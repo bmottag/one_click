@@ -1,0 +1,40 @@
+# Logs y temporales
+*.log
+.phpunit.result.cache
+.phpunit.cache
+.phpactor.json
+.env
+.env.*
+!.env.example
+
+# IDEs y editores
+.DS_Store
+Thumbs.db
+/.idea
+/.vscode
+/.fleet
+/.zed
+
+# Laravel
+/vendor
+/node_modules
+/public/hot
+/public/storage
+/public/build
+/storage/*.key
+/storage/pail
+/storage/app/public
+/storage/framework/cache
+/storage/framework/sessions
+/storage/framework/views
+/storage/logs
+Homestead.json
+Homestead.yaml
+auth.json
+
+# Docker / Sail
+docker-compose.override.yml
+.env.docker
+
+# Laravel Nova (si lo usas)
+.nova
