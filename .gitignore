@@ -21,6 +21,7 @@ Thumbs.db
 /public/hot
 /public/storage
 /public/build
+/public/template
 /storage/*.key
 /storage/pail
 /storage/app/public
