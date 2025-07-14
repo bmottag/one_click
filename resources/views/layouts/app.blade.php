@@ -12,6 +12,7 @@
 		<meta property="og:title" content="Keen - Multi-demo Bootstrap 5 HTML Admin Dashboard Theme" />
 		<meta property="og:url" content="https://keenthemes.com/keen" />
 		<meta property="og:site_name" content="Keenthemes | Keen" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 		<link rel="canonical" href="https://preview.keenthemes.com/keen" />
 		<link rel="shortcut icon" href="{{ asset('template/assets/media/logos/favicon.ico') }}" />
 		<!--begin::Fonts(mandatory for all pages)-->
@@ -63,7 +64,7 @@
 						<!--begin::Page title-->
 						<div data-kt-swapper="true" data-kt-swapper-mode="{default: 'prepend', lg: 'prepend'}" data-kt-swapper-parent="{default: '#kt_app_content_container', lg: '#kt_app_header_container'}" class="page-title d-flex flex-column justify-content-center me-3 mb-6 mb-lg-0">
 							<!--begin::Title-->
-							<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center me-3 my-0">My Projects</h1>
+							<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center me-3 my-0">ONE CLICK</h1>
 							<!--end::Title-->
 							<!--begin::Breadcrumb-->
 							<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -438,11 +439,11 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
-												<a class="menu-link" href="../../demo8/dist/apps/calendar.html">
+                                                <a class="menu-link" href="{{ route('events.index') }}">
 													<span class="menu-icon">
 														<i class="bi bi-calendar3-event fs-3"></i>
 													</span>
-													<span class="menu-title">Calendar</span>
+													<span class="menu-title">Events</span>
 												</a>
 												<!--end:Menu link-->
 											</div>
@@ -498,6 +499,7 @@
         <script src="{{ asset('template/assets/js/custom/apps/projects/list/list.js') }}"></script>
         <script src="{{ asset('template/assets/js/widgets.bundle.js') }}"></script>
         <script src="{{ asset('template/assets/js/custom/apps/chat/chat.js') }}"></script>
+        <script src="{{ asset('template/assets/js/custom/utilities/modals/new-target.js') }}"></script>
         <script src="{{ asset('template/assets/js/custom/utilities/modals/users-search.js') }}"></script>
 		<!--end::Custom Javascript-->
 		<!--end::Javascript-->
