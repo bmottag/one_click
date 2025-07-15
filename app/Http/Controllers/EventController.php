@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 class EventController extends Controller
 {
@@ -17,7 +18,27 @@ class EventController extends Controller
         $user = Auth::user();
         $events = $user->events;
 
-        return view('events.index', compact('events'));
+        return view('events.index', [
+            'events' => $events,
+            'showingAll' => false
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function show_all()
+    {
+        $today = Carbon::today();
+        
+        $events = Event::where('date', '>=', $today)
+                    ->orderBy('date', 'asc')
+                    ->get();
+
+        return view('events.index', [
+            'events' => $events,
+            'showingAll' => true
+        ]);
     }
 
     /**

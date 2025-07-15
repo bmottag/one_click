@@ -364,11 +364,37 @@
 								<!--begin::Menu-->
 								<div class="menu menu-column menu-rounded menu-active-bg menu-title-gray-700 menu-arrow-gray-500 menu-icon-gray-500 menu-bullet-gray-500 menu-state-primary my-auto" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 									<!--begin:Menu item-->
+									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item py-2">
+										<!--begin:Menu link-->
+										<span class="menu-link menu-center">
+											<span class="menu-icon me-0">
+												<i class="fonticon-house fs-1"></i>
+											</span>
+										</span>
+										<!--end:Menu link-->
+										<!--begin:Menu sub-->
+										<div class="menu-sub menu-sub-dropdown px-2 py-4 w-250px mh-75 overflow-auto">
+											<!--begin:Menu item-->
+											<a class="menu-link" href="{{ route('dashboard') }}">
+											<div class="menu-item">
+												<!--begin:Menu content-->
+												<div class="menu-content">
+													<span class="menu-section fs-5 fw-bolder ps-1 py-1">Home</span>
+												</div>
+												<!--end:Menu content-->
+											</div>
+											<!--end:Menu item-->
+											</a>
+										</div>
+										<!--end:Menu sub-->
+									</div>
+									<!--end:Menu item-->
+									<!--begin:Menu item-->
 									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item here show py-2">
 										<!--begin:Menu link-->
 										<span class="menu-link menu-center">
 											<span class="menu-icon me-0">
-												<i class="fonticon-app-store fs-1"></i>
+												<i class="fonticon-layers fs-1"></i>
 											</span>
 										</span>
 										<!--end:Menu link-->
@@ -378,63 +404,23 @@
 											<div class="menu-item">
 												<!--begin:Menu content-->
 												<div class="menu-content">
-													<span class="menu-section fs-5 fw-bolder ps-1 py-1">Apps</span>
+													<span class="menu-section fs-5 fw-bolder ps-1 py-1">Events</span>
 												</div>
 												<!--end:Menu content-->
 											</div>
 											<!--end:Menu item-->
 											<!--begin:Menu item-->
-											<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+											<div class="menu-item">
 												<!--begin:Menu link-->
-												<span class="menu-link">
+                                                <a class="menu-link" href="{{ route('events.show_all') }}">
 													<span class="menu-icon">
-														<i class="bi-chat-left fs-3"></i>
+														<i class="bi bi-patch-check fs-3"></i>
 													</span>
-													<span class="menu-title">Chat</span>
-													<span class="menu-arrow"></span>
-												</span>
+													<span class="menu-title">All Events</span>
+												</a>
 												<!--end:Menu link-->
-												<!--begin:Menu sub-->
-												<div class="menu-sub menu-sub-accordion">
-													<!--begin:Menu item-->
-													<div class="menu-item">
-														<!--begin:Menu link-->
-														<a class="menu-link" href="../../demo8/dist/apps/chat/private.html">
-															<span class="menu-bullet">
-																<span class="bullet bullet-dot"></span>
-															</span>
-															<span class="menu-title">Private Chat</span>
-														</a>
-														<!--end:Menu link-->
-													</div>
-													<!--end:Menu item-->
-													<!--begin:Menu item-->
-													<div class="menu-item">
-														<!--begin:Menu link-->
-														<a class="menu-link" href="../../demo8/dist/apps/chat/group.html">
-															<span class="menu-bullet">
-																<span class="bullet bullet-dot"></span>
-															</span>
-															<span class="menu-title">Group Chat</span>
-														</a>
-														<!--end:Menu link-->
-													</div>
-													<!--end:Menu item-->
-													<!--begin:Menu item-->
-													<div class="menu-item">
-														<!--begin:Menu link-->
-														<a class="menu-link" href="../../demo8/dist/apps/chat/drawer.html">
-															<span class="menu-bullet">
-																<span class="bullet bullet-dot"></span>
-															</span>
-															<span class="menu-title">Drawer Chat</span>
-														</a>
-														<!--end:Menu link-->
-													</div>
-													<!--end:Menu item-->
-												</div>
-												<!--end:Menu sub-->
 											</div>
+											<!--end:Menu item-->
 											<!--end:Menu item-->
 											<!--begin:Menu item-->
 											<div class="menu-item">
@@ -443,7 +429,7 @@
 													<span class="menu-icon">
 														<i class="bi bi-calendar3-event fs-3"></i>
 													</span>
-													<span class="menu-title">Events</span>
+													<span class="menu-title">My Events</span>
 												</a>
 												<!--end:Menu link-->
 											</div>
