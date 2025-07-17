@@ -30,8 +30,8 @@ class JobController extends Controller
     {
         $today = Carbon::today();
         
-        $jobs = Job::where('date_issue', '>=', $today)
-                    ->orderBy('date_issue', 'asc')
+        $jobs = Job::where('due_date', '>=', $today)
+                    ->orderBy('id', 'desc')
                     ->get();
 
         return view('jobs.index', [

@@ -1,6 +1,16 @@
 {{-- resources/views/jobs/index.blade.php --}}
 @extends('layouts.app')
 
+@section('breadcrumb')
+    <x-breadcrumb 
+        :items="[
+            ['label' => 'Home', 'url' => route('dashboard')],
+            ['label' => 'Jobs'],
+            ['label' => $showingAll ? 'All Jobs' : 'My Jobs']
+        ]"
+    />
+@endsection
+
 @section('content')
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
@@ -22,6 +32,7 @@
                     <!--end::Actions-->
                 </div>
 
+                @if(!$jobs->isEmpty())
                 <!--begin::Form-->
                 <form action="#">
                     <!--begin::Card-->
@@ -56,6 +67,7 @@
                     <!--end::Card-->
                 </form>
                 <!--end::Form-->
+                @endif
 
                 <!--end::Toolbar-->
                 <div class="row g-5 g-xl-10">
@@ -69,10 +81,14 @@
                                     <!--begin::Heading-->
                                     <div class="mb-2">
                                         <!--begin::Title-->
-                                        <h1 class="fw-semibold text-gray-800 text-center lh-lg">No job is scheduled at this time. 
-                                        <br />To create a new one, please
-                                        <span class="fw-bolder">  follow this link</span></h1>
-                                        <!--end::Title-->
+                                        <h1 class="fw-semibold text-gray-800 text-center lh-lg">No jobs available right now.
+                                        @if ($showingAll)
+                                            <br />Thanks for your interest!"</h1>
+                                        @else
+                                            <br />To create a new one, please
+                                            <span class="fw-bolder">  follow this link</span></h1>
+                                            <!--end::Title-->\
+                                        @endif
                                         <!--begin::Illustration-->
                                         <div class="py-10 text-center">
                                             <img src="{{ asset('template/assets/media/svg/illustrations/easy/2.svg') }}" class="theme-light-show w-200px" alt="" />
@@ -81,6 +97,7 @@
                                         <!--end::Illustration-->
                                     </div>
                                     <!--end::Heading-->
+                                    @if (!$showingAll)
                                     <!--begin::Links-->
                                     <div class="text-center mb-1">
                                         <!--begin::Link-->
@@ -88,6 +105,7 @@
                                         <!--end::Link-->
                                     </div>
                                     <!--end::Links-->
+                                    @endif
                                 </div>
                                 <!--end::Body-->
                             </div>
@@ -121,14 +139,14 @@
                                                         <div class="d-flex flex-stack mb-6">
                                                             <!--begin::Title-->
                                                             <div class="flex-shrink-0 me-5">
-                                                                <span class="text-gray-800 fs-1 fw-bold">{{ $job->title }}</span>
+                                                                <span class="text-gray-800 fs-1 fw-bold">{{ $job->job_title }}</span>
                                                             </div>
                                                             <!--end::Title-->
                                                             @php
                                                                 $today = date('Y-m-d');
 
-                                                                $state = $job->date > $today ? 'Active' : 'Close';
-                                                                $style = $job->date > $today ? 'primary' : 'danger';
+                                                                $state = $job->due_date > $today ? 'Active' : 'Close';
+                                                                $style = $job->due_date > $today ? 'primary' : 'danger';
                                                             @endphp
                                                             <span class="badge badge-light-{{ $style }} flex-shrink-0 align-self-center py-3 px-4 fs-7">{{ $state }}</span>
                                                         </div>
@@ -157,14 +175,14 @@
                                                     <!--begin::Body-->
                                                     <div class="mb-6">
                                                         <!--begin::Text-->
-                                                        <span class="fw-semibold text-gray-600 fs-6 mb-8 d-block">{{ $job->description }}</span>
+                                                        <span class="fw-semibold text-gray-600 fs-6 mb-8 d-block">{{ $job->job_description }}</span>
                                                         <!--end::Text-->
                                                         <!--begin::Stats-->
                                                         <div class="d-flex">
                                                             <!--begin::Stat-->
                                                             <div class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
                                                                 <!--begin::Date-->
-                                                                <span class="fs-6 text-gray-700 fw-bold">{{ $job->date->format('M j, Y') }}</span>
+                                                                <span class="fs-6 text-gray-700 fw-bold">{{ $job->due_date->format('M j, Y') }}</span>
                                                                 <!--end::Date-->
                                                                 <!--begin::Label-->
                                                                 <div class="fw-semibold text-gray-400">Date</div>

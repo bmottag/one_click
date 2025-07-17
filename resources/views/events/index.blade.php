@@ -1,6 +1,16 @@
 {{-- resources/views/events/index.blade.php --}}
 @extends('layouts.app')
 
+@section('breadcrumb')
+    <x-breadcrumb 
+        :items="[
+            ['label' => 'Home', 'url' => route('dashboard')],
+            ['label' => 'Events'],
+            ['label' => $showingAll ? 'All Events' : 'My Events']
+        ]"
+    />
+@endsection
+
 @section('content')
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">

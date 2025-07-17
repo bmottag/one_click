@@ -67,29 +67,9 @@
 							<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center me-3 my-0">ONE CLICK</h1>
 							<!--end::Title-->
 							<!--begin::Breadcrumb-->
-							<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
-								<!--begin::Item-->
-								<li class="breadcrumb-item text-muted">
-									<a href="../../demo8/dist/index.html" class="text-muted text-hover-primary">Home</a>
-								</li>
-								<!--end::Item-->
-								<!--begin::Item-->
-								<li class="breadcrumb-item">
-									<span class="bullet bg-gray-400 w-5px h-2px"></span>
-								</li>
-								<!--end::Item-->
-								<!--begin::Item-->
-								<li class="breadcrumb-item text-muted">Apps</li>
-								<!--end::Item-->
-								<!--begin::Item-->
-								<li class="breadcrumb-item">
-									<span class="bullet bg-gray-400 w-5px h-2px"></span>
-								</li>
-								<!--end::Item-->
-								<!--begin::Item-->
-								<li class="breadcrumb-item text-muted">Projects</li>
-								<!--end::Item-->
-							</ul>
+							@hasSection('breadcrumb')
+								@yield('breadcrumb')
+							@endif
 							<!--end::Breadcrumb-->
 						</div>
 						<!--end::Page title-->
@@ -115,9 +95,9 @@
 												<!--end::Avatar-->
 												<!--begin::Username-->
 												<div class="d-flex flex-column">
-													<div class="fw-bold d-flex align-items-center fs-5">Max Smith
+													<div class="fw-bold d-flex align-items-center fs-5">{{ Auth::user()->name }}
 													<span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span></div>
-													<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">max@kt.com</a>
+													<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
 												</div>
 												<!--end::Username-->
 											</div>
@@ -128,7 +108,7 @@
 										<!--end::Menu separator-->
 										<!--begin::Menu item-->
 										<div class="menu-item px-5">
-											<a href="../../demo8/dist/account/overview.html" class="menu-link px-5">My Profile</a>
+											<a href="{{ route('profile.edit') }}" class="menu-link px-5">My Profile</a>
 										</div>
 										<!--end::Menu item-->
 										<!--begin::Menu item-->
@@ -364,7 +344,10 @@
 								<!--begin::Menu-->
 								<div class="menu menu-column menu-rounded menu-active-bg menu-title-gray-700 menu-arrow-gray-500 menu-icon-gray-500 menu-bullet-gray-500 menu-state-primary my-auto" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 									<!--begin:Menu item-->
-									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item py-2">
+									@php
+										$isHomeActive = request()->routeIs('dashboard');
+									@endphp
+									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isHomeActive ? 'here show' : '' }} py-2">
 										<!--begin:Menu link-->
 										<span class="menu-link menu-center">
 											<span class="menu-icon me-0">
@@ -389,8 +372,12 @@
 										<!--end:Menu sub-->
 									</div>
 									<!--end:Menu item-->
+
 									<!--begin:Menu item-->
-									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item here show py-2">
+									@php
+										$isEventsActive = request()->routeIs('events.*');
+									@endphp
+									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isEventsActive ? 'here show' : '' }} show py-2">
 										<!--begin:Menu link-->
 										<span class="menu-link menu-center">
 											<span class="menu-icon me-0">
@@ -440,11 +427,14 @@
 									<!--end:Menu item-->
 
 									<!--begin:Menu item-->
-									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item here show py-2">
+									@php
+										$isJobsActive = request()->routeIs('jobs.*');
+									@endphp
+									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isJobsActive ? 'here show' : '' }} py-2">
 										<!--begin:Menu link-->
 										<span class="menu-link menu-center">
 											<span class="menu-icon me-0">
-												<i class="fonticon-layers fs-1"></i>
+												<i class="fonticon-notification fs-1"></i>
 											</span>
 										</span>
 										<!--end:Menu link-->
