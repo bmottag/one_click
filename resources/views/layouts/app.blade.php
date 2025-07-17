@@ -525,8 +525,8 @@
         <script src="{{ asset('template/assets/js/custom/apps/projects/list/list.js') }}"></script>
         <script src="{{ asset('template/assets/js/widgets.bundle.js') }}"></script>
         <script src="{{ asset('template/assets/js/custom/apps/chat/chat.js') }}"></script>
-        <script src="{{ asset('template/assets/js/custom/utilities/modals/new-target.js') }}"></script>
         <script src="{{ asset('template/assets/js/custom/utilities/modals/users-search.js') }}"></script>
+		@yield('scripts')
 		<!--end::Custom Javascript-->
 		<!--end::Javascript-->
 	</body>

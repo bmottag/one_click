@@ -307,7 +307,7 @@
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8">
+                        <div class="d-flex flex-column mb-8 fv-row">
                             <label class="fs-6 fw-semibold mb-2"><span class="required">Description</span></label>
                             <textarea class="form-control form-control-solid" rows="3" name="event_description" placeholder="Description"></textarea>
                         </div>
@@ -396,4 +396,8 @@
     </div>
     <!--end::Modal - New Target-->
     <!--end::Modals-->
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('template/assets/js/custom/utilities/modals/new-target.js') }}"></script>
 @endsection

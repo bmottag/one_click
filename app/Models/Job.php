@@ -18,6 +18,10 @@ class Job extends Model
         'due_date',
     ];
 
+    protected $casts = [
+        'due_date' => 'datetime',
+    ];
+
     // Relaciones (ejemplo con User)
     public function user()
     {

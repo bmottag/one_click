@@ -39,4 +39,40 @@ class JobController extends Controller
             'showingAll' => true
         ]);
     }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        // Validar datos
+        $validator = Validator::make($request->all(), [
+            'job_title' => 'required|string|max:255',
+            'job_description' => 'required|string',
+            'contact_number' => 'required', 
+            'job_date' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        // Guardar evento
+        $event = Job::create([
+            'user_id' => Auth::id(),
+            'job_title' => $request->job_title,
+            'job_description' => $request->job_description,
+            'contact_number' => $request->contact_number,
+            'due_date' => $request->job_date,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Job created successfully!',
+            'event' => $event
+        ]);
+    }
 }
