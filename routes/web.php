@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,6 +21,10 @@ Route::middleware('auth')->group(function () {
     // Eventos
     Route::get('/events/show_all', [EventController::class, 'show_all'])->name('events.show_all');
     Route::resource('events', EventController::class);
+
+    // Jobs
+    Route::get('/jobs/show_all', [JobController::class, 'show_all'])->name('jobs.show_all');
+    Route::resource('jobs', JobController::class);
 
 
 });

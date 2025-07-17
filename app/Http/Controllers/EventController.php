@@ -52,57 +52,39 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    public function store(Request $request)
+    {
+        // Validar datos
+        $validator = Validator::make($request->all(), [
+            'event_title' => 'required|string|max:255',
+            'event_place' => 'required|string|max:255',
+            'event_date' => 'required',
+        ]);
 
-public function store(Request $request)
-{
-    // Validar datos
-    $validator = Validator::make($request->all(), [
-        'event_title' => 'required|string|max:255',
-        'event_place' => 'required|string|max:255',
-        'event_date' => 'required',
-    ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'errors' => $validator->errors()
+            ], 422);
+        }
 
-    if ($validator->fails()) {
+        // Guardar evento
+        $event = Event::create([
+            'user_id' => Auth::id(),
+            'title' => $request->event_title,
+            'place' => $request->event_place,
+            'description' => $request->event_description,
+            'date' => $request->event_date,
+            'link' => $request->link,
+            'instagram' => $request->instagram,
+        ]);
+
         return response()->json([
-            'success' => 'false',
-            'errors' => $validator->errors()
-        ], 422);
+            'success' => true,
+            'message' => 'Event created successfully!',
+            'event' => $event
+        ]);
     }
-
-    // Guardar evento
-    $event = Event::create([
-        'user_id' => Auth::id(),
-        'title' => $request->event_title,
-        'place' => $request->event_place,
-        'description' => $request->event_description,
-        'date' => $request->event_date,
-        'link' => $request->link,
-        'instagram' => $request->instagram,
-    ]);
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Event created successfully!',
-        'event' => $event
-    ]);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Display the specified resource.

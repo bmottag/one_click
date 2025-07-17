@@ -438,6 +438,56 @@
 										<!--end:Menu sub-->
 									</div>
 									<!--end:Menu item-->
+
+									<!--begin:Menu item-->
+									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item here show py-2">
+										<!--begin:Menu link-->
+										<span class="menu-link menu-center">
+											<span class="menu-icon me-0">
+												<i class="fonticon-layers fs-1"></i>
+											</span>
+										</span>
+										<!--end:Menu link-->
+										<!--begin:Menu sub-->
+										<div class="menu-sub menu-sub-dropdown menu-sub-indention px-2 py-4 w-250px mh-75 overflow-auto">
+											<!--begin:Menu item-->
+											<div class="menu-item">
+												<!--begin:Menu content-->
+												<div class="menu-content">
+													<span class="menu-section fs-5 fw-bolder ps-1 py-1">Jobs</span>
+												</div>
+												<!--end:Menu content-->
+											</div>
+											<!--end:Menu item-->
+											<!--begin:Menu item-->
+											<div class="menu-item">
+												<!--begin:Menu link-->
+                                                <a class="menu-link" href="{{ route('jobs.show_all') }}">
+													<span class="menu-icon">
+														<i class="bi bi-patch-check fs-3"></i>
+													</span>
+													<span class="menu-title">All Jobs</span>
+												</a>
+												<!--end:Menu link-->
+											</div>
+											<!--end:Menu item-->
+											<!--end:Menu item-->
+											<!--begin:Menu item-->
+											<div class="menu-item">
+												<!--begin:Menu link-->
+                                                <a class="menu-link" href="{{ route('jobs.index') }}">
+													<span class="menu-icon">
+														<i class="bi bi-calendar3-event fs-3"></i>
+													</span>
+													<span class="menu-title">My Jobs</span>
+												</a>
+												<!--end:Menu link-->
+											</div>
+											<!--end:Menu item-->
+										</div>
+										<!--end:Menu sub-->
+									</div>
+									<!--end:Menu item-->
 								</div>
 								<!--end::Menu-->
 							</div>
