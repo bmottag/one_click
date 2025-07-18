@@ -13,9 +13,15 @@ class JobController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $jobs = Job::with('user')->latest()->get();
+        $query = Job::with('user');
+
+        if ($request->filled('search')) {
+            $query->where('job_title', 'like', '%' . $request->search . '%');
+        }
+
+        $jobs = $query->latest()->get();
 
         return view('jobs.index', [
             'jobs' => $jobs,
@@ -26,13 +32,18 @@ class JobController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function show_all()
+    public function show_all(Request $request)
     {
         $today = Carbon::today();
-        
-        $jobs = Job::where('due_date', '>=', $today)
-                    ->orderBy('id', 'desc')
-                    ->get();
+
+        $query = Job::where('due_date', '>=', $today)
+                    ->orderBy('id', 'desc');
+
+        if ($request->filled('search')) {
+            $query->where('job_title', 'like', '%' . $request->search . '%');
+        }
+
+        $jobs = $query->get();
 
         return view('jobs.index', [
             'jobs' => $jobs,

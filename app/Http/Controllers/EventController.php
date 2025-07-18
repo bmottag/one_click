@@ -13,10 +13,15 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user = Auth::user();
-        $events = $user->events;
+        $query = Event::with('user');
+
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        $events = $query->latest()->get();
 
         return view('events.index', [
             'events' => $events,
@@ -27,13 +32,18 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function show_all()
+    public function show_all(Request $request)
     {
         $today = Carbon::today();
-        
-        $events = Event::where('date', '>=', $today)
-                    ->orderBy('date', 'asc')
-                    ->get();
+
+        $query = Event::where('date', '>=', $today)
+                    ->orderBy('id', 'desc');
+
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        $events = $query->get();
 
         return view('events.index', [
             'events' => $events,
