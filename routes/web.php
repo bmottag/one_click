@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Eventos
+    // Events
     Route::get('/events/show_all', [EventController::class, 'show_all'])->name('events.show_all');
     Route::resource('events', EventController::class);
 
