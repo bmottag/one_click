@@ -108,12 +108,12 @@
                                 </div>
                             </div>
 
-                            <!-- Contraseña -->
+                            <!-- Password -->
                             <div class="fv-row mb-8" data-kt-password-meter="true">
                                 <div class="mb-1">
                                     <div class="position-relative mb-3">
                                         <input type="password" name="password" placeholder="Password"
-                                            class="form-control bg-transparent @error('password') is-invalid @enderror" required />
+                                            class="form-control bg-transparent @error('password') is-invalid @enderror" required autocomplete="new-password" />
                                         <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
                                             data-kt-password-meter-control="visibility">
                                             <i class="bi bi-eye-slash fs-2"></i>
@@ -133,7 +133,7 @@
                                 @enderror
                             </div>
 
-                            <!-- Confirmar contraseña -->
+                            <!-- Confirm Password -->
                             <div class="fv-row mb-8">
                                 <input type="password" name="password_confirmation" placeholder="Confirm Password"
                                     class="form-control bg-transparent" required />
@@ -191,55 +191,39 @@
                 selectedCity: null,
                 countryId: 39,
 
-init() {
-    this.fetchStates().then(() => {
-        if (this.selectedState) {
-            this.fetchCities().then(() => {
-                this.selectedCity = '{{ old('city_id') }}';
-            });
-        }
-    });
-},
+                init() {
+                    this.fetchStates().then(() => {
+                        if (this.selectedState) {
+                            this.fetchCities().then(() => {
+                                this.selectedCity = '{{ old('city_id') }}';
+                            });
+                        }
+                    });
+                },
 
+                fetchStates() {
+                    return fetch(`/api/states/${this.countryId}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            this.states = data;
+                            this.selectedState = '{{ old('state_id') }}';
+                        });
+                },
 
+                fetchCities() {
+                    this.cities = [];
+                    this.selectedCity = null;
+                    if (!this.selectedState) return Promise.resolve();
 
-
-
-fetchStates() {
-    return fetch(`/api/states/${this.countryId}`)
-        .then(res => res.json())
-        .then(data => {
-            this.states = data;
-        });
-},
-
-fetchStates() {
-    return fetch(`/api/states/${this.countryId}`)
-        .then(res => res.json())
-        .then(data => {
-            this.states = data;
-            this.selectedState = '{{ old('state_id') }}';
-        });
-},
-
-
-fetchCities() {
-    this.cities = [];
-    this.selectedCity = null;
-    if (!this.selectedState) return Promise.resolve();
-
-    return fetch(`/api/cities/${this.selectedState}`)
-        .then(res => res.json())
-        .then(data => {
-            this.cities = data;
-        });
-}
-
-
+                    return fetch(`/api/cities/${this.selectedState}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            this.cities = data;
+                        });
+                }
             }
         }
     </script>
-
 
 </body>
 </html>
