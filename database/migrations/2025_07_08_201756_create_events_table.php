@@ -16,10 +16,11 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->string('place');
-            $table->text('descripcion')->nullable();
+            $table->text('description')->nullable();
+            $table->date('date');
+            $table->string('image')->nullable();
             $table->string('link')->nullable();
             $table->string('instagram')->nullable();
-            $table->date('date');
             $table->timestamps();
         });
     }

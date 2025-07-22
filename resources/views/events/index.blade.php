@@ -123,7 +123,8 @@
                                             <!--begin::Col-->
                                             <div class="col-sm-6 mb-10 mb-sm-0">
                                                 <!--begin::Image-->
-                                                <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100" style="background-size: 100% 100%;background-image:url('{{ asset('template/assets/media/stock/600x600/img-33.jpg') }}')"></div>
+                                                <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100" 
+                                                    style="background-size: 100% 100%;background-image:url('{{ asset('storage/' . $event->image) }}')"></div>
                                                 <!--end::Image-->
                                             </div>
                                             <!--end::Col-->
@@ -242,11 +243,6 @@
         </div>
     </div>
 
-
-
-
-
-
     <!--begin::Modals-->
     <!--begin::Modal - New Target-->
     <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
@@ -273,7 +269,7 @@
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                     <!--begin:Form-->
-                    <form id="kt_modal_new_target_form" class="form" >
+                    <form id="kt_modal_new_target_form" class="form" enctype="multipart/form-data">
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
                             <!--begin::Title-->
@@ -335,6 +331,48 @@
 									<!--end::Input-->
 								</div>
 								<!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="d-block fw-semibold fs-6 mb-5">
+                                <span class="required">Image</span>
+                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Select an image that best represents your event."></i>
+                            </label>
+                            <!--end::Label-->
+                            <!--begin::Image input placeholder-->
+                            <style>.image-input-placeholder { background-image: url("{{ asset('template/assets/media/svg/files/blank-image.svg') }}"); } [data-bs-theme="dark"] .image-input-placeholder { background-image: url("{{ asset('template/assets/media/svg/files/blank-image-dark.svg') }}"); }</style>
+                            <!--end::Image input placeholder-->
+                            <!--begin::Image input-->
+                            <div class="image-input image-input-empty image-input-outline image-input-placeholder" data-kt-image-input="true">
+                                <!--begin::Preview existing image-->
+                                <div class="image-input-wrapper w-225px h-225px"></div>
+                                <!--end::Preview existing image-->
+                                <!--begin::Label-->
+                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change image">
+                                    <i class="bi bi-pencil-fill fs-7"></i>
+                                    <!--begin::Inputs-->
+                                    <input type="file" name="event_image" accept=".png, .jpg, .jpeg" />
+                                    <input type="hidden" name="event_remove" />
+                                    <!--end::Inputs-->
+                                </label>
+                                <!--end::Label-->
+                                <!--begin::Cancel-->
+                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel image">
+                                    <i class="bi bi-x fs-2"></i>
+                                </span>
+                                <!--end::Cancel-->
+                                <!--begin::Remove-->
+                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove image">
+                                    <i class="bi bi-x fs-2"></i>
+                                </span>
+                                <!--end::Remove-->
+                            </div>
+                            <!--end::Image input-->
+                            <!--begin::Hint-->
+                            <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                            <!--end::Hint-->
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->

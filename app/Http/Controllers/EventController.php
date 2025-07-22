@@ -69,6 +69,7 @@ class EventController extends Controller
             'event_title' => 'required|string|max:255',
             'event_place' => 'required|string|max:255',
             'event_date' => 'required',
+            'event_image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -78,6 +79,11 @@ class EventController extends Controller
             ], 422);
         }
 
+        $imagePath = null;
+        if ($request->hasFile('event_image')) {
+            $imagePath = $request->file('event_image')->store('events', 'public');
+        }
+
         // Guardar evento
         $event = Event::create([
             'user_id' => Auth::id(),
@@ -85,6 +91,7 @@ class EventController extends Controller
             'place' => $request->event_place,
             'description' => $request->event_description,
             'date' => $request->event_date,
+            'image' => $imagePath,
             'link' => $request->link,
             'instagram' => $request->instagram,
         ]);

@@ -7,7 +7,16 @@ use App\Models\User;
 
 class Event extends Model
 {
-    protected $fillable = ['title', 'place', 'description', 'date', 'user_id', 'link', 'instagram'];
+   protected $fillable = [
+        'user_id',    
+        'title',
+        'place',
+        'description',
+        'date',
+        'image',
+        'link',
+        'instagram',
+    ];
 
     protected $casts = [
         'date' => 'datetime',
