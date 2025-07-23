@@ -56,8 +56,8 @@
 						<!--end::Sidebar toggle-->
 						<!--begin::Logo-->
 						<div class="d-flex d-lg-none align-items-center me-auto">
-							<a href="../../demo8/dist/index.html">
-								<img alt="Logo" src="{{ asset('template/assets/media/logos/default-small-dark.svg') }}" class="h-35px" />
+							<a href="{{ route('dashboard') }}">
+								<img alt="Logo" src="{{ asset('template/assets/media/logos/logo.png') }}" class="h-40px" />
 							</a>
 						</div>
 						<!--end::Logo-->
@@ -331,8 +331,8 @@
 						<!--begin::Logo-->
 						<div class="app-sidebar-logo d-none d-lg-flex flex-center pt-8 mb-3" id="kt_app_sidebar_logo">
 							<!--begin::Logo image-->
-							<a href="../../demo8/dist/index.html">
-								<img alt="Logo" src="{{ asset('template/assets/media/logos/default-small-dark.svg') }}" class="h-35px" />
+							<a href="{{ route('dashboard') }}">
+								<img alt="Logo" src="{{ asset('template/assets/media/logos/logo.png') }}" class="h-50px" />
 							</a>
 							<!--end::Logo image-->
 						</div>

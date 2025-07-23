@@ -21,13 +21,13 @@
                 style="background-image: url('{{ asset('template/assets/media/misc/auth-bg.png') }}')">
                 <div class="d-flex flex-column flex-center p-6 p-lg-10 w-100">
                     <a href="#" class="mb-0 mb-lg-20">
-                        <img alt="Logo" src="{{ asset('template/assets/media/logos/default-white.svg') }}" class="h-40px h-lg-50px" />
+                        <img alt="Logo" src="{{ asset('template/assets/media/logos/one_click.png') }}" class="h-150px h-lg-200px" />
                     </a>
                     <img class="d-none d-lg-block mx-auto w-300px w-lg-75 w-xl-500px mb-10 mb-lg-20"
-                        src="{{ asset('template/assets/media/misc/auth-screens.png') }}" alt="" />
-                    <h1 class="d-none d-lg-block text-white fs-2qx fw-bold text-center mb-7">Fast, Efficient and Productive</h1>
+                        src="{{ asset('template/assets/media/misc/one_click.png') }}" alt="" />
+                    <h1 class="d-none d-lg-block text-white fs-2qx fw-bold text-center mb-7">One click to find services, jobs and opportunities</h1>
                     <div class="d-none d-lg-block text-white fs-base text-center">
-                        Welcome
+                        Your life in Canada, one click away.
                     </div>
                 </div>
             </div>
