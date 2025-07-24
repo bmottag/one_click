@@ -26,7 +26,7 @@
                     <!--begin::Actions-->
                     <div class="d-flex flex-wrap my-2">
                         @if (!$showingAll)
-                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">New Event</a>
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#kt_modal_new_event">New Event</a>
                         @endif
                     </div>
                     <!--end::Actions-->
@@ -81,7 +81,7 @@
                                         <!--begin::Title-->
                                         <h1 class="fw-semibold text-gray-800 text-center lh-lg">No event is scheduled at this time. 
                                         @if ($showingAll)
-                                            <br />Thanks for your interest!"</h1>
+                                            <br />Thanks for your interest!</h1>
                                         @else
                                             <br />To create a new one, please
                                             <span class="fw-bolder">  follow this link</span></h1>
@@ -99,7 +99,7 @@
                                         <!--begin::Links-->
                                         <div class="text-center mb-1">
                                             <!--begin::Link-->
-                                            <a href="#" class="btn btn-primary er fs-6 px-8 py-4" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">New Event</a>
+                                            <a href="#" class="btn btn-primary er fs-6 px-8 py-4" data-bs-toggle="modal" data-bs-target="#kt_modal_new_event">New Event</a>
                                             <!--end::Link-->
                                         </div>
                                         <!--end::Links-->
@@ -245,7 +245,7 @@
 
     <!--begin::Modals-->
     <!--begin::Modal - New Target-->
-    <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="kt_modal_new_event" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <!--begin::Modal content-->
@@ -269,7 +269,7 @@
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                     <!--begin:Form-->
-                    <form id="kt_modal_new_target_form" class="form" enctype="multipart/form-data">
+                    <form id="kt_modal_new_event_form" class="form" enctype="multipart/form-data">
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
                             <!--begin::Title-->
@@ -413,8 +413,8 @@
                         <!--end::Input group-->
                         <!--begin::Actions-->
                         <div class="text-center">
-                            <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Cancel</button>
-                            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                            <button type="reset" id="kt_modal_new_event_cancel" class="btn btn-light me-3">Cancel</button>
+                            <button type="submit" id="kt_modal_new_event_submit" class="btn btn-primary">
                                 <span class="indicator-label">Submit</span>
                                 <span class="indicator-progress">Please wait...
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -435,5 +435,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('template/assets/js/custom/utilities/modals/new-target.js') }}"></script>
+    <script src="{{ asset('js/validations/events.js') }}"></script>
 @endsection

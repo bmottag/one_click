@@ -1,12 +1,12 @@
-{{-- resources/views/jobs/index.blade.php --}}
+{{-- resources/views/rents/index.blade.php --}}
 @extends('layouts.app')
 
 @section('breadcrumb')
     <x-breadcrumb 
         :items="[
             ['label' => 'Home', 'url' => route('dashboard')],
-            ['label' => 'Jobs'],
-            ['label' => $showingAll ? 'All Jobs' : 'My Jobs']
+            ['label' => 'Rents', 'url' => route('rents.show_all')],
+            ['label' => $showingAll ? 'All Rents' : 'My Rents']
         ]"
     />
 @endsection
@@ -21,19 +21,19 @@
                 <!--begin::Toolbar-->
                 <div class="d-flex flex-wrap flex-stack mb-6">
                     <!--begin::Heading-->
-                    <h3 class="fw-bold my-2">Jobs</h3>
+                    <h3 class="fw-bold my-2">Rents</h3>
                     <!--end::Heading-->
                     <!--begin::Actions-->
                     <div class="d-flex flex-wrap my-2">
                         @if (!$showingAll)
-                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal_new_job">New Job</a>
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal_new_rent">New Rent</a>
                         @endif
                     </div>
                     <!--end::Actions-->
                 </div>
 
                 <!--begin::Form-->
-                <form method="GET" action="{{ $showingAll ? route('jobs.show_all') : route('jobs.index') }}">
+                <form method="GET" action="{{ $showingAll ? route('rents.show_all') : route('rents.index') }}">
                     <!--begin::Card-->
                     <div class="card mb-7">
                         <!--begin::Card body-->
@@ -69,7 +69,7 @@
 
                 <!--end::Toolbar-->
                 <div class="row g-5 g-xl-10">
-                    @if($jobs->isEmpty())
+                    @if($rents->isEmpty())
                         <!--begin::Col-->
                         <div class="col-xl-4">
                             <!--begin::Engage widget 1-->
@@ -79,7 +79,7 @@
                                     <!--begin::Heading-->
                                     <div class="mb-2">
                                         <!--begin::Title-->
-                                        <h1 class="fw-semibold text-gray-800 text-center lh-lg">No Jobs available right now.
+                                        <h1 class="fw-semibold text-gray-800 text-center lh-lg">No Rents available right now.
                                         @if ($showingAll)
                                             <br />Thanks for your interest!</h1>
                                         @else
@@ -99,7 +99,7 @@
                                         <!--begin::Links-->
                                         <div class="text-center mb-1">
                                             <!--begin::Link-->
-                                            <a href="#" class="btn btn-primary er fs-6 px-8 py-4" data-bs-toggle="modal" data-bs-target="#modal_new_job">New Job</a>
+                                            <a href="#" class="btn btn-primary er fs-6 px-8 py-4" data-bs-toggle="modal" data-bs-target="#modal_new_rent">New Rent</a>
                                             <!--end::Link-->
                                         </div>
                                         <!--end::Links-->
@@ -111,7 +111,7 @@
                         </div>
                         <!--end::Col-->
                     @else
-                        @foreach($jobs as $job)
+                        @foreach($rents as $rent)
                             <!--begin::Col-->
                             <div class="col-md-6 col-xl-4">
                                 <!--begin::Card-->
@@ -122,7 +122,7 @@
                                         <div class="card-title m-0">
                                             <!--begin::Title-->
                                             <div class="flex-shrink-0 me-5">
-                                                <span class="text-gray-800 fs-1 fw-bold">{{ $job->job_title }}</span>
+                                                <span class="text-gray-800 fs-1 fw-bold">{{ $rent->rent_title }}</span>
                                             </div>
                                             <!--end::Title-->
                                         </div>
@@ -132,8 +132,8 @@
                                             @php
                                                 $today = date('Y-m-d');
 
-                                                $state = $job->due_date > $today ? 'Active' : 'Close';
-                                                $style = $job->due_date > $today ? 'primary' : 'danger';
+                                                $state = $rent->due_date > $today ? 'Active' : 'Close';
+                                                $style = $rent->due_date > $today ? 'primary' : 'danger';
                                             @endphp
                                             <span class="badge badge-light-{{ $style }} flex-shrink-0 align-self-center py-3 px-4 fs-7">{{ $state }}</span>
                                         </div>
@@ -143,19 +143,19 @@
                                     <!--begin:: Card body-->
                                     <div class="card-body p-9">
                                         <!--begin::Description-->
-                                        <span class="fw-semibold text-gray-600 fs-6 mb-8 d-block">{{ $job->job_description }}</span>
+                                        <span class="fw-semibold text-gray-600 fs-6 mb-8 d-block">{{ $rent->description }}</span>
                                         <!--end::Description-->
                                         <!--begin::Info-->
                                         <div class="d-flex flex-wrap mb-5">
                                             <!--begin::Due-->
                                             <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
-                                                <div class="fs-6 text-gray-800 fw-bold">{{ $job->due_date->format('M j, Y') }}</div>
+                                                <div class="fs-6 text-gray-800 fw-bold">{{ $rent->due_date->format('M j, Y') }}</div>
                                                 <div class="fw-semibold text-gray-400">Due Date</div>
                                             </div>
                                             <!--end::Due-->
                                             <!--begin::Budget-->
                                             <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                                <div class="fs-6 text-gray-800 fw-bold">{{ $job->contact_number }}</div>
+                                                <div class="fs-6 text-gray-800 fw-bold">{{ $rent->contact_number }}</div>
                                                 <div class="fw-semibold text-gray-400">Contact Number</div>
                                             </div>
                                             <!--end::Budget-->
@@ -176,7 +176,7 @@
 
     <!--begin::Modals-->
     <!--begin::Modal - New Target-->
-    <div class="modal fade" id="modal_new_job" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="modal_new_rent" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <!--begin::Modal content-->
@@ -200,14 +200,14 @@
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                     <!--begin:Form-->
-                    <form id="modal_new_job_form" class="form" >
+                    <form id="modal_new_rent_form" class="form" >
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
                             <!--begin::Title-->
-                            <h1 class="mb-3">Jobs</h1>
+                            <h1 class="mb-3">Rents</h1>
                             <!--end::Title-->
                             <!--begin::Description-->
-                            <div class="text-muted fw-semibold fs-5">Add / Edit Jobs.</div>
+                            <div class="text-muted fw-semibold fs-5">Add / Edit Rents.</div>
                             <!--end::Description-->
                         </div>
                         <!--end::Heading-->
@@ -215,16 +215,16 @@
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span class="required">Job Title</span>
+                                <span class="required">Rent Title</span>
                             </label>
                             <!--end::Label-->
-                            <input type="text" class="form-control form-control-solid" placeholder="Enter Job Title" name="job_title" />
+                            <input type="text" class="form-control form-control-solid" placeholder="Enter Rent Title" name="rent_title" />
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <label class="fs-6 fw-semibold mb-2"><span class="required">Description</span></label>
-                            <textarea class="form-control form-control-solid" rows="3" name="job_description" placeholder="Description"></textarea>
+                            <textarea class="form-control form-control-solid" rows="3" name="description" placeholder="Description"></textarea>
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
@@ -255,7 +255,7 @@
                                     <!--end::Svg Icon-->
                                     <!--end::Icon-->
                                     <!--begin::Datepicker-->
-                                    <input class="form-control form-control-solid ps-12" placeholder="Select a date" name="job_date" />
+                                    <input class="form-control form-control-solid ps-12" placeholder="Select a date" name="due_date" />
                                     <!--end::Datepicker-->
                                 </div>
                                 <!--end::Input-->
@@ -265,8 +265,8 @@
                         <!--end::Input group-->
                         <!--begin::Actions-->
                         <div class="text-center">
-                            <button type="reset" id="modal_new_job_cancel" class="btn btn-light me-3">Cancel</button>
-                            <button type="submit" id="modal_new_job_submit" class="btn btn-primary">
+                            <button type="reset" id="modal_new_rent_cancel" class="btn btn-light me-3">Cancel</button>
+                            <button type="submit" id="modal_new_rent_submit" class="btn btn-primary">
                                 <span class="indicator-label">Submit</span>
                                 <span class="indicator-progress">Please wait...
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -287,5 +287,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/validations/jobs.js') }}"></script>
+    <script src="{{ asset('js/validations/rents.js') }}"></script>
 @endsection
