@@ -531,6 +531,110 @@
 										<!--end:Menu sub-->
 									</div>
 									<!--end:Menu item-->
+									<!--begin:Menu item-->
+									@php
+										$isServicesActive = request()->routeIs('services.*');
+									@endphp
+									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isServicesActive ? 'here show' : '' }} py-2">
+										<!--begin:Menu link-->
+										<span class="menu-link menu-center">
+											<span class="menu-icon me-0">
+												<i class="bi bi-fire fs-1"></i>
+											</span>
+										</span>
+										<!--end:Menu link-->
+										<!--begin:Menu sub-->
+										<div class="menu-sub menu-sub-dropdown menu-sub-indention px-2 py-4 w-250px mh-75 overflow-auto">
+											<!--begin:Menu item-->
+											<div class="menu-item">
+												<!--begin:Menu content-->
+												<div class="menu-content">
+													<span class="menu-section fs-5 fw-bolder ps-1 py-1">Services</span>
+												</div>
+												<!--end:Menu content-->
+											</div>
+											<!--end:Menu item-->
+											<!--begin:Menu item-->
+											<div class="menu-item">
+												<!--begin:Menu link-->
+                                                <a class="menu-link" href="{{ route('services.show_all') }}">
+													<span class="menu-icon">
+														<i class="bi bi-patch-check fs-3"></i>
+													</span>
+													<span class="menu-title">All Services</span>
+												</a>
+												<!--end:Menu link-->
+											</div>
+											<!--end:Menu item-->
+											<!--end:Menu item-->
+											<!--begin:Menu item-->
+											<div class="menu-item">
+												<!--begin:Menu link-->
+                                                <a class="menu-link" href="{{ route('services.index') }}">
+													<span class="menu-icon">
+														<i class="bi bi-calendar3-event fs-3"></i>
+													</span>
+													<span class="menu-title">My Services</span>
+												</a>
+												<!--end:Menu link-->
+											</div>
+											<!--end:Menu item-->
+										</div>
+										<!--end:Menu sub-->
+									</div>
+									<!--end:Menu item-->
+									<!--begin:Menu item-->
+									@php
+										$isRestaurantsActive = request()->routeIs('restaurants.*');
+									@endphp
+									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isRestaurantsActive ? 'here show' : '' }} py-2">
+										<!--begin:Menu link-->
+										<span class="menu-link menu-center">
+											<span class="menu-icon me-0">
+												<i class="bi bi-handbag fs-1"></i>
+											</span>
+										</span>
+										<!--end:Menu link-->
+										<!--begin:Menu sub-->
+										<div class="menu-sub menu-sub-dropdown menu-sub-indention px-2 py-4 w-250px mh-75 overflow-auto">
+											<!--begin:Menu item-->
+											<div class="menu-item">
+												<!--begin:Menu content-->
+												<div class="menu-content">
+													<span class="menu-section fs-5 fw-bolder ps-1 py-1">Restaurants</span>
+												</div>
+												<!--end:Menu content-->
+											</div>
+											<!--end:Menu item-->
+											<!--begin:Menu item-->
+											<div class="menu-item">
+												<!--begin:Menu link-->
+                                                <a class="menu-link" href="{{ route('restaurants.show_all') }}">
+													<span class="menu-icon">
+														<i class="bi bi-patch-check fs-3"></i>
+													</span>
+													<span class="menu-title">All Restaurants</span>
+												</a>
+												<!--end:Menu link-->
+											</div>
+											<!--end:Menu item-->
+											<!--end:Menu item-->
+											<!--begin:Menu item-->
+											<div class="menu-item">
+												<!--begin:Menu link-->
+                                                <a class="menu-link" href="{{ route('restaurants.index') }}">
+													<span class="menu-icon">
+														<i class="bi bi-calendar3-event fs-3"></i>
+													</span>
+													<span class="menu-title">My Restaurants</span>
+												</a>
+												<!--end:Menu link-->
+											</div>
+											<!--end:Menu item-->
+										</div>
+										<!--end:Menu sub-->
+									</div>
+									<!--end:Menu item-->
 								</div>
 								<!--end::Menu-->
 							</div>

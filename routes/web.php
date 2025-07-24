@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RentController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\RestaurantController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,6 +32,14 @@ Route::middleware('auth')->group(function () {
     // Rents
     Route::get('/rents/show_all', [RentController::class, 'show_all'])->name('rents.show_all');
     Route::resource('rents', RentController::class);
+
+    // Services
+    Route::get('/services/show_all', [ServiceController::class, 'show_all'])->name('services.show_all');
+    Route::resource('services', ServiceController::class);
+
+    // Restaurants
+    Route::get('/restaurants/show_all', [RestaurantController::class, 'show_all'])->name('restaurants.show_all');
+    Route::resource('restaurants', RestaurantController::class);
 
 });
 
