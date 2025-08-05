@@ -64,6 +64,35 @@
                                 @enderror
                             </div>
 
+                            <div class="row">
+                                <div class="col-md-6 fv-row mb-8">
+                                    <label for="status" class="required fs-6 fw-semibold mb-2">Status</label>
+                                    <select name="status" id="status"
+                                            class="form-select @error('status') is-invalid @enderror"
+                                            required>
+                                        <option value="">Select your status</option>
+                                        <option value="canadian_citizen" {{ old('status') == 'canadian_citizen' ? 'selected' : '' }}>Canadian Citizen</option>
+                                        <option value="permanent_resident" {{ old('status') == 'permanent_resident' ? 'selected' : '' }}>Permanent Resident</option>
+                                        <option value="temporary_resident" {{ old('status') == 'temporary_resident' ? 'selected' : '' }}>Temporary Resident</option>
+                                        <option value="refugee" {{ old('status') == 'refugee' ? 'selected' : '' }}>Refugee / Protected Person</option>
+                                        <option value="other" {{ old('status') == 'other' ? 'selected' : '' }}>Other</option>
+                                    </select>
+                                    @error('status')
+                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <!-- City -->
+                                <div class="col-md-6 fv-row mb-8">
+                                    <label for="city" class="required fs-6 fw-semibold mb-2">Contact Number</label>
+                                    <input type="text" name="contact_number" value="{{ old('contact_number') }}" placeholder="Contact Number"
+                                        class="form-control bg-transparent @error('contact_number') is-invalid @enderror" required />
+                                    @error('contact_number')
+                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <!-- Contenedor Alpine -->
                             <div x-data="locationData()" x-init="init()" class="row">
 
@@ -74,7 +103,7 @@
                                             name="state_id"
                                             x-model="selectedState"
                                             @change="fetchCities();"
-                                            class="form-select form-select-solid @error('state_id') is-invalid @enderror"
+                                            class="form-select @error('state_id') is-invalid @enderror"
                                             data-placeholder="Select a Province"
                                             required>
                                         <option></option>
@@ -93,7 +122,7 @@
                                     <select id="city"
                                             name="city_id"
                                             x-model="selectedCity"
-                                            class="form-select form-select-solid @error('city_id') is-invalid @enderror"
+                                            class="form-select @error('city_id') is-invalid @enderror"
                                             data-placeholder="Selec a City"
                                             required>
                                         <option></option>
@@ -177,7 +206,7 @@
     <script>var hostUrl = "{{ asset('template/assets') }}/";</script>
     <script src="{{ asset('template/assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('template/assets/js/scripts.bundle.js') }}"></script>
-    <script src="{{ asset('template/assets/js/custom/authentication/sign-up/general.js') }}"></script>
+    <script src="{{ asset('js/validations/authentication/sign-up/general.js') }}"></script>
 		<!--To use Alpine.js-->
 		<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
