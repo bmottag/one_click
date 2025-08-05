@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Event;
+use App\Models\EventReservation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 
@@ -15,18 +16,14 @@ class EventController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Event::with('user');
+        $events = Event::with('user')
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->where('title', 'like', '%' . $request->search . '%');
+            })
+            ->latest()
+            ->get();
 
-        if ($request->filled('search')) {
-            $query->where('title', 'like', '%' . $request->search . '%');
-        }
-
-        $events = $query->latest()->get();
-
-        return view('events.index', [
-            'events' => $events,
-            'showingAll' => false
-        ]);
+        return view('events.index', compact('events'));
     }
 
     /**
@@ -34,29 +31,14 @@ class EventController extends Controller
      */
     public function show_all(Request $request)
     {
-        $today = Carbon::today();
+        $events = Event::where('date', '>=', Carbon::today())
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->where('title', 'like', '%' . $request->search . '%');
+            })
+            ->latest('id')
+            ->get();
 
-        $query = Event::where('date', '>=', $today)
-                    ->orderBy('id', 'desc');
-
-        if ($request->filled('search')) {
-            $query->where('title', 'like', '%' . $request->search . '%');
-        }
-
-        $events = $query->get();
-
-        return view('events.index', [
-            'events' => $events,
-            'showingAll' => true
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return view('events.show', compact('events'));
     }
 
     /**
@@ -130,8 +112,42 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Event $event)
     {
-        //
+        $event->delete();
+        return response()->json(['success' => true]);
     }
+
+
+    public function reserve(Request $request)
+    {
+        $request->validate([
+            'event_id' => 'required|exists:events,id',
+        ]);
+
+        EventReservation::create([
+            'user_id' => Auth::id(),
+            'event_id' => $request->event_id,
+            'date' => now(),
+        ]);
+
+        return response()->json(['message' => 'Reservation created successfully.'], 200);
+    }
+
+    public function showJson($id)
+    {
+        $event = Event::findOrFail($id);
+
+        return response()->json([
+            'id' => $event->id,
+            'title' => $event->title,
+            'description' => $event->description,
+            'place' => $event->place,
+            'date' => $event->date,
+            'link' => $event->link,
+            'image' => asset('storage/' . $event->image),
+        ]);
+    }
+
+
 }

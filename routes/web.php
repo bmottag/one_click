@@ -23,6 +23,8 @@ Route::middleware('auth')->group(function () {
 
     // Events
     Route::get('/events/show_all', [EventController::class, 'show_all'])->name('events.show_all');
+    Route::post('/events/reserve', [EventController::class, 'reserve'])->name('events.reserve');
+    Route::get('/events/{id}/json', [EventController::class, 'showJson'])->name('events.show.json');
     Route::resource('events', EventController::class);
 
     // Jobs
