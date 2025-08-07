@@ -15,18 +15,14 @@ class JobController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Job::with('user');
+        $jobs = Job::with('user')
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->where('job_title', 'like', '%' . $request->search . '%');
+            })
+            ->latest()
+            ->get();
 
-        if ($request->filled('search')) {
-            $query->where('job_title', 'like', '%' . $request->search . '%');
-        }
-
-        $jobs = $query->latest()->get();
-
-        return view('jobs.index', [
-            'jobs' => $jobs,
-            'showingAll' => false
-        ]);
+        return view('jobs.index', compact('jobs'));
     }
 
     /**
@@ -34,21 +30,14 @@ class JobController extends Controller
      */
     public function show_all(Request $request)
     {
-        $today = Carbon::today();
+        $jobs = Job::where('due_date', '>=', Carbon::today())
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->where('job_title', 'like', '%' . $request->search . '%');
+            })
+            ->latest('id')
+            ->get();
 
-        $query = Job::where('due_date', '>=', $today)
-                    ->orderBy('id', 'desc');
-
-        if ($request->filled('search')) {
-            $query->where('job_title', 'like', '%' . $request->search . '%');
-        }
-
-        $jobs = $query->get();
-
-        return view('jobs.index', [
-            'jobs' => $jobs,
-            'showingAll' => true
-        ]);
+        return view('jobs.show', compact('jobs'));
     }
 
     /**
@@ -85,5 +74,14 @@ class JobController extends Controller
             'message' => 'Job created successfully!',
             'event' => $event
         ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Job $job)
+    {
+        $job->delete();
+        return response()->json(['success' => true]);
     }
 }

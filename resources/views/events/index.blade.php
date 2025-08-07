@@ -64,7 +64,6 @@
                         <!--end::Col-->
                     </div>
                 @else
-                    <!--begin::Products-->
                     <div class="card card-flush">
                         <!--begin::Card header-->
                         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
