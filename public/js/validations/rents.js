@@ -219,4 +219,65 @@ var KTModalNewTarget = function () {
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
 	KTModalNewTarget.init();
+
+	// SweetAlert delete handler (¡YA NO está dentro de otro DOMContentLoaded!)
+	document.querySelectorAll('.btn-delete').forEach(button => {
+		button.addEventListener('click', function (e) {
+			e.preventDefault();
+
+			const itemId = this.getAttribute('data-id');
+
+			Swal.fire({
+				title: 'Are you sure?',
+				text: "This action cannot be undone.",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Yes, delete it!',
+				cancelButtonText: 'Cancel',
+				buttonsStyling: false,
+				customClass: {
+					confirmButton: 'btn btn-danger',
+					cancelButton: 'btn btn-light'
+				}
+			}).then((result) => {
+				if (result.isConfirmed) {
+					fetch(`/rents/${itemId}`, {
+						method: 'DELETE',
+						headers: {
+							'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+							'Accept': 'application/json'
+						}
+					})
+					.then(response => {
+						if (response.ok) {
+							Swal.fire({
+								title: 'Deleted!',
+								text: 'The event has been deleted.',
+								icon: 'success',
+								confirmButtonText: 'OK',
+								buttonsStyling: false,
+								customClass: {
+									confirmButton: 'btn btn-primary'
+								}
+							}).then(() => {
+								location.reload(); // Refresh page
+							});
+						} else {
+							Swal.fire({
+								title: 'Error!',
+								text: 'Something went wrong.',
+								icon: 'error',
+								confirmButtonText: 'OK'
+							});
+						}
+					})
+					.catch(error => {
+						console.error(error);
+						Swal.fire('Error!', 'Server error occurred.', 'error');
+					});
+				}
+			});
+		});
+	});
+
 });

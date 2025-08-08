@@ -15,18 +15,14 @@ class RentController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Rent::with('user');
+        $rents = Rent::with('user')
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->where('rent_title', 'like', '%' . $request->search . '%');
+            })
+            ->latest()
+            ->get();
 
-        if ($request->filled('search')) {
-            $query->where('rent_title', 'like', '%' . $request->search . '%');
-        }
-
-        $rents = $query->latest()->get();
-
-        return view('rents.index', [
-            'rents' => $rents,
-            'showingAll' => false
-        ]);
+        return view('rents.index', compact('rents'));
     }
 
     /**
@@ -34,21 +30,14 @@ class RentController extends Controller
      */
     public function show_all(Request $request)
     {
-        $today = Carbon::today();
+        $rents = Rent::where('due_date', '>=', Carbon::today())
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->where('rent_title', 'like', '%' . $request->search . '%');
+            })
+            ->latest('id')
+            ->get();
 
-        $query = Rent::where('due_date', '>=', $today)
-                    ->orderBy('id', 'desc');
-
-        if ($request->filled('search')) {
-            $query->where('rent_title', 'like', '%' . $request->search . '%');
-        }
-
-        $rents = $query->get();
-
-        return view('rents.index', [
-            'rents' => $rents,
-            'showingAll' => true
-        ]);
+        return view('rents.show', compact('rents'));
     }
 
     /**
@@ -124,6 +113,7 @@ class RentController extends Controller
      */
     public function destroy(Rent $rent)
     {
-        //
+        $rent->delete();
+        return response()->json(['success' => true]);
     }
 }

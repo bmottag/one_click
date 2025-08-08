@@ -6,7 +6,7 @@
         :items="[
             ['label' => 'Home', 'url' => route('dashboard')],
             ['label' => 'Rents', 'url' => route('rents.show_all')],
-            ['label' => $showingAll ? 'All Rents' : 'My Rents']
+            ['label' => 'My Rents']
         ]"
     />
 @endsection
@@ -23,49 +23,7 @@
                     <!--begin::Heading-->
                     <h3 class="fw-bold my-2">Rents</h3>
                     <!--end::Heading-->
-                    <!--begin::Actions-->
-                    <div class="d-flex flex-wrap my-2">
-                        @if (!$showingAll)
-                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal_new_rent">New Rent</a>
-                        @endif
-                    </div>
-                    <!--end::Actions-->
                 </div>
-
-                <!--begin::Form-->
-                <form method="GET" action="{{ $showingAll ? route('rents.show_all') : route('rents.index') }}">
-                    <!--begin::Card-->
-                    <div class="card mb-7">
-                        <!--begin::Card body-->
-                        <div class="card-body">
-                            <!--begin::Compact form-->
-                            <div class="d-flex align-items-center">
-                                <!--begin::Input group-->
-                                <div class="position-relative w-md-400px me-md-2">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                                    <span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
-                                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                    <input type="text" class="form-control form-control-solid ps-10" name="search" value="" placeholder="Search" />
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin:Action-->
-                                <div class="d-flex align-items-center">
-                                    <button type="submit" class="btn btn-primary me-5">Search</button>
-                                </div>
-                                <!--end:Action-->
-                            </div>
-                            <!--end::Compact form-->
-                        </div>
-                        <!--end::Card body-->
-                    </div>
-                    <!--end::Card-->
-                </form>
-                <!--end::Form-->
 
                 <!--end::Toolbar-->
                 <div class="row g-5 g-xl-10">
@@ -80,13 +38,9 @@
                                     <div class="mb-2">
                                         <!--begin::Title-->
                                         <h1 class="fw-semibold text-gray-800 text-center lh-lg">No Rents available right now.
-                                        @if ($showingAll)
-                                            <br />Thanks for your interest!</h1>
-                                        @else
-                                            <br />To create a new one, please
-                                            <span class="fw-bolder">  follow this link</span></h1>
-                                            <!--end::Title-->
-                                        @endif
+                                        <br />To create a new one, please
+                                        <span class="fw-bolder">  follow this link</span></h1>
+                                        <!--end::Title-->
                                         <!--begin::Illustration-->
                                         <div class="py-10 text-center">
                                             <img src="{{ asset('template/assets/media/svg/illustrations/easy/2.svg') }}" class="theme-light-show w-200px" alt="" />
@@ -95,15 +49,14 @@
                                         <!--end::Illustration-->
                                     </div>
                                     <!--end::Heading-->
-                                    @if (!$showingAll)
-                                        <!--begin::Links-->
-                                        <div class="text-center mb-1">
-                                            <!--begin::Link-->
-                                            <a href="#" class="btn btn-primary er fs-6 px-8 py-4" data-bs-toggle="modal" data-bs-target="#modal_new_rent">New Rent</a>
-                                            <!--end::Link-->
-                                        </div>
-                                        <!--end::Links-->
-                                    @endif
+
+                                    <!--begin::Links-->
+                                    <div class="text-center mb-1">
+                                        <!--begin::Link-->
+                                        <a href="#" class="btn btn-primary er fs-6 px-8 py-4" data-bs-toggle="modal" data-bs-target="#modal_new_rent">New Rent</a>
+                                        <!--end::Link-->
+                                    </div>
+                                    <!--end::Links-->
                                 </div>
                                 <!--end::Body-->
                             </div>
@@ -111,63 +64,132 @@
                         </div>
                         <!--end::Col-->
                     @else
-                        @foreach($rents as $rent)
-                            <!--begin::Col-->
-                            <div class="col-md-6 col-xl-4">
-                                <!--begin::Card-->
-                                <a href="../../demo8/dist/apps/projects/project.html" class="card border-hover-primary">
-                                    <!--begin::Card header-->
-                                    <div class="card-header border-0 pt-9">
-                                        <!--begin::Card Title-->
-                                        <div class="card-title m-0">
-                                            <!--begin::Title-->
-                                            <div class="flex-shrink-0 me-5">
-                                                <span class="text-gray-800 fs-1 fw-bold">{{ $rent->rent_title }}</span>
-                                            </div>
-                                            <!--end::Title-->
-                                        </div>
-                                        <!--end::Car Title-->
-                                        <!--begin::Card toolbar-->
-                                        <div class="card-toolbar">
-                                            @php
-                                                $today = date('Y-m-d');
-
-                                                $state = $rent->due_date > $today ? 'Active' : 'Close';
-                                                $style = $rent->due_date > $today ? 'primary' : 'danger';
-                                            @endphp
-                                            <span class="badge badge-light-{{ $style }} flex-shrink-0 align-self-center py-3 px-4 fs-7">{{ $state }}</span>
-                                        </div>
-                                        <!--end::Card toolbar-->
+                        <div class="card card-flush">
+                            <!--begin::Card header-->
+                            <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                                <!--begin::Card title-->
+                                <div class="card-title">
+                                    <!--begin::Search-->
+                                    <div class="d-flex align-items-center position-relative my-1">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                        <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                                <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                        <input type="text" data-kt-ecommerce-product-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search Event" />
                                     </div>
-                                    <!--end:: Card header-->
-                                    <!--begin:: Card body-->
-                                    <div class="card-body p-9">
-                                        <!--begin::Description-->
-                                        <span class="fw-semibold text-gray-600 fs-6 mb-8 d-block">{{ $rent->description }}</span>
-                                        <!--end::Description-->
-                                        <!--begin::Info-->
-                                        <div class="d-flex flex-wrap mb-5">
-                                            <!--begin::Due-->
-                                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
-                                                <div class="fs-6 text-gray-800 fw-bold">{{ $rent->due_date->format('M j, Y') }}</div>
-                                                <div class="fw-semibold text-gray-400">Due Date</div>
-                                            </div>
-                                            <!--end::Due-->
-                                            <!--begin::Budget-->
-                                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                                <div class="fs-6 text-gray-800 fw-bold">{{ $rent->contact_number }}</div>
-                                                <div class="fw-semibold text-gray-400">Contact Number</div>
-                                            </div>
-                                            <!--end::Budget-->
-                                        </div>
-                                        <!--end::Info-->
+                                    <!--end::Search-->
+                                </div>
+                                <!--end::Card title-->
+                                <!--begin::Card toolbar-->
+                                <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                                    <div class="w-100 mw-150px">
+                                        <!--begin::Select2-->
+                                        <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Status" data-kt-ecommerce-product-filter="status">
+                                            <option></option>
+                                            <option value="all">All</option>
+                                            <option value="published">Published</option>
+                                            <option value="scheduled">Scheduled</option>
+                                            <option value="inactive">Inactive</option>
+                                        </select>
+                                        <!--end::Select2-->
                                     </div>
-                                    <!--end:: Card body-->
-                                </a>
-                                <!--end::Card-->
+                                    <!--begin::Add product-->
+                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_new_rent">New Rent</a>
+                                    <!--end::Add product-->
+                                </div>
+                                <!--end::Card toolbar-->
                             </div>
-                            <!--end::Col-->
-                        @endforeach
+                            <!--end::Card header-->
+                            <!--begin::Card body-->
+                            <div class="card-body pt-0">
+                                <!--begin::Table-->
+                                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_products_table">
+                                    <!--begin::Table head-->
+                                    <thead>
+                                        <!--begin::Table row-->
+                                        <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                            <th class="min-w-150px">Rent title</th>
+                                            <th class="text-start min-w-200px">Description</th>
+                                            <th class="text-center min-w-100px">Contact Number</th>
+                                            <th class="text-start min-w-100px">Due Date</th>
+                                            <th class="text-end min-w-100px">Status</th>
+                                            <th class="text-end min-w-70px">Actions</th>
+                                        </tr>
+                                        <!--end::Table row-->
+                                    </thead>
+                                    <!--end::Table head-->
+                                    <!--begin::Table body-->
+                                    <tbody class="fw-semibold text-gray-600">
+                                        @foreach($rents as $rent)
+                                            <!--begin::Table row-->
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">{{ $rent->rent_title }}</a>
+                                                    </div>
+                                                </td>
+
+                                                <td class="text-start pe-0">
+                                                    <span>{{ $rent->description }}</span>
+                                                </td>
+
+                                                <td class="text-center pe-0">
+                                                    <span>{{ $rent->contact_number }}</span>
+                                                </td>
+
+                                                <td class="text-end pe-0">{{ $rent->due_date->format('M j, Y') }}</td>
+
+                                                <td class="text-end pe-0">
+                                                    @php
+                                                        $today = date('Y-m-d');
+
+                                                        $state = $rent->due_date > $today ? 'Active' : 'Close';
+                                                        $style = $rent->due_date > $today ? 'primary' : 'danger';
+                                                    @endphp
+                                                    <!--begin::Badges-->
+                                                    <div class="badge badge-light-{{ $style }}">{{ $state }}</div>
+                                                    <!--end::Badges-->
+                                                </td>
+                                                <!--begin::Action=-->
+                                                <td class="text-end">
+                                                    <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+                                                    <span class="svg-icon svg-icon-5 m-0">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon--></a>
+                                                    <!--begin::Menu-->
+                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="../../demo8/dist/apps/ecommerce/catalog/edit-product.html" class="menu-link px-3">Edit</a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3 btn-delete text-danger" data-id="{{ $rent->id }}">Delete</a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+                                                    </div>
+                                                    <!--end::Menu-->
+                                                </td>
+                                                <!--end::Action=-->
+                                            </tr>
+                                            <!--end::Table row-->
+                                        @endforeach
+                                    </tbody>
+                                    <!--end::Table body-->
+                                </table>
+                                <!--end::Table-->
+                            </div>
+                            <!--end::Card body-->
+                        </div>
                     @endif
                 </div>
             </div>
