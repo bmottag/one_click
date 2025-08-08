@@ -36,6 +36,13 @@ var KTModalNewTarget = function () {
 							}
 						}
 					},
+					company: {
+						validators: {
+							notEmpty: {
+								message: 'Company is required'
+							}
+						}
+					},
 					job_description: {
 						validators: {
 							notEmpty: {

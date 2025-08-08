@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('job_title');
+            $table->string('company');
             $table->text('job_description');
             $table->string('contact_number');
             $table->date('due_date');

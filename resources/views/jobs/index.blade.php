@@ -112,6 +112,7 @@
                                         <!--begin::Table row-->
                                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                             <th class="min-w-150px">Job</th>
+                                            <th class="text-start min-w-100px">Company</th>
                                             <th class="text-start min-w-200px">Description</th>
                                             <th class="text-center min-w-100px">Contact Number</th>
                                             <th class="text-start min-w-100px">Due Date</th>
@@ -130,6 +131,10 @@
                                                     <div class="d-flex align-items-center">
                                                         <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">{{ $job->job_title }}</a>
                                                     </div>
+                                                </td>
+
+                                                <td class="text-start pe-0">
+                                                    <span>{{ $job->company }}</span>
                                                 </td>
 
                                                 <td class="text-start pe-0">
@@ -242,6 +247,14 @@
                             <input type="text" class="form-control form-control-solid" placeholder="Enter Job Title" name="job_title" />
                         </div>
                         <!--end::Input group-->
+                        <div class="d-flex flex-column mb-8 fv-row">
+                            <!--begin::Label-->
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span class="required">Company</span>
+                            </label>
+                            <!--end::Label-->
+                            <input type="text" class="form-control form-control-solid" placeholder="Enter Company" name="company" />
+                        </div>
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <label class="fs-6 fw-semibold mb-2"><span class="required">Description</span></label>

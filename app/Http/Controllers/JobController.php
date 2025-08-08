@@ -48,6 +48,7 @@ class JobController extends Controller
         // Validar datos
         $validator = Validator::make($request->all(), [
             'job_title' => 'required|string|max:255',
+            'company' => 'required|string|max:255',
             'job_description' => 'required|string',
             'contact_number' => 'required', 
             'job_date' => 'required',
@@ -64,6 +65,7 @@ class JobController extends Controller
         $event = Job::create([
             'user_id' => Auth::id(),
             'job_title' => $request->job_title,
+            'company' => $request->company,
             'job_description' => $request->job_description,
             'contact_number' => $request->contact_number,
             'due_date' => $request->job_date,

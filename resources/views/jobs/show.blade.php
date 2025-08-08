@@ -125,6 +125,10 @@
                                         <!--end::Description-->
                                         <!--begin::Info-->
                                         <div class="d-flex flex-wrap mb-5">
+                                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                                                <div class="fs-6 text-gray-800 fw-bold">{{ $job->company }}</div>
+                                                <div class="fw-semibold text-gray-400">Company</div>
+                                            </div>
                                             <!--begin::Due-->
                                             <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
                                                 <div class="fs-6 text-gray-800 fw-bold">{{ $job->due_date->format('M j, Y') }}</div>
