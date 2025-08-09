@@ -14,18 +14,14 @@ class RestaurantController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Restaurant::with('user');
+        $data = Restaurant::with('user')
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->where('restaurant_name', 'like', '%' . $request->search . '%');
+            })
+            ->latest()
+            ->get();
 
-        if ($request->filled('search')) {
-            $query->where('restaurant_name', 'like', '%' . $request->search . '%');
-        }
-
-        $data = $query->latest()->get();
-
-        return view('restaurants.index', [
-            'data' => $data,
-            'showingAll' => false
-        ]);
+        return view('restaurants.index', compact('data'));
     }
 
     /**
@@ -33,18 +29,13 @@ class RestaurantController extends Controller
      */
     public function show_all(Request $request)
     {
-        $query = Restaurant::orderBy('restaurant_name', 'asc');
+        $data = Restaurant::when($request->filled('search'), function ($query) use ($request) {
+                    $query->where('restaurant_name', 'like', '%' . $request->search . '%');
+                })
+                ->orderBy('restaurant_name', 'asc')
+                ->get();
 
-        if ($request->filled('search')) {
-            $query->where('restaurant_name', 'like', '%' . $request->search . '%');
-        }
-
-        $data = $query->get();
-
-        return view('restaurants.index', [
-            'data' => $data,
-            'showingAll' => true
-        ]);
+        return view('restaurants.show', compact('data'));
     }
 
     /**
@@ -137,6 +128,7 @@ class RestaurantController extends Controller
      */
     public function destroy(Restaurant $restaurant)
     {
-        //
+        $restaurant->delete();
+        return response()->json(['success' => true]);
     }
 }

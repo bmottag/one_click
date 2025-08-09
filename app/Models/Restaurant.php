@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Restaurant extends Model
 {
+   use SoftDeletes;
+
    protected $fillable = [
         'user_id',    
         'restaurant_name',
