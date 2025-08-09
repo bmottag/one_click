@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('instagram')->nullable();
             $table->string('youtube')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

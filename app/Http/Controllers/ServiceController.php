@@ -14,18 +14,14 @@ class ServiceController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Service::with('user');
+        $data = Service::with('user')
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->where('company_name', 'like', '%' . $request->search . '%');
+            })
+            ->latest()
+            ->get();
 
-        if ($request->filled('search')) {
-            $query->where('company_name', 'like', '%' . $request->search . '%');
-        }
-
-        $data = $query->latest()->get();
-
-        return view('services.index', [
-            'data' => $data,
-            'showingAll' => false
-        ]);
+        return view('services.index', compact('data'));
     }
 
     /**
@@ -33,18 +29,13 @@ class ServiceController extends Controller
      */
     public function show_all(Request $request)
     {
-        $query = Service::orderBy('company_name', 'asc');
+        $data = Service::when($request->filled('search'), function ($query) use ($request) {
+                    $query->where('company_name', 'like', '%' . $request->search . '%');
+                })
+                ->orderBy('company_name', 'asc')
+                ->get();
 
-        if ($request->filled('search')) {
-            $query->where('company_name', 'like', '%' . $request->search . '%');
-        }
-
-        $data = $query->get();
-
-        return view('services.index', [
-            'data' => $data,
-            'showingAll' => true
-        ]);
+        return view('services.show', compact('data'));
     }
 
     /**
@@ -137,6 +128,7 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        //
+        $service->delete();
+        return response()->json(['success' => true]);
     }
 }
