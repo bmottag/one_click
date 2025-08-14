@@ -2,7 +2,7 @@
 <html lang="en">
 	<!--begin::Head-->
 	<head><base href="../../"/>
-		<title>ONE CLICK</title>
+		<title>Canada One Click</title>
 		<meta charset="utf-8" />
 		<meta name="description" content="The most advanced Bootstrap Admin Theme on Bootstrap Market trusted by over 4,000 beginners and professionals. Multi-demo, Dark Mode, RTL support. Grab your copy now and get life-time updates for free." />
 		<meta name="keywords" content="keen, bootstrap, bootstrap 5, bootstrap 4, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
@@ -64,8 +64,8 @@
 						<!--begin::Page title-->
 						<div data-kt-swapper="true" data-kt-swapper-mode="{default: 'prepend', lg: 'prepend'}" data-kt-swapper-parent="{default: '#kt_app_content_container', lg: '#kt_app_header_container'}" class="page-title d-flex flex-column justify-content-center me-3 mb-6 mb-lg-0">
 							<!--begin::Title-->
-							<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center me-3 my-0">ONE CLICK</h1>
-							<!--end::Title-->
+							<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center me-3 my-0">Canada One Click</h1>
+							<!--end::Title-
 							<!--begin::Breadcrumb-->
 							@hasSection('breadcrumb')
 								@yield('breadcrumb')
@@ -399,7 +399,7 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
-                                                <a class="menu-link" href="{{ route('events.show_all') }}">
+                                                <a class="menu-link {{ request()->routeIs('events.show_all') ? 'active' : '' }}" href="{{ route('events.show_all') }}">
 													<span class="menu-icon">
 														<i class="bi bi-patch-check fs-3"></i>
 													</span>
@@ -408,11 +408,10 @@
 												<!--end:Menu link-->
 											</div>
 											<!--end:Menu item-->
-											<!--end:Menu item-->
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
-                                                <a class="menu-link" href="{{ route('events.index') }}">
+                                                <a class="menu-link {{ request()->routeIs('events.index') ? 'active' : '' }}" href="{{ route('events.index') }}">
 													<span class="menu-icon">
 														<i class="bi bi-calendar3-event fs-3"></i>
 													</span>
@@ -452,7 +451,7 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
-                                                <a class="menu-link" href="{{ route('jobs.show_all') }}">
+                                                <a class="menu-link {{ request()->routeIs('jobs.show_all') ? 'active' : '' }}" href="{{ route('jobs.show_all') }}">
 													<span class="menu-icon">
 														<i class="bi bi-patch-check fs-3"></i>
 													</span>
@@ -465,7 +464,7 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
-                                                <a class="menu-link" href="{{ route('jobs.index') }}">
+                                                <a class="menu-link {{ request()->routeIs('jobs.index') ? 'active' : '' }}" href="{{ route('jobs.index') }}">
 													<span class="menu-icon">
 														<i class="bi bi-calendar3-event fs-3"></i>
 													</span>
@@ -505,7 +504,7 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
-                                                <a class="menu-link" href="{{ route('rents.show_all') }}">
+                                                <a class="menu-link {{ request()->routeIs('rents.show_all') ? 'active' : '' }}" href="{{ route('rents.show_all') }}">
 													<span class="menu-icon">
 														<i class="bi bi-patch-check fs-3"></i>
 													</span>
@@ -518,7 +517,7 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
-                                                <a class="menu-link" href="{{ route('rents.index') }}">
+                                                <a class="menu-link {{ request()->routeIs('events.index') ? 'active' : '' }}" href="{{ route('rents.index') }}">
 													<span class="menu-icon">
 														<i class="bi bi-calendar3-event fs-3"></i>
 													</span>
@@ -557,7 +556,7 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
-                                                <a class="menu-link" href="{{ route('services.show_all') }}">
+                                                <a class="menu-link {{ request()->routeIs('services.show_all') ? 'active' : '' }}" href="{{ route('services.show_all') }}">
 													<span class="menu-icon">
 														<i class="bi bi-patch-check fs-3"></i>
 													</span>
@@ -570,7 +569,7 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
-                                                <a class="menu-link" href="{{ route('services.index') }}">
+                                                <a class="menu-link {{ request()->routeIs('services.index') ? 'active' : '' }}" href="{{ route('services.index') }}">
 													<span class="menu-icon">
 														<i class="bi bi-calendar3-event fs-3"></i>
 													</span>
@@ -609,7 +608,7 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
-                                                <a class="menu-link" href="{{ route('restaurants.show_all') }}">
+                                                <a class="menu-link {{ request()->routeIs('restaurants.show_all') ? 'active' : '' }}" href="{{ route('restaurants.show_all') }}">
 													<span class="menu-icon">
 														<i class="bi bi-patch-check fs-3"></i>
 													</span>
@@ -622,7 +621,7 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
-                                                <a class="menu-link" href="{{ route('restaurants.index') }}">
+                                                <a class="menu-link {{ request()->routeIs('restaurants.index') ? 'active' : '' }}" href="{{ route('restaurants.index') }}">
 													<span class="menu-icon">
 														<i class="bi bi-calendar3-event fs-3"></i>
 													</span>
