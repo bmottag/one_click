@@ -408,18 +408,19 @@
 												<!--end:Menu link-->
 											</div>
 											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-                                                <a class="menu-link {{ request()->routeIs('events.index') ? 'active' : '' }}" href="{{ route('events.index') }}">
-													<span class="menu-icon">
-														<i class="bi bi-calendar3-event fs-3"></i>
-													</span>
-													<span class="menu-title">My Events</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
+
+											@if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
+												<div class="menu-item">
+													<a class="menu-link {{ request()->routeIs('events.index') ? 'active' : '' }}" 
+													href="{{ route('events.index') }}">
+														<span class="menu-icon">
+															<i class="bi bi-calendar3-event fs-3"></i>
+														</span>
+														<span class="menu-title">My Events</span>
+													</a>
+												</div>
+											@endif
+
 										</div>
 										<!--end:Menu sub-->
 									</div>

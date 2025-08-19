@@ -26,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'state_id',
         'city_id',
+        'role',
     ];
 
     /**
@@ -55,5 +56,16 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Event::class);
     }
+
+    public function isAdmin()
+    {
+        return $this->role === 'administrator';
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->role === 'super_admin';
+    }
+
 
 }

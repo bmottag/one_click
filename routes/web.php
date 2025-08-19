@@ -21,11 +21,24 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // ---------------------------
     // Events
+    // ---------------------------
+
+    // Todos los usuarios autenticados (registered, admin, super) → pueden ver y reservar
     Route::get('/events/show_all', [EventController::class, 'show_all'])->name('events.show_all');
     Route::post('/events/reserve', [EventController::class, 'reserve'])->name('events.reserve');
     Route::get('/events/{id}/json', [EventController::class, 'showJson'])->name('events.show.json');
-    Route::resource('events', EventController::class);
+
+    // Solo administrator y super_admin
+    Route::middleware('role:administrator,super_admin')->group(function () {
+        Route::get('/events', [EventController::class, 'index'])->name('events.index');
+        Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+        Route::post('/events', [EventController::class, 'store'])->name('events.store');
+        Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
+        Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
+        Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+    });
 
     // Jobs
     Route::get('/jobs/show_all', [JobController::class, 'show_all'])->name('jobs.show_all');
