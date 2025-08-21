@@ -44,10 +44,13 @@ var KTModalBidding = function () {
 
             // Add validation rule                
             const name = detectedField.getAttribute('name');
+            const label = el.closest('.fv-row').querySelector('label span');
+            const fieldName = label ? label.innerText : name;
+
             validationFields.fields[name] = {
                 validators: {
                     notEmpty: {
-                        message: el.innerText + ' is required'
+                        message: fieldName + ' is required'
                     }
                 }
             }
@@ -84,7 +87,8 @@ var KTModalBidding = function () {
                                 'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
                             },
                             body: JSON.stringify({
-                                event_id: document.getElementById('modal_event_id').value
+                                user_id: document.getElementById('modal_user_id').value,
+                                role: document.getElementById('modal_user_role').value
                             })
                         })
                         .then(response => response.json())
@@ -97,6 +101,7 @@ var KTModalBidding = function () {
                             }).then(() => {
                                 form.reset();
                                 modal.hide();
+                                location.reload();
                             });
                         })
                         .catch(() => {
@@ -107,7 +112,6 @@ var KTModalBidding = function () {
                                 customClass: { confirmButton: "btn btn-primary" }
                             });
                         });
-
                     } else {
                         // Show popup error 
                         Swal.fire({
@@ -244,12 +248,13 @@ var KTModalBidding = function () {
         }
     }
 
+
     // Public methods
     return {
         init: function () {
             // Elements
-            element = document.querySelector('#kt_modal_bidding');
-            form = document.getElementById('kt_modal_bidding_form');
+            element = document.querySelector('#modal_user');
+            form = document.getElementById('modal_user_form');
             modal = new bootstrap.Modal(element);
 
             if (!form) {

@@ -19,50 +19,6 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        // Validar datos
-        $validator = Validator::make($request->all(), [
-            'event_title' => 'required|string|max:255',
-            'event_place' => 'required|string|max:255',
-            'event_date' => 'required',
-            'event_image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => 'false',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        $imagePath = null;
-        if ($request->hasFile('event_image')) {
-            $imagePath = $request->file('event_image')->store('events', 'public');
-        }
-
-        // Guardar evento
-        $event = Event::create([
-            'user_id' => Auth::id(),
-            'title' => $request->event_title,
-            'place' => $request->event_place,
-            'description' => $request->event_description,
-            'date' => $request->event_date,
-            'image' => $imagePath,
-            'link' => $request->link,
-            'instagram' => $request->instagram,
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Event created successfully!',
-            'event' => $event
-        ]);
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(string $id)
@@ -81,9 +37,21 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'role' => 'required|in:registered_user,administrator,super_admin',
+        ]);
+
+        $user = User::findOrFail($request->user_id);
+        $user->role = $request->role;
+        $user->save();
+
+        return response()->json([
+            'message' => 'El rol del usuario se actualizó correctamente',
+            'user' => $user
+        ]);
     }
 
     /**
@@ -95,34 +63,16 @@ class UserController extends Controller
         return response()->json(['success' => true]);
     }
 
-
-    public function reserve(Request $request)
-    {
-        $request->validate([
-            'event_id' => 'required|exists:events,id',
-        ]);
-
-        EventReservation::create([
-            'user_id' => Auth::id(),
-            'event_id' => $request->event_id,
-            'date' => now(),
-        ]);
-
-        return response()->json(['message' => 'Reservation created successfully.'], 200);
-    }
-
     public function showJson($id)
     {
-        $event = Event::findOrFail($id);
+        $user = User::findOrFail($id);
 
         return response()->json([
-            'id' => $event->id,
-            'title' => $event->title,
-            'description' => $event->description,
-            'place' => $event->place,
-            'date' => $event->date,
-            'link' => $event->link,
-            'image' => asset('storage/' . $event->image),
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'contact_number' => $user->contact_number,
+            'role' => $user->role
         ]);
     }
 

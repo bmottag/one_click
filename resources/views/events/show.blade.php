@@ -199,15 +199,14 @@
                                                             <!--end::Svg Icon--></a>
                                                         @endif
 
-
-<button 
-    class="btn btn-primary btn-join-event"
-    data-event-id="{{ $event->id }}"
-    data-bs-toggle="modal"
-    data-bs-target="#kt_modal_bidding"
->
-    Join Event
-</button>
+                                                        <button 
+                                                            class="btn btn-primary btn-join-event"
+                                                            data-event-id="{{ $event->id }}"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#kt_modal_bidding"
+                                                        >
+                                                            Join Event
+                                                        </button>
 
                                                         <!--end::Actions-->
                                                     </div>
@@ -234,192 +233,172 @@
     <!--begin::Modals-->
 
 
-		<!--begin::Modal - New Target-->
-		<div class="modal fade" id="kt_modal_bidding" tabindex="-1" aria-hidden="true">
-			<!--begin::Modal dialog-->
-			<div class="modal-dialog modal-dialog-centered mw-650px">
-				<!--begin::Modal content-->
-				<div class="modal-content rounded">
-					<!--begin::Modal header-->
-					<div class="modal-header pb-0 border-0 justify-content-end">
-						<!--begin::Close-->
-						<div class="btn btn-sm btn-icon btn-active-color-primary" data-kt-modal-action-type="close">
-							<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-							<span class="svg-icon svg-icon-1">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
-									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
-								</svg>
-							</span>
-							<!--end::Svg Icon-->
-						</div>
-						<!--end::Close-->
-					</div>
-					<!--begin::Modal header-->
-					<!--begin::Modal body-->
-					<div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-						<!--begin:Form-->
-                        <form id="kt_modal_bidding_form" class="form" method="POST" action="{{ route('events.reserve') }}">
-                            @csrf
-                            <input type="hidden" name="event_id" id="modal_event_id" value="">
+    <!--begin::Modal - New Target-->
+    <div class="modal fade" id="kt_modal_bidding" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content rounded">
+                <!--begin::Modal header-->
+                <div class="modal-header pb-0 border-0 justify-content-end">
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-kt-modal-action-type="close">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--begin::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
+                    <!--begin:Form-->
+                    <form id="kt_modal_bidding_form" class="form" method="POST" action="{{ route('events.reserve') }}">
+                        @csrf
+                        <input type="hidden" name="event_id" id="modal_event_id" value="">
 
-							<!--begin::Heading-->
-							<div class="mb-13 text-center">
-								<!--begin::Title-->
-                                <h1 id="modal_event_title" class="mb-3"></h1>
-								<!--end::Title-->
-								<!--begin::Description-->
-								<div id="modal_event_description" class="text-muted fw-semibold fs-5">
-                                    
-								</div>
-								<!--end::Description-->
-							</div>
-							<!--end::Heading-->
-							<!--begin::Input group-->
-                            <div class="fv-row mb-8">
-                                <div id="modal_event_image_container" 
-                                    class="card-rounded"
-                                    style="min-height: 300px; background-size: cover; background-image: url('');">
-                                </div>
+                        <!--begin::Heading-->
+                        <div class="mb-13 text-center">
+                            <!--begin::Title-->
+                            <h1 id="modal_event_title" class="mb-3"></h1>
+                            <!--end::Title-->
+                            <!--begin::Description-->
+                            <div id="modal_event_description" class="text-muted fw-semibold fs-5">
+                                
                             </div>
+                            <!--end::Description-->
+                        </div>
+                        <!--end::Heading-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-8">
+                            <div id="modal_event_image_container" 
+                                class="card-rounded"
+                                style="min-height: 300px; background-size: cover; background-image: url('');">
+                            </div>
+                        </div>
+
+                        <div class="fv-row mb-8">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span>Place</span>
+                            </label>
+                            <div id="modal_event_place" class="text-muted"></div>
+                        </div>
 
 
+                                        <!--end::Input group-->
+                        <div class="fv-row mb-8">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span>Date</span>
+                            </label>
+                            <div id="modal_event_date" class="text-muted"></div>
+                        </div>
+                        <div class="fv-row mb-8">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                <span>Link</span>
+                            </label>
+                            <div>
+                                <a id="modal_event_link" href="#" target="_blank" class="text-primary text-hover-underline fw-semibold"></a>
+                            </div>
+                        </div>
 
-<div class="fv-row mb-8">
-    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-        <span>Place</span>
-    </label>
-    <div id="modal_event_place" class="text-muted"></div>
-</div>
-
-
-							<!--end::Input group-->
-<div class="fv-row mb-8">
-    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-        <span>Date</span>
-    </label>
-    <div id="modal_event_date" class="text-muted"></div>
-</div>
-<div class="fv-row mb-8">
-    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-        <span>Link</span>
-    </label>
-    <div>
-        <a id="modal_event_link" href="#" target="_blank" class="text-primary text-hover-underline fw-semibold"></a>
+                        <!--begin::Notice-->
+                        <!--begin::Notice-->
+                        <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
+                            <!--begin::Icon-->
+                            <!--begin::Svg Icon | path: icons/duotune/finance/fin008.svg-->
+                            <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path opacity="0.5" d="M12.8956 13.4982L10.7949 11.2651C10.2697 10.7068 9.38251 10.7068 8.85731 11.2651C8.37559 11.7772 8.37559 12.5757 8.85731 13.0878L12.7499 17.2257C13.1448 17.6455 13.8118 17.6455 14.2066 17.2257L21.1427 9.85252C21.6244 9.34044 21.6244 8.54191 21.1427 8.02984C20.6175 7.47154 19.7303 7.47154 19.2051 8.02984L14.061 13.4982C13.7451 13.834 13.2115 13.834 12.8956 13.4982Z" fill="currentColor"/>
+                                    <path d="M7.89557 13.4982L5.79487 11.2651C5.26967 10.7068 4.38251 10.7068 3.85731 11.2651C3.37559 11.7772 3.37559 12.5757 3.85731 13.0878L7.74989 17.2257C8.14476 17.6455 8.81176 17.6455 9.20663 17.2257L16.1427 9.85252C16.6244 9.34044 16.6244 8.54191 16.1427 8.02984C15.6175 7.47154 14.7303 7.47154 14.2051 8.02984L9.06096 13.4982C8.74506 13.834 8.21146 13.834 7.89557 13.4982Z" fill="currentColor"/>
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                            <!--end::Icon-->
+                            <!--begin::Wrapper-->
+                            <div class="d-flex flex-stack flex-grow-1">
+                                <!--begin::Content-->
+                                <div class="fw-semibold">
+                                    <h4 class="text-gray-900 fw-bold">Join Event</h4>
+                                    <div class="fs-6 text-gray-700">
+                                        Click the Join Event button below to confirm your reservation for this event. By joining, you'll secure your spot and receive any important updates related to the event.
+                                    </div>
+                                </div>
+                                <!--end::Content-->
+                            </div>
+                            <!--end::Wrapper-->
+                        </div>
+                        <!--end::Notice-->
+                        <!--end::Notice-->
+                        <!--begin::Actions-->
+                        <div class="text-center">
+                            <button type="reset" class="btn btn-light me-3" data-kt-modal-action-type="cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary" data-kt-modal-action-type="submit">
+                                <span class="indicator-label">Submit</span>
+                                <span class="indicator-progress">Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                        <!--end::Actions-->
+                    </form>
+                    <!--end:Form-->
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
     </div>
-</div>
+    <!--end::Modal - New Target-->
 
-							<!--begin::Notice-->
-							<!--begin::Notice-->
-							<div class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
-								<!--begin::Icon-->
-								<!--begin::Svg Icon | path: icons/duotune/finance/fin008.svg-->
-                                <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path opacity="0.5" d="M12.8956 13.4982L10.7949 11.2651C10.2697 10.7068 9.38251 10.7068 8.85731 11.2651C8.37559 11.7772 8.37559 12.5757 8.85731 13.0878L12.7499 17.2257C13.1448 17.6455 13.8118 17.6455 14.2066 17.2257L21.1427 9.85252C21.6244 9.34044 21.6244 8.54191 21.1427 8.02984C20.6175 7.47154 19.7303 7.47154 19.2051 8.02984L14.061 13.4982C13.7451 13.834 13.2115 13.834 12.8956 13.4982Z" fill="currentColor"/>
-                                        <path d="M7.89557 13.4982L5.79487 11.2651C5.26967 10.7068 4.38251 10.7068 3.85731 11.2651C3.37559 11.7772 3.37559 12.5757 3.85731 13.0878L7.74989 17.2257C8.14476 17.6455 8.81176 17.6455 9.20663 17.2257L16.1427 9.85252C16.6244 9.34044 16.6244 8.54191 16.1427 8.02984C15.6175 7.47154 14.7303 7.47154 14.2051 8.02984L9.06096 13.4982C8.74506 13.834 8.21146 13.834 7.89557 13.4982Z" fill="currentColor"/>
-                                    </svg>
-                                </span>
-								<!--end::Svg Icon-->
-								<!--end::Icon-->
-								<!--begin::Wrapper-->
-								<div class="d-flex flex-stack flex-grow-1">
-									<!--begin::Content-->
-									<div class="fw-semibold">
-										<h4 class="text-gray-900 fw-bold">Join Event</h4>
-										<div class="fs-6 text-gray-700">
-                                            Click the Join Event button below to confirm your reservation for this event. By joining, you'll secure your spot and receive any important updates related to the event.
-										</div>
-									</div>
-									<!--end::Content-->
-								</div>
-								<!--end::Wrapper-->
-							</div>
-							<!--end::Notice-->
-							<!--end::Notice-->
-							<!--begin::Actions-->
-							<div class="text-center">
-								<button type="reset" class="btn btn-light me-3" data-kt-modal-action-type="cancel">Cancel</button>
-								<button type="submit" class="btn btn-primary" data-kt-modal-action-type="submit">
-									<span class="indicator-label">Submit</span>
-									<span class="indicator-progress">Please wait...
-									<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-								</button>
-							</div>
-							<!--end::Actions-->
-						</form>
-						<!--end:Form-->
-					</div>
-					<!--end::Modal body-->
-				</div>
-				<!--end::Modal content-->
-			</div>
-			<!--end::Modal dialog-->
-		</div>
-		<!--end::Modal - New Target-->
     <!--end::Modals-->
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/validations/events_reservation.js') }}"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('kt_modal_bidding');
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const modal = document.getElementById('kt_modal_bidding');
+            modal.addEventListener('show.bs.modal', function (e) {
+                const trigger = e.relatedTarget;
+                const eventId = trigger.getAttribute('data-event-id');
 
-    modal.addEventListener('show.bs.modal', function (e) {
-        const trigger = e.relatedTarget;
-        const eventId = trigger.getAttribute('data-event-id');
+                if (!eventId) return;
 
-        if (!eventId) return;
+                // Limpiar contenido mientras carga
+                document.getElementById('modal_event_title').textContent = 'Loading...';
+                document.getElementById('modal_event_description').textContent = '';
+                document.getElementById('modal_event_image_container').style.backgroundImage = `url('')`;
 
-        // Limpiar contenido mientras carga
-        document.getElementById('modal_event_title').textContent = 'Loading...';
-        document.getElementById('modal_event_description').textContent = '';
-        document.getElementById('modal_event_image_container').style.backgroundImage = `url('')`;
+                fetch(`/events/${eventId}/json`)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Event not found');
+                        return response.json();
+                    })
+                    .then(data => {
+                        document.getElementById('modal_event_id').value = data.id;
+                        document.getElementById('modal_event_title').textContent = data.title;
+                        document.getElementById('modal_event_description').textContent = data.description;
+                        document.getElementById('modal_event_place').textContent = data.place;
+                        document.getElementById('modal_event_image_container').style.backgroundImage = `url('${data.image}')`;
 
-        fetch(`/events/${eventId}/json`)
-            .then(response => {
-                if (!response.ok) throw new Error('Event not found');
-                return response.json();
-            })
-            .then(data => {
-                document.getElementById('modal_event_id').value = data.id;
-                document.getElementById('modal_event_title').textContent = data.title;
-                document.getElementById('modal_event_description').textContent = data.description;
-                document.getElementById('modal_event_place').textContent = data.place;
-                document.getElementById('modal_event_image_container').style.backgroundImage = `url('${data.image}')`;
-
-                document.getElementById('modal_event_date').textContent = data.date;
-                const link = document.getElementById('modal_event_link');
-                link.href = data.link || '#';
-                link.textContent = data.link ? 'Visit event link' : 'No link available';
-            })
-            .catch(error => {
-                console.error(error);
-                document.getElementById('modal_event_title').textContent = 'Error loading event';
+                        document.getElementById('modal_event_date').textContent = data.date;
+                        const link = document.getElementById('modal_event_link');
+                        link.href = data.link || '#';
+                        link.textContent = data.link ? 'Visit event link' : 'No link available';
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        document.getElementById('modal_event_title').textContent = 'Error loading event';
+                    });
             });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    });
-});
-
-</script>
+        });
+    </script>
 
 @endsection

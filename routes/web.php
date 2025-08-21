@@ -24,6 +24,8 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:super_admin')->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/users/{id}/json', [UserController::class, 'showJson'])->name('users.show.json');
+        Route::post('/users/update', [UserController::class, 'update'])->name('users.update');
     });
 
 
