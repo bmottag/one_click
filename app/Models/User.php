@@ -67,5 +67,37 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role === 'super_admin';
     }
 
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function getUserStatusLabelAttribute()
+    {
+        return match ($this->user_status) {
+            'canadian_citizen'   => 'Canadian Citizen',
+            'permanent_resident' => 'Permanent Resident',
+            'temporary_resident' => 'Temporary Resident',
+            'refugee'            => 'Refugee / Protected Person',
+            'other'              => 'Other',
+            default              => 'N/A',
+        };
+    }
+
+    public function getRoleBadgeAttribute()
+    {
+        return match ($this->role) {
+            'registered_user' => '<span class="badge py-3 px-4 fs-7 badge-light-primary">Registered User</span>',
+            'administrator'   => '<span class="badge py-3 px-4 fs-7 badge-light-danger">Administrator</span>',
+            'super_admin'     => '<span class="badge py-3 px-4 fs-7 badge-light-warning">Super Admin</span>',
+            default           => '<span class="badge py-3 px-4 fs-7 badge-light-secondary">N/A</span>',
+        };
+    }
+
 
 }

@@ -111,6 +111,25 @@
 											<a href="{{ route('profile.edit') }}" class="menu-link px-5">My Profile</a>
 										</div>
 										<!--end::Menu item-->
+
+										@if(auth()->user()->isSuperAdmin())
+											<div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
+												<a href="#" class="menu-link px-5">
+													<span class="menu-title">Administration</span>
+													<span class="menu-arrow"></span>
+												</a>
+												<!--begin::Menu sub-->
+												<div class="menu-sub menu-sub-dropdown w-175px py-4">
+													<!--begin::Menu item-->
+													<div class="menu-item px-3">
+														<a href="{{ route('users.index') }}" class="menu-link px-5">Clients</a>
+													</div>
+													<!--end::Menu item-->
+												</div>
+												<!--end::Menu sub-->
+											</div>
+										@endif
+
 										<!--begin::Menu item-->
 										<div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
 											<a href="#" class="menu-link px-5">
@@ -340,304 +359,259 @@
 						<!--begin::sidebar menu-->
 						<div class="app-sidebar-menu d-flex flex-center overflow-hidden flex-column-fluid">
 							<!--begin::Menu wrapper-->
-							<div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper d-flex hover-scroll-overlay-y my-5" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu, #kt_app_sidebar" data-kt-scroll-offset="5px">
-								<!--begin::Menu-->
-								<div class="menu menu-column menu-rounded menu-active-bg menu-title-gray-700 menu-arrow-gray-500 menu-icon-gray-500 menu-bullet-gray-500 menu-state-primary my-auto" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
-									<!--begin:Menu item-->
-									@php
-										$isHomeActive = request()->routeIs('dashboard');
-									@endphp
-									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isHomeActive ? 'here show' : '' }} py-2">
-										<!--begin:Menu link-->
-										<span class="menu-link menu-center">
-											<span class="menu-icon me-0">
-												<i class="bi bi-house fs-1"></i>
-											</span>
-										</span>
-										<!--end:Menu link-->
-										<!--begin:Menu sub-->
-										<div class="menu-sub menu-sub-dropdown px-2 py-4 w-250px mh-75 overflow-auto">
-											<!--begin:Menu item-->
-											<a class="menu-link" href="{{ route('dashboard') }}">
-											<div class="menu-item">
-												<!--begin:Menu content-->
-												<div class="menu-content">
-													<span class="menu-section fs-5 fw-bolder ps-1 py-1">Home</span>
-												</div>
-												<!--end:Menu content-->
-											</div>
-											<!--end:Menu item-->
+								<div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper d-flex hover-scroll-overlay-y my-5" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu, #kt_app_sidebar" data-kt-scroll-offset="5px">
+									<!--begin::Menu-->
+									<div class="menu menu-column menu-rounded menu-active-bg menu-title-gray-700 menu-arrow-gray-500 menu-icon-gray-500 menu-bullet-gray-500 menu-state-primary my-auto" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
+										<!--begin:Menu item-->
+										@php
+											$isHomeActive = request()->routeIs('dashboard');
+										@endphp
+										<div class="menu-item {{ $isHomeActive ? 'here show' : '' }} py-2">
+											<!--begin:Menu link-->
+											<a href="{{ route('dashboard') }}" class="menu-link menu-center">
+												<span class="menu-icon me-0 d-flex flex-column align-items-center">
+													<i class="bi bi-house fs-1"></i>
+													<span class="menu-title">Home</span>
+												</span>
 											</a>
+											<!--end:Menu link-->
 										</div>
-										<!--end:Menu sub-->
-									</div>
-									<!--end:Menu item-->
+										<!--end:Menu item-->
 
-									<!--begin:Menu item-->
-									@php
-										$isEventsActive = request()->routeIs('events.*');
-									@endphp
-									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isEventsActive ? 'here show' : '' }} show py-2">
-										<!--begin:Menu link-->
-										<span class="menu-link menu-center">
-											<span class="menu-icon me-0">
-												<i class="bi bi-calendar-event fs-1"></i>
+										<!--begin:Menu item-->
+										@php
+											$isEventsActive = request()->routeIs('events.*');
+										@endphp
+										<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isEventsActive ? 'here show' : '' }} py-2">
+											<!--begin:Menu link-->
+											<span class="menu-link menu-center">
+												<span class="menu-icon me-0 d-flex flex-column align-items-center">
+													<i class="bi bi-calendar-event fs-1"></i>
+													<span class="menu-title">Events</span>
+												</span>
 											</span>
-										</span>
-										<!--end:Menu link-->
-										<!--begin:Menu sub-->
-										<div class="menu-sub menu-sub-dropdown menu-sub-indention px-2 py-4 w-250px mh-75 overflow-auto">
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu content-->
-												<div class="menu-content">
-													<span class="menu-section fs-5 fw-bolder ps-1 py-1">Events</span>
-												</div>
-												<!--end:Menu content-->
-											</div>
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-                                                <a class="menu-link {{ request()->routeIs('events.show_all') ? 'active' : '' }}" href="{{ route('events.show_all') }}">
-													<span class="menu-icon">
-														<i class="bi bi-patch-check fs-3"></i>
-													</span>
-													<span class="menu-title">All Events</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-
-											@if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
+											<!--end:Menu link-->
+											<!--begin:Menu sub-->
+											<div class="menu-sub menu-sub-dropdown menu-sub-indention px-2 py-4 w-250px mh-75 overflow-auto">
+												<!--begin:Menu item-->
 												<div class="menu-item">
-													<a class="menu-link {{ request()->routeIs('events.index') ? 'active' : '' }}" 
-													href="{{ route('events.index') }}">
+													<!--begin:Menu link-->
+													<a class="menu-link {{ request()->routeIs('events.show_all') ? 'active' : '' }}" href="{{ route('events.show_all') }}">
+														<span class="menu-icon">
+															<i class="bi bi-patch-check fs-3"></i>
+														</span>
+														<span class="menu-title">All Events</span>
+													</a>
+													<!--end:Menu link-->
+												</div>
+												<!--end:Menu item-->
+
+												@if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
+													<div class="menu-item">
+														<a class="menu-link {{ request()->routeIs('events.index') ? 'active' : '' }}" 
+														href="{{ route('events.index') }}">
+															<span class="menu-icon">
+																<i class="bi bi-calendar3-event fs-3"></i>
+															</span>
+															<span class="menu-title">My Events</span>
+														</a>
+													</div>
+												@endif
+
+											</div>
+											<!--end:Menu sub-->
+										</div>
+										<!--end:Menu item-->
+
+										<!--begin:Menu item-->
+										@php
+											$isJobsActive = request()->routeIs('jobs.*');
+										@endphp
+										<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isJobsActive ? 'here show' : '' }} py-2">
+											<!--begin:Menu link-->
+											<span class="menu-link menu-center">
+												<span class="menu-icon me-0 d-flex flex-column align-items-center">
+													<i class="bi bi-briefcase fs-1"></i>
+													<span class="menu-title">Jobs</span>
+												</span>
+											</span>
+											<!--end:Menu link-->
+											<!--begin:Menu sub-->
+											<div class="menu-sub menu-sub-dropdown menu-sub-indention px-2 py-4 w-250px mh-75 overflow-auto">
+												<!--begin:Menu item-->
+												<div class="menu-item">
+													<!--begin:Menu link-->
+													<a class="menu-link {{ request()->routeIs('jobs.show_all') ? 'active' : '' }}" href="{{ route('jobs.show_all') }}">
+														<span class="menu-icon">
+															<i class="bi bi-patch-check fs-3"></i>
+														</span>
+														<span class="menu-title">All Jobs</span>
+													</a>
+													<!--end:Menu link-->
+												</div>
+												<!--end:Menu item-->
+												<!--end:Menu item-->
+												<!--begin:Menu item-->
+												<div class="menu-item">
+													<!--begin:Menu link-->
+													<a class="menu-link {{ request()->routeIs('jobs.index') ? 'active' : '' }}" href="{{ route('jobs.index') }}">
 														<span class="menu-icon">
 															<i class="bi bi-calendar3-event fs-3"></i>
 														</span>
-														<span class="menu-title">My Events</span>
+														<span class="menu-title">My Jobs</span>
 													</a>
+													<!--end:Menu link-->
 												</div>
-											@endif
+												<!--end:Menu item-->
+											</div>
+											<!--end:Menu sub-->
+										</div>
+										<!--end:Menu item-->
 
-										</div>
-										<!--end:Menu sub-->
-									</div>
-									<!--end:Menu item-->
-
-									<!--begin:Menu item-->
-									@php
-										$isJobsActive = request()->routeIs('jobs.*');
-									@endphp
-									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isJobsActive ? 'here show' : '' }} py-2">
-										<!--begin:Menu link-->
-										<span class="menu-link menu-center">
-											<span class="menu-icon me-0">
-												<i class="bi bi-briefcase fs-1"></i>
+										<!--begin:Menu item-->
+										@php
+											$isRentsActive = request()->routeIs('rents.*');
+										@endphp
+										<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isRentsActive ? 'here show' : '' }} py-2">
+											<!--begin:Menu link-->
+											<span class="menu-link menu-center">
+												<span class="menu-icon me-0 d-flex flex-column align-items-center">
+													<i class="bi bi-buildings fs-1"></i>
+													<span class="menu-title">Rents</span>
+												</span>
 											</span>
-										</span>
-										<!--end:Menu link-->
-										<!--begin:Menu sub-->
-										<div class="menu-sub menu-sub-dropdown menu-sub-indention px-2 py-4 w-250px mh-75 overflow-auto">
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu content-->
-												<div class="menu-content">
-													<span class="menu-section fs-5 fw-bolder ps-1 py-1">Jobs</span>
+											<!--end:Menu link-->
+											<!--begin:Menu sub-->
+											<div class="menu-sub menu-sub-dropdown menu-sub-indention px-2 py-4 w-250px mh-75 overflow-auto">
+												<!--begin:Menu item-->
+												<div class="menu-item">
+													<!--begin:Menu content-->
+													<div class="menu-content">
+														<span class="menu-section fs-5 fw-bolder ps-1 py-1">Rents</span>
+													</div>
+													<!--end:Menu content-->
 												</div>
-												<!--end:Menu content-->
+												<!--end:Menu item-->
+												<!--begin:Menu item-->
+												<div class="menu-item">
+													<!--begin:Menu link-->
+													<a class="menu-link {{ request()->routeIs('rents.show_all') ? 'active' : '' }}" href="{{ route('rents.show_all') }}">
+														<span class="menu-icon">
+															<i class="bi bi-patch-check fs-3"></i>
+														</span>
+														<span class="menu-title">All Rents</span>
+													</a>
+													<!--end:Menu link-->
+												</div>
+												<!--end:Menu item-->
+												<!--end:Menu item-->
+												<!--begin:Menu item-->
+												<div class="menu-item">
+													<!--begin:Menu link-->
+													<a class="menu-link {{ request()->routeIs('events.index') ? 'active' : '' }}" href="{{ route('rents.index') }}">
+														<span class="menu-icon">
+															<i class="bi bi-calendar3-event fs-3"></i>
+														</span>
+														<span class="menu-title">My Rents</span>
+													</a>
+													<!--end:Menu link-->
+												</div>
+												<!--end:Menu item-->
 											</div>
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-                                                <a class="menu-link {{ request()->routeIs('jobs.show_all') ? 'active' : '' }}" href="{{ route('jobs.show_all') }}">
-													<span class="menu-icon">
-														<i class="bi bi-patch-check fs-3"></i>
-													</span>
-													<span class="menu-title">All Jobs</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-                                                <a class="menu-link {{ request()->routeIs('jobs.index') ? 'active' : '' }}" href="{{ route('jobs.index') }}">
-													<span class="menu-icon">
-														<i class="bi bi-calendar3-event fs-3"></i>
-													</span>
-													<span class="menu-title">My Jobs</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
+											<!--end:Menu sub-->
 										</div>
-										<!--end:Menu sub-->
-									</div>
-									<!--end:Menu item-->
-
-									<!--begin:Menu item-->
-									@php
-										$isRentsActive = request()->routeIs('rents.*');
-									@endphp
-									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isRentsActive ? 'here show' : '' }} py-2">
-										<!--begin:Menu link-->
-										<span class="menu-link menu-center">
-											<span class="menu-icon me-0">
-												<i class="bi bi-buildings fs-1"></i>
+										<!--end:Menu item-->
+										<!--begin:Menu item-->
+										@php
+											$isServicesActive = request()->routeIs('services.*');
+										@endphp
+										<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isServicesActive ? 'here show' : '' }} py-2">
+											<!--begin:Menu link-->
+											<span class="menu-link menu-center">
+												<span class="menu-icon me-0 d-flex flex-column align-items-center">
+													<i class="bi bi-fire fs-1"></i>
+													<span class="menu-title">Services</span>
+												</span>
 											</span>
-										</span>
-										<!--end:Menu link-->
-										<!--begin:Menu sub-->
-										<div class="menu-sub menu-sub-dropdown menu-sub-indention px-2 py-4 w-250px mh-75 overflow-auto">
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu content-->
-												<div class="menu-content">
-													<span class="menu-section fs-5 fw-bolder ps-1 py-1">Rents</span>
+											<!--end:Menu link-->
+											<!--begin:Menu sub-->
+											<div class="menu-sub menu-sub-dropdown menu-sub-indention px-2 py-4 w-250px mh-75 overflow-auto">
+												<!--begin:Menu item-->
+												<div class="menu-item">
+													<!--begin:Menu link-->
+													<a class="menu-link {{ request()->routeIs('services.show_all') ? 'active' : '' }}" href="{{ route('services.show_all') }}">
+														<span class="menu-icon">
+															<i class="bi bi-patch-check fs-3"></i>
+														</span>
+														<span class="menu-title">All Services</span>
+													</a>
+													<!--end:Menu link-->
 												</div>
-												<!--end:Menu content-->
+												<!--end:Menu item-->
+												<!--end:Menu item-->
+												<!--begin:Menu item-->
+												<div class="menu-item">
+													<!--begin:Menu link-->
+													<a class="menu-link {{ request()->routeIs('services.index') ? 'active' : '' }}" href="{{ route('services.index') }}">
+														<span class="menu-icon">
+															<i class="bi bi-calendar3-event fs-3"></i>
+														</span>
+														<span class="menu-title">My Services</span>
+													</a>
+													<!--end:Menu link-->
+												</div>
+												<!--end:Menu item-->
 											</div>
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-                                                <a class="menu-link {{ request()->routeIs('rents.show_all') ? 'active' : '' }}" href="{{ route('rents.show_all') }}">
-													<span class="menu-icon">
-														<i class="bi bi-patch-check fs-3"></i>
-													</span>
-													<span class="menu-title">All Rents</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-                                                <a class="menu-link {{ request()->routeIs('events.index') ? 'active' : '' }}" href="{{ route('rents.index') }}">
-													<span class="menu-icon">
-														<i class="bi bi-calendar3-event fs-3"></i>
-													</span>
-													<span class="menu-title">My Rents</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
+											<!--end:Menu sub-->
 										</div>
-										<!--end:Menu sub-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									@php
-										$isServicesActive = request()->routeIs('services.*');
-									@endphp
-									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isServicesActive ? 'here show' : '' }} py-2">
-										<!--begin:Menu link-->
-										<span class="menu-link menu-center">
-											<span class="menu-icon me-0">
-												<i class="bi bi-fire fs-1"></i>
+										<!--end:Menu item-->
+										<!--begin:Menu item-->
+										@php
+											$isRestaurantsActive = request()->routeIs('restaurants.*');
+										@endphp
+										<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isRestaurantsActive ? 'here show' : '' }} py-2">
+											<!--begin:Menu link-->
+											<span class="menu-link menu-center">
+												<span class="menu-icon me-0 d-flex flex-column align-items-center">
+													<i class="bi bi-handbag fs-1"></i>
+													<span class="menu-title">Restaurants</span>
+												</span>
 											</span>
-										</span>
-										<!--end:Menu link-->
-										<!--begin:Menu sub-->
-										<div class="menu-sub menu-sub-dropdown menu-sub-indention px-2 py-4 w-250px mh-75 overflow-auto">
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu content-->
-												<div class="menu-content">
-													<span class="menu-section fs-5 fw-bolder ps-1 py-1">Services</span>
+											<!--end:Menu link-->
+											<!--begin:Menu sub-->
+											<div class="menu-sub menu-sub-dropdown menu-sub-indention px-2 py-4 w-250px mh-75 overflow-auto">
+												<!--begin:Menu item-->
+												<div class="menu-item">
+													<!--begin:Menu link-->
+													<a class="menu-link {{ request()->routeIs('restaurants.show_all') ? 'active' : '' }}" href="{{ route('restaurants.show_all') }}">
+														<span class="menu-icon">
+															<i class="bi bi-patch-check fs-3"></i>
+														</span>
+														<span class="menu-title">All Restaurants</span>
+													</a>
+													<!--end:Menu link-->
 												</div>
-												<!--end:Menu content-->
-											</div>
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-                                                <a class="menu-link {{ request()->routeIs('services.show_all') ? 'active' : '' }}" href="{{ route('services.show_all') }}">
-													<span class="menu-icon">
-														<i class="bi bi-patch-check fs-3"></i>
-													</span>
-													<span class="menu-title">All Services</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-                                                <a class="menu-link {{ request()->routeIs('services.index') ? 'active' : '' }}" href="{{ route('services.index') }}">
-													<span class="menu-icon">
-														<i class="bi bi-calendar3-event fs-3"></i>
-													</span>
-													<span class="menu-title">My Services</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-										</div>
-										<!--end:Menu sub-->
-									</div>
-									<!--end:Menu item-->
-									<!--begin:Menu item-->
-									@php
-										$isRestaurantsActive = request()->routeIs('restaurants.*');
-									@endphp
-									<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item {{ $isRestaurantsActive ? 'here show' : '' }} py-2">
-										<!--begin:Menu link-->
-										<span class="menu-link menu-center">
-											<span class="menu-icon me-0">
-												<i class="bi bi-handbag fs-1"></i>
-											</span>
-										</span>
-										<!--end:Menu link-->
-										<!--begin:Menu sub-->
-										<div class="menu-sub menu-sub-dropdown menu-sub-indention px-2 py-4 w-250px mh-75 overflow-auto">
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu content-->
-												<div class="menu-content">
-													<span class="menu-section fs-5 fw-bolder ps-1 py-1">Restaurants</span>
+												<!--end:Menu item-->
+												<!--end:Menu item-->
+												<!--begin:Menu item-->
+												<div class="menu-item">
+													<!--begin:Menu link-->
+													<a class="menu-link {{ request()->routeIs('restaurants.index') ? 'active' : '' }}" href="{{ route('restaurants.index') }}">
+														<span class="menu-icon">
+															<i class="bi bi-calendar3-event fs-3"></i>
+														</span>
+														<span class="menu-title">My Restaurants</span>
+													</a>
+													<!--end:Menu link-->
 												</div>
-												<!--end:Menu content-->
+												<!--end:Menu item-->
 											</div>
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-                                                <a class="menu-link {{ request()->routeIs('restaurants.show_all') ? 'active' : '' }}" href="{{ route('restaurants.show_all') }}">
-													<span class="menu-icon">
-														<i class="bi bi-patch-check fs-3"></i>
-													</span>
-													<span class="menu-title">All Restaurants</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-                                                <a class="menu-link {{ request()->routeIs('restaurants.index') ? 'active' : '' }}" href="{{ route('restaurants.index') }}">
-													<span class="menu-icon">
-														<i class="bi bi-calendar3-event fs-3"></i>
-													</span>
-													<span class="menu-title">My Restaurants</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
+											<!--end:Menu sub-->
 										</div>
-										<!--end:Menu sub-->
+										<!--end:Menu item-->
 									</div>
-									<!--end:Menu item-->
+									<!--end::Menu-->
 								</div>
-								<!--end::Menu-->
-							</div>
 							<!--end::Menu wrapper-->
 						</div>
 						<!--end::sidebar menu-->
