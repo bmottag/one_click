@@ -28,9 +28,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/users/update', [UserController::class, 'update'])->name('users.update');
     });
 
-
     // ---------------------------
-    // Events
+    // EVENTS
     // ---------------------------
 
     // Todos los usuarios autenticados (registered, admin, super) → pueden ver y reservar
@@ -48,21 +47,50 @@ Route::middleware('auth')->group(function () {
         Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
     });
 
-    // Jobs
+    // ---------------------------
+    // JOBS
+    // ---------------------------
     Route::get('/jobs/show_all', [JobController::class, 'show_all'])->name('jobs.show_all');
-    Route::resource('jobs', JobController::class);
 
-    // Rents
+    // Solo administrator y super_admin
+    Route::middleware('role:administrator,super_admin')->group(function () {
+        Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
+        Route::post('/jobs', [JobController::class, 'store'])->name('jobs.store');
+        Route::delete('/jobs/{event}', [JobController::class, 'destroy'])->name('jobs.destroy');
+    });
+
+    // ---------------------------
+    // RENTS
+    // ---------------------------
     Route::get('/rents/show_all', [RentController::class, 'show_all'])->name('rents.show_all');
-    Route::resource('rents', RentController::class);
+    // Solo administrator y super_admin
+    Route::middleware('role:administrator,super_admin')->group(function () {
+        Route::get('/rents', [RentController::class, 'index'])->name('rents.index');
+        Route::post('/rents', [RentController::class, 'store'])->name('rents.store');
+        Route::delete('/rents/{event}', [RentController::class, 'destroy'])->name('rents.destroy');
+    });
 
-    // Services
+    // ---------------------------
+    // SERVICES
+    // ---------------------------
     Route::get('/services/show_all', [ServiceController::class, 'show_all'])->name('services.show_all');
-    Route::resource('services', ServiceController::class);
+    // Solo administrator y super_admin
+    Route::middleware('role:administrator,super_admin')->group(function () {
+        Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
+        Route::post('/services', [ServiceController::class, 'store'])->name('services.store');
+        Route::delete('/services/{event}', [ServiceController::class, 'destroy'])->name('services.destroy');
+    });
 
-    // Restaurants
+    // ---------------------------
+    // RESTAURANTS
+    // ---------------------------
     Route::get('/restaurants/show_all', [RestaurantController::class, 'show_all'])->name('restaurants.show_all');
-    Route::resource('restaurants', RestaurantController::class);
+    // Solo administrator y super_admin
+    Route::middleware('role:administrator,super_admin')->group(function () {
+        Route::get('/restaurants', [RestaurantController::class, 'index'])->name('restaurants.index');
+        Route::post('/restaurants', [RestaurantController::class, 'store'])->name('restaurants.store');
+        Route::delete('/restaurants/{event}', [RestaurantController::class, 'destroy'])->name('restaurants.destroy');
+    });
 
 });
 

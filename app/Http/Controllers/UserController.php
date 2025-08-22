@@ -49,7 +49,7 @@ class UserController extends Controller
         $user->save();
 
         return response()->json([
-            'message' => 'El rol del usuario se actualizó correctamente',
+            'message' => "The user's role was updated successfully.",
             'user' => $user
         ]);
     }

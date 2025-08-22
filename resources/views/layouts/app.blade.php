@@ -450,19 +450,18 @@
 													<!--end:Menu link-->
 												</div>
 												<!--end:Menu item-->
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link {{ request()->routeIs('jobs.index') ? 'active' : '' }}" href="{{ route('jobs.index') }}">
-														<span class="menu-icon">
-															<i class="bi bi-calendar3-event fs-3"></i>
-														</span>
-														<span class="menu-title">My Jobs</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
+
+												@if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
+													<div class="menu-item">
+														<a class="menu-link {{ request()->routeIs('jobs.index') ? 'active' : '' }}" href="{{ route('jobs.index') }}">
+															<span class="menu-icon">
+																<i class="bi bi-calendar3-event fs-3"></i>
+															</span>
+															<span class="menu-title">My Jobs</span>
+														</a>
+													</div>
+												@endif
+
 											</div>
 											<!--end:Menu sub-->
 										</div>
@@ -505,18 +504,18 @@
 												</div>
 												<!--end:Menu item-->
 												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link {{ request()->routeIs('events.index') ? 'active' : '' }}" href="{{ route('rents.index') }}">
-														<span class="menu-icon">
-															<i class="bi bi-calendar3-event fs-3"></i>
-														</span>
-														<span class="menu-title">My Rents</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
+												
+												@if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
+													<div class="menu-item">
+														<a class="menu-link {{ request()->routeIs('events.index') ? 'active' : '' }}" href="{{ route('rents.index') }}">
+															<span class="menu-icon">
+																<i class="bi bi-calendar3-event fs-3"></i>
+															</span>
+															<span class="menu-title">My Rents</span>
+														</a>
+													</div>
+												@endif
+
 											</div>
 											<!--end:Menu sub-->
 										</div>
@@ -549,18 +548,18 @@
 												</div>
 												<!--end:Menu item-->
 												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link {{ request()->routeIs('services.index') ? 'active' : '' }}" href="{{ route('services.index') }}">
-														<span class="menu-icon">
-															<i class="bi bi-calendar3-event fs-3"></i>
-														</span>
-														<span class="menu-title">My Services</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
+												
+												@if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
+													<div class="menu-item">
+														<a class="menu-link {{ request()->routeIs('services.index') ? 'active' : '' }}" href="{{ route('services.index') }}">
+															<span class="menu-icon">
+																<i class="bi bi-calendar3-event fs-3"></i>
+															</span>
+															<span class="menu-title">My Services</span>
+														</a>
+													</div>
+												@endif
+
 											</div>
 											<!--end:Menu sub-->
 										</div>
@@ -593,18 +592,18 @@
 												</div>
 												<!--end:Menu item-->
 												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link {{ request()->routeIs('restaurants.index') ? 'active' : '' }}" href="{{ route('restaurants.index') }}">
-														<span class="menu-icon">
-															<i class="bi bi-calendar3-event fs-3"></i>
-														</span>
-														<span class="menu-title">My Restaurants</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
+												
+												@if(auth()->user()->isAdmin() || auth()->user()->isSuperAdmin())
+													<div class="menu-item">
+														<a class="menu-link {{ request()->routeIs('restaurants.index') ? 'active' : '' }}" href="{{ route('restaurants.index') }}">
+															<span class="menu-icon">
+																<i class="bi bi-calendar3-event fs-3"></i>
+															</span>
+															<span class="menu-title">My Restaurants</span>
+														</a>
+													</div>
+												@endif
+
 											</div>
 											<!--end:Menu sub-->
 										</div>
