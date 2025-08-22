@@ -335,46 +335,52 @@
                             <!--end::Hint-->
                         </div>
                         <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span>Link</span>
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Link" name="link" />
+
+                        <div class="row g-9 mb-8">
+                            <div class="col-md-6 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>Link</span>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Link" name="link" />
+                            </div>
+
+                            <div class="col-md-6 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>Facebook</span>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Facebook" name="facebook" />
+                            </div>
                         </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span>Facebook</span>
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Facebook" name="facebook" />
+
+                        <div class="row g-9 mb-8">
+                            <div class="col-md-6 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>Instagram</span>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Instagram" name="instagram" />
+                            </div>
+
+                            <div class="col-md-6 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>Youtube</span>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Youtube" name="youtube" />
+                            </div>
                         </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span>Instagram</span>
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Instagram" name="instagram" />
+
+                        <div class="row g-9 mb-8">
+                            <div class="col-md-6 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>Google</span>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Google" name="google" />
+                            </div>
+
+                            <div class="col-md-6 fv-row">
+
+                            </div>
                         </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span>Youtube</span>
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Youtube" name="youtube" />
-                        </div>
-                        <!--end::Input group-->
+
                         <!--begin::Actions-->
                         <div class="text-center">
                             <button type="reset" id="kt_modal_new_service_cancel" class="btn btn-light me-3">Cancel</button>

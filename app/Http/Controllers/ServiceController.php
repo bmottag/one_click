@@ -63,6 +63,7 @@ class ServiceController extends Controller
             'facebook' => 'nullable|url|max:150',
             'instagram' => 'nullable|url|max:150',
             'youtube' => 'nullable|url|max:150',
+            'google' => 'nullable|url|max:150',
         ]);
 
         if ($validator->fails()) {
@@ -90,6 +91,7 @@ class ServiceController extends Controller
             'facebook' => $request->facebook,
             'instagram' => $request->instagram,
             'youtube' => $request->youtube,
+            'google' => $request->google,
         ]);
 
         return response()->json([

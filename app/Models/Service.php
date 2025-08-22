@@ -22,6 +22,7 @@ class Service extends Model
         'facebook',
         'instagram',
         'youtube',
+        'google',
     ];
 
     public function user()
