@@ -5,8 +5,7 @@
     <x-breadcrumb 
         :items="[
             ['label' => 'Home', 'url' => route('dashboard')],
-            ['label' => 'Events', 'url' => route('events.show_all')],
-            ['label' => 'All Events']
+            ['label' => 'Events', 'url' => route('events.show_all')]
         ]"
     />
 @endsection

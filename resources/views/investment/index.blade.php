@@ -1,12 +1,12 @@
-{{-- resources/views/restaurants/index.blade.php --}}
+{{-- resources/views/investment/index.blade.php --}}
 @extends('layouts.app')
 
 @section('breadcrumb')
     <x-breadcrumb 
         :items="[
             ['label' => 'Home', 'url' => route('dashboard')],
-            ['label' => 'Restaurants', 'url' => route('restaurants.show_all')],
-            ['label' => 'My Restaurants']
+            ['label' => 'Investment', 'url' => route('investment.show_all')],
+            ['label' => 'My Investment']
         ]"
     />
 @endsection
@@ -21,7 +21,7 @@
                 <!--begin::Toolbar-->
                 <div class="d-flex flex-wrap flex-stack mb-6">
                     <!--begin::Heading-->
-                    <h3 class="fw-bold my-2">Restaurants</h3>
+                    <h3 class="fw-bold my-2">Investment</h3>
                     <!--end::Heading-->
                 </div>
 
@@ -49,11 +49,10 @@
                                         <!--end::Illustration-->
                                     </div>
                                     <!--end::Heading-->
-
                                     <!--begin::Links-->
                                     <div class="text-center mb-1">
                                         <!--begin::Link-->
-                                        <a href="#" class="btn btn-primary er fs-6 px-8 py-4" data-bs-toggle="modal" data-bs-target="#kt_modal_new_restaurant">New Restaurant</a>
+                                        <a href="#" class="btn btn-primary er fs-6 px-8 py-4" data-bs-toggle="modal" data-bs-target="#kt_modal_new_service">New Investment</a>
                                         <!--end::Link-->
                                     </div>
                                     <!--end::Links-->
@@ -98,7 +97,7 @@
                                         <!--end::Select2-->
                                     </div>
                                     <!--begin::Add product-->
-                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_new_restaurant">New Restaurant</a>
+                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_new_service">New Investment</a>
                                     <!--end::Add product-->
                                 </div>
                                 <!--end::Card toolbar-->
@@ -112,7 +111,7 @@
                                     <thead>
                                         <!--begin::Table row-->
                                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                                            <th class="min-w-150px">Name</th>
+                                            <th class="min-w-150px">Company</th>
                                             <th class="text-start min-w-200px">Description</th>
                                             <th class="text-end min-w-100px">Phone</th>
                                             <th class="text-end min-w-100px">Email</th>
@@ -134,7 +133,7 @@
                                                             <img src="{{ asset('storage/' . $item->image) }}" class="" alt="" />
                                                         </div>
                                                         <div class="d-flex justify-content-start flex-column">
-                                                            <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">{{ $item->restaurant_name }}</a>
+                                                            <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">{{ $item->company_name }}</a>
                                                             <!--<span class="text-gray-400 fw-semibold d-block fs-7">Jenny Wilson</span>-->
                                                         </div>
                                                     </div>
@@ -210,7 +209,7 @@
 
     <!--begin::Modals-->
     <!--begin::Modal - New Target-->
-    <div class="modal fade" id="kt_modal_new_restaurant" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="kt_modal_new_service" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <!--begin::Modal content-->
@@ -234,14 +233,14 @@
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                     <!--begin:Form-->
-                    <form id="kt_modal_new_restaurant_form" class="form" enctype="multipart/form-data">
+                    <form id="kt_modal_new_service_form" class="form" enctype="multipart/form-data">
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
                             <!--begin::Title-->
-                            <h1 class="mb-3">Restaurant</h1>
+                            <h1 class="mb-3">Investment</h1>
                             <!--end::Title-->
                             <!--begin::Description-->
-                            <div class="text-muted fw-semibold fs-5">Add / Edit Restaurant.</div>
+                            <div class="text-muted fw-semibold fs-5">Add / Edit Investment.</div>
                             <!--end::Description-->
                         </div>
                         <!--end::Heading-->
@@ -249,10 +248,10 @@
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span class="required">Name</span>
+                                <span class="required">Company Name</span>
                             </label>
                             <!--end::Label-->
-                            <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Name" name="restaurant_name" />
+                            <input type="text" class="form-control form-control-solid" placeholder="Enter Company Name" name="company_name" />
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
@@ -299,7 +298,7 @@
                             <!--begin::Label-->
                             <label class="d-block fw-semibold fs-6 mb-5">
                                 <span class="required">Image</span>
-                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Select an image that best represents your restaurant."></i>
+                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Select an image that best represents your service."></i>
                             </label>
                             <!--end::Label-->
                             <!--begin::Image input placeholder-->
@@ -336,50 +335,56 @@
                             <!--end::Hint-->
                         </div>
                         <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span>Link</span>
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Link" name="link" />
+
+                        <div class="row g-9 mb-8">
+                            <div class="col-md-6 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>Link</span>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Link" name="link" />
+                            </div>
+
+                            <div class="col-md-6 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>Facebook</span>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Facebook" name="facebook" />
+                            </div>
                         </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span>Facebook</span>
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Facebook" name="facebook" />
+
+                        <div class="row g-9 mb-8">
+                            <div class="col-md-6 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>Instagram</span>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Instagram" name="instagram" />
+                            </div>
+
+                            <div class="col-md-6 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>Youtube</span>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Youtube" name="youtube" />
+                            </div>
                         </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span>Instagram</span>
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Instagram" name="instagram" />
+
+                        <div class="row g-9 mb-8">
+                            <div class="col-md-6 fv-row">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>Google</span>
+                                </label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Google" name="google" />
+                            </div>
+
+                            <div class="col-md-6 fv-row">
+
+                            </div>
                         </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span>Youtube</span>
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control form-control-solid" placeholder="Enter Restaurant Youtube" name="youtube" />
-                        </div>
-                        <!--end::Input group-->
+
                         <!--begin::Actions-->
                         <div class="text-center">
-                            <button type="reset" id="kt_modal_new_restaurant_cancel" class="btn btn-light me-3">Cancel</button>
-                            <button type="submit" id="kt_modal_new_restaurant_submit" class="btn btn-primary">
+                            <button type="reset" id="kt_modal_new_service_cancel" class="btn btn-light me-3">Cancel</button>
+                            <button type="submit" id="kt_modal_new_service_submit" class="btn btn-primary">
                                 <span class="indicator-label">Submit</span>
                                 <span class="indicator-progress">Please wait...
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -400,5 +405,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/validations/restaurants.js') }}"></script>
+    <script src="{{ asset('js/validations/investment.js') }}"></script>
 @endsection

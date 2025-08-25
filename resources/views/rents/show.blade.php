@@ -6,7 +6,6 @@
         :items="[
             ['label' => 'Home', 'url' => route('dashboard')],
             ['label' => 'Rents', 'url' => route('rents.show_all')],
-            ['label' => 'All Rents']
         ]"
     />
 @endsection

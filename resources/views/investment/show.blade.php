@@ -1,11 +1,11 @@
-{{-- resources/views/restaurants/index.blade.php --}}
+{{-- resources/views/investment/index.blade.php --}}
 @extends('layouts.app')
 
 @section('breadcrumb')
     <x-breadcrumb 
         :items="[
             ['label' => 'Home', 'url' => route('dashboard')],
-            ['label' => 'Restaurants', 'url' => route('restaurants.show_all')]
+            ['label' => 'Investment', 'url' => route('investment.show_all')],
         ]"
     />
 @endsection
@@ -20,12 +20,12 @@
                 <!--begin::Toolbar-->
                 <div class="d-flex flex-wrap flex-stack mb-6">
                     <!--begin::Heading-->
-                    <h3 class="fw-bold my-2">Restaurants</h3>
+                    <h3 class="fw-bold my-2">Investment</h3>
                     <!--end::Heading-->
                 </div>
 
                 <!--begin::Form-->
-                <form method="GET" action="{{ route('restaurants.show_all') }}">
+                <form method="GET" action="{{ route('investment.show_all') }}">
                     <!--begin::Card-->
                     <div class="card mb-7">
                         <!--begin::Card body-->
@@ -71,7 +71,7 @@
                                     <!--begin::Heading-->
                                     <div class="mb-2">
                                         <!--begin::Title-->
-                                        <h1 class="fw-semibold text-gray-800 text-center lh-lg">No restaurants to display at the moment. 
+                                        <h1 class="fw-semibold text-gray-800 text-center lh-lg">No items to display at the moment. 
                                         <br />Thanks for your interest!</h1>
                                         <!--begin::Illustration-->
                                         <div class="py-10 text-center">
@@ -115,16 +115,10 @@
                                                         <div class="d-flex flex-stack mb-6">
                                                             <!--begin::Title-->
                                                             <div class="flex-shrink-0 me-5">
-                                                                <span class="text-gray-800 fs-1 fw-bold">{{ $item->title }}</span>
+                                                                <span class="text-gray-800 fs-1 fw-bold">{{ $item->company_name }}</span>
                                                             </div>
                                                             <!--end::Title-->
-                                                            @php
-                                                                $today = date('Y-m-d');
 
-                                                                $state = $item->date > $today ? 'Active' : 'Close';
-                                                                $style = $item->date > $today ? 'primary' : 'danger';
-                                                            @endphp
-                                                            <span class="badge badge-light-{{ $style }} flex-shrink-0 align-self-center py-3 px-4 fs-7">{{ $state }}</span>
                                                         </div>
                                                         <!--end::Heading-->
                                                         <!--begin::Items-->
@@ -155,26 +149,26 @@
                                                         <!--end::Text-->
                                                         <!--begin::Stats-->
                                                         <div class="d-flex">
-                                                            <!--begin::Stat-->
+                                                            <div class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
+                                                                <!--begin::Number-->
+                                                                <span class="fs-6 text-gray-700 fw-bold">{{ $item->email }}</span>
+                                                                <!--end::Number-->
+                                                                <!--begin::Label-->
+                                                                <div class="fw-semibold text-gray-400">Email</div>
+                                                                <!--end::Label-->
+                                                            </div>
+                                                            <!--end::Stat-->
+                                                        </div>
+
+                                                        <div class="d-flex">
                                                             <div class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
                                                                 <!--begin::Date-->
                                                                 <span class="fs-6 text-gray-700 fw-bold">{{ $item->address }}</span>
                                                                 <!--end::Date-->
                                                                 <!--begin::Label-->
-                                                                <div class="fw-semibold text-gray-400">Date</div>
+                                                                <div class="fw-semibold text-gray-400">Address</div>
                                                                 <!--end::Label-->
                                                             </div>
-                                                            <!--end::Stat-->
-                                                            <!--begin::Stat-->
-                                                            <div class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
-                                                                <!--begin::Number-->
-                                                                <span class="fs-6 text-gray-700 fw-bold">{{ $item->place }}</span>
-                                                                <!--end::Number-->
-                                                                <!--begin::Label-->
-                                                                <div class="fw-semibold text-gray-400">Place</div>
-                                                                <!--end::Label-->
-                                                            </div>
-                                                            <!--end::Stat-->
                                                         </div>
                                                         <!--end::Stats-->
                                                     </div>

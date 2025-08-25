@@ -7,6 +7,9 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\RentController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\BeautyController;
+use App\Http\Controllers\InvestmentController;
+use App\Http\Controllers\TourismController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -90,6 +93,39 @@ Route::middleware('auth')->group(function () {
         Route::get('/restaurants', [RestaurantController::class, 'index'])->name('restaurants.index');
         Route::post('/restaurants', [RestaurantController::class, 'store'])->name('restaurants.store');
         Route::delete('/restaurants/{event}', [RestaurantController::class, 'destroy'])->name('restaurants.destroy');
+    });
+
+    // ---------------------------
+    // BEAUTY
+    // ---------------------------
+    Route::get('/beauty/show_all', [BeautyController::class, 'show_all'])->name('beauty.show_all');
+    // Solo administrator y super_admin
+    Route::middleware('role:administrator,super_admin')->group(function () {
+        Route::get('/beauty', [BeautyController::class, 'index'])->name('beauty.index');
+        Route::post('/beauty', [BeautyController::class, 'store'])->name('beauty.store');
+        Route::delete('/beauty/{event}', [BeautyController::class, 'destroy'])->name('beauty.destroy');
+    });
+
+    // ---------------------------
+    // INVESTMENTS
+    // ---------------------------
+    Route::get('/investment/show_all', [InvestmentController::class, 'show_all'])->name('investment.show_all');
+    // Solo administrator y super_admin
+    Route::middleware('role:administrator,super_admin')->group(function () {
+        Route::get('/investment', [InvestmentController::class, 'index'])->name('investment.index');
+        Route::post('/investment', [InvestmentController::class, 'store'])->name('investment.store');
+        Route::delete('/investment/{event}', [InvestmentController::class, 'destroy'])->name('investment.destroy');
+    });
+
+    // ---------------------------
+    // TOURISM
+    // ---------------------------
+    Route::get('/tourism/show_all', [TourismController::class, 'show_all'])->name('tourism.show_all');
+    // Solo administrator y super_admin
+    Route::middleware('role:administrator,super_admin')->group(function () {
+        Route::get('/tourism', [TourismController::class, 'index'])->name('tourism.index');
+        Route::post('/tourism', [TourismController::class, 'store'])->name('tourism.store');
+        Route::delete('/tourism/{event}', [TourismController::class, 'destroy'])->name('tourism.destroy');
     });
 
 });

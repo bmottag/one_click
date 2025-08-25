@@ -6,7 +6,6 @@
         :items="[
             ['label' => 'Home', 'url' => route('dashboard')],
             ['label' => 'Services', 'url' => route('services.show_all')],
-            ['label' => 'All Services']
         ]"
     />
 @endsection
