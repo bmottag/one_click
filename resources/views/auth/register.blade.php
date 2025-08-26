@@ -207,8 +207,8 @@
     <script src="{{ asset('template/assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('template/assets/js/scripts.bundle.js') }}"></script>
     <script src="{{ asset('js/validations/authentication/sign-up/general.js') }}"></script>
-		<!--To use Alpine.js-->
-		<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <!--To use Alpine.js-->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
     <script>
         function locationData() {

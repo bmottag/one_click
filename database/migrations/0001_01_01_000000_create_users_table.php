@@ -15,10 +15,19 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('user_status');
+            $table->string('contact_number');
+            $table->unsignedMediumInteger('state_id');
+            $table->unsignedMediumInteger('city_id');
+            $table->enum('role', ['registered_user', 'administrator', 'super_admin'])->default('registered_user');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
