@@ -27,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'state_id',
         'city_id',
+        'image',
         'role',
     ];
 
@@ -90,14 +91,37 @@ class User extends Authenticatable implements MustVerifyEmail
         };
     }
 
-    public function getRoleBadgeAttribute()
+    public function getAvatarAttribute()
+    {
+        return $this->image 
+            ? asset('storage/' . $this->image) 
+            : asset('template/assets/media/avatars/blank.png');
+    }
+
+    public function getRoleLabel($short = false)
     {
         return match ($this->role) {
-            'registered_user' => '<span class="badge py-3 px-4 fs-7 badge-light-primary">Registered User</span>',
-            'administrator'   => '<span class="badge py-3 px-4 fs-7 badge-light-danger">Administrator</span>',
-            'super_admin'     => '<span class="badge py-3 px-4 fs-7 badge-light-warning">Super Admin</span>',
-            default           => '<span class="badge py-3 px-4 fs-7 badge-light-secondary">N/A</span>',
+            'registered_user' => $short ? 'Registered' : 'Registered User',
+            'administrator'   => $short ? 'Admin' : 'Administrator',
+            'super_admin'     => 'Super Admin',
+            default           => 'N/A',
         };
+    }
+
+    public function getRoleBadge($short = false)
+    {
+        $classes = match ($this->role) {
+            'registered_user' => 'badge-light-primary',
+            'administrator'   => 'badge-light-danger',
+            'super_admin'     => 'badge-light-warning',
+            default           => 'badge-light-secondary',
+        };
+
+        return sprintf(
+            '<span class="badge py-3 px-4 fs-8 ms-2 %s">%s</span>',
+            $classes,
+            $this->getRoleLabel($short)
+        );
     }
 
 

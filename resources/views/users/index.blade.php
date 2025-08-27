@@ -101,7 +101,7 @@
                                             <td class="text-end pe-0">{{ $user->contact_number }}</td>
                                             <td class="text-start pe-0">{{ $user->state->name }}</td>
                                             <td class="text-start pe-0">{{ $user->city->name }}</td>
-                                            <td class="text-center pe-0">{!! $user->role_badge !!}</td>
+                                            <td class="text-center pe-0">{!! $user->getRoleBadge() !!}</td>
 
                                             <!--end::Status=-->
                                             <!--begin::Action=-->

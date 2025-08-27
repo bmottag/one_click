@@ -27,6 +27,7 @@ class ProfileUpdateRequest extends FormRequest
             ],
             'state_id' => ['required', 'exists:states,id'],
             'city_id' => ['required', 'exists:cities,id'],
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 }

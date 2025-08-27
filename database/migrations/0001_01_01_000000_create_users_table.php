@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('contact_number');
             $table->unsignedMediumInteger('state_id');
             $table->unsignedMediumInteger('city_id');
+            $table->string('image')->nullable();
             $table->enum('role', ['registered_user', 'administrator', 'super_admin'])->default('registered_user');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
