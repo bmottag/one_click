@@ -62,6 +62,10 @@
                             @endif
                         </div>
 
+                        <div class="alert alert-warning">
+                            <strong>Warning:</strong> Keep in mind that the selected city will be set as the default for your listings.
+                        </div>
+
                         <div x-data="locationData()" x-init="init()" class="row">
 
                             <!-- Province -->

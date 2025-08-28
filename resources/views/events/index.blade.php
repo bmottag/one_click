@@ -132,11 +132,15 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="symbol symbol-50px me-3">
-                                                        <img src="{{ asset('storage/' . $event->image) }}" class="" alt="" />
+                                                        @php
+                                                            $firstImage = is_array($event->image) ? $event->image[0] : json_decode($event->image)[0] ?? null;
+                                                        @endphp
+                                                        @if($firstImage)
+                                                            <img src="{{ asset('storage/' . $firstImage) }}" class="" alt="" />
+                                                        @endif
                                                     </div>
                                                     <div class="d-flex justify-content-start flex-column">
                                                         <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">{{ $event->title }}</a>
-                                                        <!--<span class="text-gray-400 fw-semibold d-block fs-7">Jenny Wilson</span>-->
                                                     </div>
                                                 </div>
                                             </td>
@@ -326,46 +330,38 @@
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
-                        <div class="fv-row mb-10">
-                            <!--begin::Label-->
+                        <div class="fv-row mb-8">
                             <label class="d-block fw-semibold fs-6 mb-5">
-                                <span class="required">Image</span>
-                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Select an image that best represents your event."></i>
+                                <span class="required">Images</span>
+                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Select images that best represents your event."></i>
                             </label>
-                            <!--end::Label-->
-                            <!--begin::Image input placeholder-->
-                            <style>.image-input-placeholder { background-image: url("{{ asset('template/assets/media/svg/files/blank-image.svg') }}"); } [data-bs-theme="dark"] .image-input-placeholder { background-image: url("{{ asset('template/assets/media/svg/files/blank-image-dark.svg') }}"); }</style>
-                            <!--end::Image input placeholder-->
-                            <!--begin::Image input-->
-                            <div class="image-input image-input-empty image-input-outline image-input-placeholder" data-kt-image-input="true">
-                                <!--begin::Preview existing image-->
-                                <div class="image-input-wrapper w-225px h-225px"></div>
-                                <!--end::Preview existing image-->
-                                <!--begin::Label-->
-                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change image">
-                                    <i class="bi bi-pencil-fill fs-7"></i>
-                                    <!--begin::Inputs-->
-                                    <input type="file" name="event_image" accept=".png, .jpg, .jpeg" />
-                                    <input type="hidden" name="event_remove" />
-                                    <!--end::Inputs-->
-                                </label>
-                                <!--end::Label-->
-                                <!--begin::Cancel-->
-                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel image">
-                                    <i class="bi bi-x fs-2"></i>
-                                </span>
-                                <!--end::Cancel-->
-                                <!--begin::Remove-->
-                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove image">
-                                    <i class="bi bi-x fs-2"></i>
-                                </span>
-                                <!--end::Remove-->
+                            <!--begin::Dropzone-->
+                            <div class="dropzone" id="kt_modal_new_event_dropzone">
+                                <!--begin::Message-->
+                                <div class="dz-message needsclick">
+                                    <!--begin::Icon-->
+                                    <!--begin::Svg Icon | path: icons/duotune/files/fil010.svg-->
+                                    <span class="svg-icon svg-icon-3hx svg-icon-primary">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM14.5 12L12.7 9.3C12.3 8.9 11.7 8.9 11.3 9.3L10 12H11.5V17C11.5 17.6 11.4 18 12 18C12.6 18 12.5 17.6 12.5 17V12H14.5Z" fill="currentColor" />
+                                            <path d="M13 11.5V17.9355C13 18.2742 12.6 19 12 19C11.4 19 11 18.2742 11 17.9355V11.5H13Z" fill="currentColor" />
+                                            <path d="M8.2575 11.4411C7.82942 11.8015 8.08434 12.5 8.64398 12.5H15.356C15.9157 12.5 16.1706 11.8015 15.7425 11.4411L12.4375 8.65789C12.1875 8.44737 11.8125 8.44737 11.5625 8.65789L8.2575 11.4411Z" fill="currentColor" />
+                                            <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                    <!--end::Icon-->
+                                    <!--begin::Info-->
+                                    <div class="ms-4">
+                                        <h3 class="dfs-3 fw-bold text-gray-900 mb-1">Drop images here or click to upload.</h3>
+                                        <span class="fw-semibold fs-4 text-muted">Upload up to 10 images</span>
+                                    </div>
+                                    <!--end::Info-->
+                                </div>
                             </div>
-                            <!--end::Image input-->
-                            <!--begin::Hint-->
-                            <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
-                            <!--end::Hint-->
+                            <!--end::Dropzone-->
                         </div>
+
                         <!--end::Input group-->
                         <!--begin::Input group-->
                         <div class="d-flex flex-stack mb-8">

@@ -23,6 +23,7 @@ class Event extends Model
 
     protected $casts = [
         'date' => 'datetime',
+        'image' => 'array',
     ];
 
     public function user()

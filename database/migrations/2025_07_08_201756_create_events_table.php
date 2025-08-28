@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('place');
             $table->text('description')->nullable();
             $table->date('date');
-            $table->string('image')->nullable();
+            $table->json('image')->nullable();
             $table->string('link')->nullable();
             $table->string('instagram')->nullable();
             $table->timestamps();

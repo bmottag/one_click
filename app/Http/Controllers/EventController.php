@@ -51,7 +51,8 @@ class EventController extends Controller
             'event_title' => 'required|string|max:255',
             'event_place' => 'required|string|max:255',
             'event_date' => 'required',
-            'event_image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'event_images' => 'required|array',
+            'event_images.*' => 'image|mimes:jpg,jpeg,png|max:5120', // 5MB por archivo
         ]);
 
         if ($validator->fails()) {
@@ -61,9 +62,11 @@ class EventController extends Controller
             ], 422);
         }
 
-        $imagePath = null;
-        if ($request->hasFile('event_image')) {
-            $imagePath = $request->file('event_image')->store('events', 'public');
+        $imagePaths = [];
+        if ($request->hasFile('event_images')) {
+            foreach ($request->file('event_images') as $file) {
+                $imagePaths[] = $file->store('events', 'public');
+            }
         }
 
         // Guardar evento
@@ -73,7 +76,7 @@ class EventController extends Controller
             'place' => $request->event_place,
             'description' => $request->event_description,
             'date' => $request->event_date,
-            'image' => $imagePath,
+            'image' => $imagePaths,
             'link' => $request->link,
             'instagram' => $request->instagram,
         ]);

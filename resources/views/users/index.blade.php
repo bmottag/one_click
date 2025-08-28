@@ -89,6 +89,9 @@
                                         <tr>
                                             <td>
                                                 <div class="d-flex align-items-center">
+                                                    <div class="symbol symbol-50px me-3">
+                                                        <img src="{{ $user->avatar }}" class="" alt="" />
+                                                    </div>
                                                     <div class="d-flex justify-content-start flex-column">
                                                         <a href="#" class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6">{{ $user->name }}</a>
                                                         <span class="text-gray-400 fw-semibold d-block fs-7">{{ $user->email }}</span>
