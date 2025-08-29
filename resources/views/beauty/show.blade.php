@@ -115,7 +115,7 @@
                                                         <div class="d-flex flex-stack mb-6">
                                                             <!--begin::Title-->
                                                             <div class="flex-shrink-0 me-5">
-                                                            <span class="text-gray-800 fs-1 fw-bold">{{ $item->company_namea }}</span>
+                                                            <span class="text-gray-800 fs-1 fw-bold">{{ $item->company_name }}</span>
                                                             </div>
                                                             <!--end::Title-->
 

@@ -8,6 +8,7 @@ var KTModalNewTarget = function () {
 	var form;
 	var modal;
 	var modalEl;
+	var myDropzone;
 
 	// Init form inputs
 	var initForm = function() {
@@ -17,6 +18,24 @@ var KTModalNewTarget = function () {
 			enableTime: false,
 			dateFormat: "Y-m-d",
 		});
+
+        // Dropzone config
+        Dropzone.autoDiscover = false; // muy importante
+
+        myDropzone = new Dropzone("#kt_modal_new_dropzone", { 
+            url: "/rents",  
+            paramName: "rent_images", 
+            uploadMultiple: true,
+            parallelUploads: 10,
+            maxFiles: 10,
+            maxFilesize: 5, // MB
+            acceptedFiles: "image/*",
+            addRemoveLinks: true,
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            autoProcessQueue: false 
+        });
 
 	}
 
@@ -79,76 +98,36 @@ var KTModalNewTarget = function () {
 					console.log('validated!');
 
 					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
 
-						// Disable button to avoid multiple click 
-						submitButton.disabled = true;
-
-						// Gather form data
-						const formData = new FormData(form);
-
-						fetch('/rents', {
-							method: 'POST',
-							body: formData,
-							headers: {
-								'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-							},
-						})
-						.then(response => response.json())
-						.then(data => {
-							submitButton.removeAttribute('data-kt-indicator');
-							submitButton.disabled = false;
-
-							if (data.success) {
-								Swal.fire({
-									text: "Form has been successfully submitted!",
-									icon: "success",
-									buttonsStyling: false,
-									confirmButtonText: "Ok, got it!",
-									customClass: {
-										confirmButton: "btn btn-primary"
-									}
-								}).then(function (result) {
-									if (result.isConfirmed) {
-										location.reload();
-									}
-								});
-
-								// Limpiar formulario
-								form.reset();
-							} else {
-								Swal.fire({
-									text: data.message || "Something went wrong.",
-									icon: "error",
-									buttonsStyling: false,
-									confirmButtonText: "Ok, got it!",
-									customClass: {
-										confirmButton: "btn btn-primary"
-									}
-								});
-							}
-						})
-						.catch(error => {
-							submitButton.removeAttribute('data-kt-indicator');
-							submitButton.disabled = false;
-
-							console.error('AJAX Error:', error);
-
+						// Validación de imágenes
+						if (!myDropzone || myDropzone.files.length === 0) {
 							Swal.fire({
-								text: "Request failed. Please try again.",
+								text: "Please upload at least one image.",
 								icon: "error",
 								buttonsStyling: false,
 								confirmButtonText: "Ok, got it!",
-								customClass: {
-									confirmButton: "btn btn-primary"
-								}
+								customClass: { confirmButton: "btn btn-primary" }
 							});
-						});
+							return; // ¡importante! no procesar Dropzone
+						}
+
+                        submitButton.setAttribute('data-kt-indicator', 'on');
+                        submitButton.disabled = true;
+
+                        // Enviar datos adicionales de Dropzone
+                        myDropzone.on("sendingmultiple", function(file, xhr, formData) {
+                            formData.append("rent_title", form.querySelector('[name="rent_title"]').value);
+                            formData.append("description", form.querySelector('[name="description"]').value);
+                            formData.append("contact_number", form.querySelector('[name="contact_number"]').value);
+                            formData.append("due_date", form.querySelector('[name="due_date"]').value);
+                        });
+
+                        myDropzone.processQueue();
 
 					} else {
 						// Show error message.
 						Swal.fire({
-							text: "Sorry, looks like there are some errors detected, please try again.",
+							text: "Please fill in all required fields and upload at least one image.",
 							icon: "error",
 							buttonsStyling: false,
 							confirmButtonText: "Ok, got it!",
@@ -160,6 +139,32 @@ var KTModalNewTarget = function () {
 				});
 			}
 		});
+
+        myDropzone.on("successmultiple", function(files, response) {
+            submitButton.removeAttribute('data-kt-indicator');
+            submitButton.disabled = false;
+
+            Swal.fire({
+                text: "Rent created successfully!",
+                icon: "success",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: { confirmButton: "btn btn-primary" }
+            }).then(() => location.reload());
+        });
+
+        myDropzone.on("errormultiple", function(files, response) {
+            submitButton.removeAttribute('data-kt-indicator');
+            submitButton.disabled = false;
+
+            Swal.fire({
+                text: "Something went wrong. Please try again.",
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: { confirmButton: "btn btn-primary" }
+            });
+        });
 
 		cancelButton.addEventListener('click', function (e) {
 			e.preventDefault();
@@ -212,6 +217,14 @@ var KTModalNewTarget = function () {
 
 			initForm();
 			handleForm();
+
+			modalEl.addEventListener('hidden.bs.modal', function () {
+				form.reset();                  
+				validator.resetForm(true);
+				if (myDropzone) {
+					myDropzone.removeAllFiles(true);
+				}
+			});
 		}
 	};
 }();

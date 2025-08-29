@@ -59,6 +59,8 @@ class RentController extends Controller
             'description' => 'required|string',
             'contact_number' => 'required', 
             'due_date' => 'required',
+            'rent_images' => 'required|array',
+            'rent_images.*' => 'image|mimes:jpg,jpeg,png|max:5120', // 5MB por archivo
         ]);
 
         if ($validator->fails()) {
@@ -67,20 +69,28 @@ class RentController extends Controller
                 'errors' => $validator->errors()
             ], 422);
         }
-
-        // Guardar evento
-        $event = Rent::create([
+        
+        $imagePaths = [];
+        if ($request->hasFile('rent_images')) {
+            foreach ($request->file('rent_images') as $file) {
+                $imagePaths[] = $file->store('rents', 'public');
+            }
+        }
+        
+        // Guardar
+        $info = Rent::create([
             'user_id' => Auth::id(),
             'rent_title' => $request->rent_title,
             'description' => $request->description,
             'contact_number' => $request->contact_number,
             'due_date' => $request->due_date,
+            'images' => $imagePaths,
         ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Rent created successfully!',
-            'event' => $event
+            'info' => $info
         ]);
     }
 

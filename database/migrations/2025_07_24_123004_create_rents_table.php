@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('contact_number');
             $table->date('due_date');
+            $table->json('images')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

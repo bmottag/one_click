@@ -16,10 +16,12 @@ class Rent extends Model
         'description',
         'contact_number',
         'due_date',
+        'images',
     ];
 
     protected $casts = [
         'due_date' => 'datetime',
+        'images' => 'array',
     ];
 
     public function user()

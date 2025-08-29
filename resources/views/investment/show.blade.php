@@ -191,7 +191,6 @@
                                                             </span>
                                                             <!--end::Svg Icon--></a>
                                                         @endif
-                                                        <a href="#" class="btn btn-primary btn-sm flex-shrink-0 me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_bidding">Join Event</a>
                                                         <!--end::Actions-->
                                                     </div>
                                                     <!--end::Footer-->

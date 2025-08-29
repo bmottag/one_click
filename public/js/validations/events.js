@@ -22,7 +22,7 @@ var KTModalNewTarget = function () {
         // Dropzone config
         Dropzone.autoDiscover = false; // muy importante
 
-        myDropzone = new Dropzone("#kt_modal_new_event_dropzone", { 
+        myDropzone = new Dropzone("#kt_modal_new_dropzone", { 
             url: "/events",  
             paramName: "event_images", 
             uploadMultiple: true,
