@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('contact_number');
             $table->string('address');
             $table->string('email');
-            $table->string('image')->nullable();
+            $table->json('images')->nullable();
             $table->string('link')->nullable();
             $table->string('facebook')->nullable();
             $table->string('instagram')->nullable();

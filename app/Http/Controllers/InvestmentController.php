@@ -58,7 +58,8 @@ class InvestmentController extends Controller
             'contact_number' => 'required|string|max:15',
             'address' => 'required|string|max:150',
             'email' => 'required|email|max:255',
-            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'images' => 'required|array',
+            'images.*' => 'image|mimes:jpg,jpeg,png|max:5120', // 5MB por archivo
             'link' => [
                                 'nullable',
                                 'regex:/^(https?:\/\/)?(www\.)?[a-z0-9\-]+(\.[a-z]{2,})(\/.*)?$/i',
@@ -93,9 +94,11 @@ class InvestmentController extends Controller
             ], 422);
         }
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('services', 'public');
+        $imagePaths = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $imagePaths[] = $file->store('investment', 'public');
+            }
         }
 
         // Guardar evento
@@ -106,7 +109,7 @@ class InvestmentController extends Controller
             'contact_number' => $request->contact_number,
             'address' => $request->address,
             'email' => $request->email,
-            'image' => $imagePath,
+            'images' => $imagePaths,
             'link' => $request->link,
             'facebook' => $request->facebook,
             'instagram' => $request->instagram,

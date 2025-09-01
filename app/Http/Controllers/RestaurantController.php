@@ -58,7 +58,8 @@ class RestaurantController extends Controller
             'contact_number' => 'required|string|max:15',
             'address' => 'required|string|max:150',
             'email' => 'required|email|max:255',
-            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'images' => 'required|array',
+            'images.*' => 'image|mimes:jpg,jpeg,png|max:5120', // 5MB por archivo
             'link' => 'nullable|url|max:150',
             'facebook' => 'nullable|url|max:150',
             'instagram' => 'nullable|url|max:150',
@@ -72,9 +73,11 @@ class RestaurantController extends Controller
             ], 422);
         }
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('restaurants', 'public');
+        $imagePaths = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $imagePaths[] = $file->store('restaurants', 'public');
+            }
         }
 
         // Guardar evento
@@ -85,7 +88,7 @@ class RestaurantController extends Controller
             'contact_number' => $request->contact_number,
             'address' => $request->address,
             'email' => $request->email,
-            'image' => $imagePath,
+            'images' => $imagePaths,
             'link' => $request->link,
             'facebook' => $request->facebook,
             'instagram' => $request->instagram,

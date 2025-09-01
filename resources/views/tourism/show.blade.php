@@ -99,10 +99,36 @@
                                         <div class="row gx-9 h-100">
                                             <!--begin::Col-->
                                             <div class="col-sm-6 mb-10 mb-sm-0">
-                                                <!--begin::Image-->
-                                                <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100" 
-                                                    style="background-size: 100% 100%;background-image:url('{{ asset('storage/' . $item->image) }}')"></div>
-                                                <!--end::Image-->
+                                                <!--begin::Carousel-->
+                                                <div id="eventCarousel{{ $item->id }}" class="carousel slide card-rounded min-h-400px min-h-sm-100 h-100" data-bs-ride="carousel">
+                                                    <div class="carousel-inner h-100">
+                                                        @foreach($item->images as $index => $img)
+                                                            <div class="carousel-item @if($index == 0) active @endif h-100">
+                                                                <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-100" 
+                                                                    style="background-size: 100% 100%; background-image: url('{{ asset('storage/' . $img) }}')">
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+
+                                                    <!-- Controls -->
+                                                    <button class="carousel-control-prev" type="button" data-bs-target="#eventCarousel{{ $item->id }}" data-bs-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Previous</span>
+                                                    </button>
+                                                    <button class="carousel-control-next" type="button" data-bs-target="#eventCarousel{{ $item->id }}" data-bs-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Next</span>
+                                                    </button>
+
+                                                    <!-- Indicators -->
+                                                    <ol class="carousel-indicators">
+                                                        @foreach($item->images as $index => $img)
+                                                            <li data-bs-target="#eventCarousel{{ $item->id }}" data-bs-slide-to="{{ $index }}" class="@if($index == 0) active @endif"></li>
+                                                        @endforeach
+                                                    </ol>
+                                                </div>
+                                                <!--end::Carousel-->
                                             </div>
                                             <!--end::Col-->
                                             <!--begin::Col-->

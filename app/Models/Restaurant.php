@@ -17,11 +17,15 @@ class Restaurant extends Model
         'contact_number',
         'address',
         'email',
-        'image',
+        'images',
         'link',
         'facebook',
         'instagram',
         'youtube',
+    ];
+
+    protected $casts = [
+        'images' => 'array',
     ];
 
     public function user()

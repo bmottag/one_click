@@ -8,6 +8,28 @@ var KTModalNewTarget = function () {
 	var form;
 	var modal;
 	var modalEl;
+	var myDropzone;
+
+	// Init form inputs
+	var initForm = function() {
+        // Dropzone config
+        Dropzone.autoDiscover = false; // muy importante
+
+        myDropzone = new Dropzone("#kt_modal_new_dropzone", { 
+            url: "/restaurants",  
+            paramName: "images", 
+            uploadMultiple: true,
+            parallelUploads: 10,
+            maxFiles: 10,
+            maxFilesize: 5, // MB
+            acceptedFiles: "image/*",
+            addRemoveLinks: true,
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            autoProcessQueue: false 
+        });
+	}
 
 	// Handle form validation and submittion
 	var handleForm = function() {
@@ -57,19 +79,6 @@ var KTModalNewTarget = function () {
 							}
 						}
 					},
-					image: {
-						validators: {
-							notEmpty: {
-								message: 'Image is required'
-							},
-							file: {
-								extension: 'jpeg,jpg,png',
-								type: 'image/jpeg,image/png',
-								maxSize: 2097152, // 2MB en bytes
-								message: 'Please choose a valid image file (jpeg, jpg, png) under 2MB'
-							}
-						}
-					},
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
@@ -92,98 +101,35 @@ var KTModalNewTarget = function () {
 					console.log('validated!');
 
 					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
-
-						// Disable button to avoid multiple click 
-						submitButton.disabled = true;
-
-						// Gather form data
-						const formData = new FormData(form);
-
-						form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
-						form.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
-
-						fetch('/restaurants', {
-							method: 'POST',
-							body: formData,
-							headers: {
-								'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-							},
-						})
-						.then(async response => {
-							submitButton.removeAttribute('data-kt-indicator');
-							submitButton.disabled = false;
-
-							if (response.ok) {
-								const data = await response.json();
-								if (data.success) {
-									Swal.fire({
-										text: "Form has been successfully submitted!",
-										icon: "success",
-										buttonsStyling: false,
-										confirmButtonText: "Ok, got it!",
-										customClass: {
-											confirmButton: "btn btn-primary"
-										}
-									}).then(function (result) {
-										if (result.isConfirmed) {
-											location.reload();
-										}
-									});
-
-									form.reset();
-								}
-							} else if (response.status === 422) {
-								const data = await response.json();
-								const errors = data.errors;
-
-								Object.keys(errors).forEach(function(fieldName) {
-									// Buscar input por name
-									const input = form.querySelector(`[name="${fieldName}"]`);
-									if (input) {
-										// Agregar clase de error
-										input.classList.add('is-invalid');
-
-										// Mostrar mensaje debajo si no existe
-										let errorEl = input.nextElementSibling;
-										if (!errorEl || !errorEl.classList.contains('invalid-feedback')) {
-											errorEl = document.createElement('div');
-											errorEl.classList.add('invalid-feedback');
-											input.parentNode.appendChild(errorEl);
-										}
-										errorEl.innerText = errors[fieldName][0];
-									}
-								});
-
-								Swal.fire({
-									text: "Please correct the highlighted errors and try again.",
-									icon: "error",
-									buttonsStyling: false,
-									confirmButtonText: "Ok, got it!",
-									customClass: {
-										confirmButton: "btn btn-primary"
-									}
-								});
-							} else {
-								throw new Error('Unexpected error');
-							}
-						})
-						.catch(error => {
-							submitButton.removeAttribute('data-kt-indicator');
-							submitButton.disabled = false;
-
-							console.error('AJAX Error:', error);
-
+						// Validación de imágenes
+						if (!myDropzone || myDropzone.files.length === 0) {
 							Swal.fire({
-								text: "Request failed. Please try again.",
+								text: "Please upload at least one image.",
 								icon: "error",
 								buttonsStyling: false,
 								confirmButtonText: "Ok, got it!",
-								customClass: {
-									confirmButton: "btn btn-primary"
-								}
+								customClass: { confirmButton: "btn btn-primary" }
 							});
-						});
+							return; // ¡importante! no procesar Dropzone
+						}
+
+                        submitButton.setAttribute('data-kt-indicator', 'on');
+                        submitButton.disabled = true;
+
+                        // Enviar datos adicionales de Dropzone
+                        myDropzone.on("sendingmultiple", function(file, xhr, formData) {
+                            formData.append("restaurant_name", form.querySelector('[name="restaurant_name"]').value);
+                            formData.append("description", form.querySelector('[name="description"]').value);
+                            formData.append("contact_number", form.querySelector('[name="contact_number"]').value);
+                            formData.append("address", form.querySelector('[name="address"]').value);
+							formData.append("email", form.querySelector('[name="email"]').value);
+							formData.append("link", form.querySelector('[name="link"]').value);
+							formData.append("facebook", form.querySelector('[name="facebook"]').value);
+							formData.append("instagram", form.querySelector('[name="instagram"]').value);
+							formData.append("youtube", form.querySelector('[name="youtube"]').value);
+                        });
+
+                        myDropzone.processQueue();
 
 					} else {
 						// Show error message.
@@ -200,6 +146,32 @@ var KTModalNewTarget = function () {
 				});
 			}
 		});
+
+        myDropzone.on("successmultiple", function(files, response) {
+            submitButton.removeAttribute('data-kt-indicator');
+            submitButton.disabled = false;
+
+            Swal.fire({
+                text: "Item created successfully!",
+                icon: "success",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: { confirmButton: "btn btn-primary" }
+            }).then(() => location.reload());
+        });
+
+        myDropzone.on("errormultiple", function(files, response) {
+            submitButton.removeAttribute('data-kt-indicator');
+            submitButton.disabled = false;
+
+            Swal.fire({
+                text: "Something went wrong. Please try again.",
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: { confirmButton: "btn btn-primary" }
+            });
+        });
 
 		cancelButton.addEventListener('click', function (e) {
 			e.preventDefault();
@@ -250,7 +222,16 @@ var KTModalNewTarget = function () {
 			submitButton = document.getElementById('kt_modal_new_restaurant_submit');
 			cancelButton = document.getElementById('kt_modal_new_restaurant_cancel');
 
+			initForm();
 			handleForm();
+
+			modalEl.addEventListener('hidden.bs.modal', function () {
+				form.reset();                  
+				validator.resetForm(true);
+				if (myDropzone) {
+					myDropzone.removeAllFiles(true);
+				}
+			});
 		}
 	};
 }();

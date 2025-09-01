@@ -76,7 +76,7 @@ class EventController extends Controller
             'place' => $request->event_place,
             'description' => $request->event_description,
             'date' => $request->event_date,
-            'image' => $imagePaths,
+            'images' => $imagePaths,
             'link' => $request->link,
             'instagram' => $request->instagram,
         ]);

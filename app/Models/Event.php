@@ -16,14 +16,14 @@ class Event extends Model
         'place',
         'description',
         'date',
-        'image',
+        'images',
         'link',
         'instagram',
     ];
 
     protected $casts = [
         'date' => 'datetime',
-        'image' => 'array',
+        'images' => 'array',
     ];
 
     public function user()
