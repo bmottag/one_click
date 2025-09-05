@@ -10,6 +10,7 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\BeautyController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\TourismController;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,7 +22,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/billing', [ProfileController::class, 'edit'])->name('profile.billing');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
@@ -127,6 +130,19 @@ Route::middleware('auth')->group(function () {
         Route::post('/tourism', [TourismController::class, 'store'])->name('tourism.store');
         Route::delete('/tourism/{event}', [TourismController::class, 'destroy'])->name('tourism.destroy');
     });
+
+    // ---------------------------
+    // SUBSCRIPTION & BILLING
+    // ---------------------------
+    Route::get('/subscription/pricing', [SubscriptionController::class, 'pricing'])->name('subscription.pricing');
+    Route::post('/subscription/create-checkout-session', [SubscriptionController::class, 'createSession']);
+    Route::get('/subscription/return', [SubscriptionController::class, 'return'])->name('subscription.return');
+
+
+
+
+
+
 
 });
 

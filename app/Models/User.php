@@ -29,6 +29,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'city_id',
         'image',
         'role',
+        'stripe_id'
     ];
 
     /**
@@ -77,6 +78,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
     }
 
     public function getUserStatusLabelAttribute()

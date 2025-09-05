@@ -109,7 +109,7 @@
 										<!--end::Menu separator-->
 										<!--begin::Menu item-->
 										<div class="menu-item px-5">
-											<a href="{{ route('profile.edit') }}" class="menu-link px-5">My Profile</a>
+											<a href="{{ route('profile.index') }}" class="menu-link px-5">My Profile</a>
 										</div>
 										<!--end::Menu item-->
 
@@ -159,12 +159,7 @@
 												<!--end::Menu separator-->
 												<!--begin::Menu item-->
 												<div class="menu-item px-3">
-													<div class="menu-content px-3">
-														<label class="form-check form-switch form-check-custom form-check-solid">
-															<input class="form-check-input w-30px h-20px" type="checkbox" value="1" checked="checked" name="notifications" />
-															<span class="form-check-label text-muted fs-7">Notifications</span>
-														</label>
-													</div>
+													<a href="{{ route('subscription.pricing') }}" class="menu-link px-5">Pricing</a>
 												</div>
 												<!--end::Menu item-->
 											</div>
