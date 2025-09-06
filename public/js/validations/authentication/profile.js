@@ -8,7 +8,7 @@ var KTAccountSettingsProfileDetails = function () {
     var validation;
 
     // Private functions
-    var initValidation = function () {
+    var handleForm = function () {
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
         validation = FormValidation.formValidation(
             form,
@@ -21,7 +21,7 @@ var KTAccountSettingsProfileDetails = function () {
                             }
                         }
                     },
-                    phone: {
+                    contact_number: {
                         validators: {
                             notEmpty: {
                                 message: 'Phone number is required'
@@ -60,7 +60,6 @@ var KTAccountSettingsProfileDetails = function () {
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
                     submitButton: new FormValidation.plugins.SubmitButton(),
-                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
 					bootstrap: new FormValidation.plugins.Bootstrap5({
                         rowSelector: '.col-lg-8',
 						eleInvalidClass: 'is-invalid',
@@ -69,37 +68,127 @@ var KTAccountSettingsProfileDetails = function () {
 				}
             }
         );
-    }
 
-    var handleForm = function () {
-        submitButton.addEventListener('click', function (e) {
+		// Action buttons
+		submitButton.addEventListener('click', function (e) {
+			e.preventDefault();
 
-            validation.validate().then(function (status) {
-                if (status == 'Valid') {
+			// Validate form before submit
+			if (validation) {
+				validation.validate().then(function (status) {
+					console.log('validated!');
 
-                    swal.fire({
-                        text: "Thank you! You've updated your basic info",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn fw-bold btn-light-primary"
-                        }
-                    });
+					if (status == 'Valid') {
+						submitButton.setAttribute('data-kt-indicator', 'on');
 
-                } else {
-                    swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn fw-bold btn-light-primary"
-                        }
-                    });
-                }
-            });
-        });
+						// Disable button to avoid multiple click 
+						submitButton.disabled = true;
+
+						// Gather form data
+						const formData = new FormData(form);
+
+						form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+						form.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
+
+						fetch('/profile', {
+							method: 'POST',
+							body: formData,
+							headers: {
+								'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                'Accept': 'application/json'
+							},
+						})
+						.then(async response => {
+							submitButton.removeAttribute('data-kt-indicator');
+							submitButton.disabled = false;
+
+							if (response.ok) {
+								const data = await response.json();
+								if (data.success) {
+									Swal.fire({
+										text: "Form has been successfully submitted!",
+										icon: "success",
+										buttonsStyling: false,
+										confirmButtonText: "Ok, got it!",
+										customClass: {
+											confirmButton: "btn btn-primary"
+										}
+									}).then(function (result) {
+										if (result.isConfirmed) {
+											location.reload();
+										}
+									});
+
+									form.reset();
+								}
+							} else if (response.status === 422) {
+								const data = await response.json();
+								const errors = data.errors;
+
+								Object.keys(errors).forEach(function(fieldName) {
+									// Buscar input por name
+									const input = form.querySelector(`[name="${fieldName}"]`);
+									if (input) {
+										// Agregar clase de error
+										input.classList.add('is-invalid');
+
+										// Mostrar mensaje debajo si no existe
+										let errorEl = input.nextElementSibling;
+										if (!errorEl || !errorEl.classList.contains('invalid-feedback')) {
+											errorEl = document.createElement('div');
+											errorEl.classList.add('invalid-feedback');
+											input.parentNode.appendChild(errorEl);
+										}
+										errorEl.innerText = errors[fieldName][0];
+									}
+								});
+
+								Swal.fire({
+									text: "Please correct the highlighted errors and try again.",
+									icon: "error",
+									buttonsStyling: false,
+									confirmButtonText: "Ok, got it!",
+									customClass: {
+										confirmButton: "btn btn-primary"
+									}
+								});
+							} else {
+								throw new Error('Unexpected error');
+							}
+						})
+						.catch(error => {
+							submitButton.removeAttribute('data-kt-indicator');
+							submitButton.disabled = false;
+
+							console.error('AJAX Error:', error);
+
+							Swal.fire({
+								text: "Request failed. Please try again.",
+								icon: "error",
+								buttonsStyling: false,
+								confirmButtonText: "Ok, got it!",
+								customClass: {
+									confirmButton: "btn btn-primary"
+								}
+							});
+						});
+
+					} else {
+						// Show error message.
+						Swal.fire({
+							text: "Sorry, looks like there are some errors detected, please try again.",
+							icon: "error",
+							buttonsStyling: false,
+							confirmButtonText: "Ok, got it!",
+							customClass: {
+								confirmButton: "btn btn-primary"
+							}
+						});
+					}
+				});
+			}
+		});
+
     }
 
     // Public methods
@@ -113,7 +202,6 @@ var KTAccountSettingsProfileDetails = function () {
 
             submitButton = form.querySelector('#kt_account_profile_details_submit');
 
-            initValidation();
             handleForm();
         }
     }

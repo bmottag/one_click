@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\UpdateEmailRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +35,7 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(ProfileUpdateRequest $request)
     {
         $user = $request->user();
 
@@ -60,7 +61,26 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return response()->json([
+            'success' => true,
+            'message' => 'User updated successfully!',
+            'user' => $user
+        ]);
+    }
+
+    public function updateEmail(UpdateEmailRequest $request)
+    {
+        $user = $request->user();
+
+        $user->email = $request->email;
+        $user->email_verified_at = null;
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Email updated successfully!',
+            'user' => $user
+        ]);
     }
 
     /**
