@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Subscription;
 
 class ProfileController extends Controller
 {
@@ -29,6 +30,24 @@ class ProfileController extends Controller
     {
         return view('profile.edit', [
             'user' => $request->user(),
+        ]);
+    }
+
+    /**
+     * Display the user's billing information.
+     */
+    public function billing(Request $request): View
+    {
+        $user = $request->user();
+
+        $subscriptions = Subscription::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('profile.billing', [
+            'user' => $user,
+            'subscriptions' => $subscriptions,
+            'lastSubscription' => $subscriptions->first(),
         ]);
     }
 

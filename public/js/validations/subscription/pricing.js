@@ -33,12 +33,14 @@ var KTPricingGeneral = function () {
                 if (button) {
                     button.setAttribute('data-period', 'month');
                     button.setAttribute('data-price-id', priceIds[plan].month);
+                    button.setAttribute('data-plan', plan); 
                 }
             } else if (type === 'annual') {
                 item.innerHTML = annualPrice;
                 if (button) {
                     button.setAttribute('data-period', 'annual');
                     button.setAttribute('data-price-id', priceIds[plan].annual);
+                    button.setAttribute('data-plan', plan); 
                 }
             }
         });

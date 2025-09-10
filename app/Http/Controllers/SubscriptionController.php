@@ -50,8 +50,6 @@ class SubscriptionController extends Controller
             ]);
         }
         $priceId = $request->input('price_id');
-
-        $priceId = $request->input('price_id');
         $period = $request->input('period'); // "month" o "annual"
         $plan = $request->input('plan'); // "pro" o "full"
 
@@ -83,45 +81,74 @@ class SubscriptionController extends Controller
         $sessionId = $request->get('session_id');
 
         if (!$sessionId) {
-            return view('checkout.failed', ['message' => 'No session_id received.']);
+            return redirect()
+                ->route('profile.billing')
+                ->with('error', 'No session_id received.');
         }
 
         try {
-            $session = Session::retrieve($sessionId);
+            $session = Session::retrieve([
+                'id' => $sessionId,
+                'expand' => ['line_items', 'subscription'],
+            ]);
         } catch (\Exception $e) {
-            return view('checkout.failed', ['message' => 'No se pudo consultar la sesión: ' . $e->getMessage()]);
+            return redirect()
+                ->route('profile.billing')
+                ->with('error', 'No se pudo consultar la sesión: ' . $e->getMessage());
         }
 
         $user = auth()->user();
+        $subscription = $session->subscription; // ya expandido
 
-        // Obtener la suscripción de Stripe para conocer fecha de finalización
-        $subscription = StripeSubscription::retrieve($session->subscription);
+        $endsAt = null;
+
+        // 1️⃣ Si Stripe nos da current_period_end, usamos eso
+        if (isset($subscription->current_period_end)) {
+            $endsAt = \Carbon\Carbon::createFromTimestamp($subscription->current_period_end);
+
+        // 2️⃣ Si está en periodo de prueba
+        } elseif (isset($subscription->trial_end)) {
+            $endsAt = \Carbon\Carbon::createFromTimestamp($subscription->trial_end);
+
+        // 3️⃣ Si no hay ninguno, calculamos según start_date + interval
+        } elseif (isset($subscription->start_date) && isset($session->metadata->interval)) {
+            $start = \Carbon\Carbon::createFromTimestamp($subscription->start_date);
+            $interval = $session->metadata->interval; // "month" o "annual"
+
+            if ($interval === 'month') {
+                $endsAt = $start->copy()->addMonth();
+            } elseif ($interval === 'annual') {
+                $endsAt = $start->copy()->addYear();
+            }
+        }
+
 
         // Guardar en la base de datos
         Subscription::updateOrCreate(
-            ['stripe_session_id' => $session->id],
+            ['stripe_subscription_id' => $subscription->id],
             [
                 'user_id' => $user->id,
-                'stripe_subscription_id' => $session->subscription,
+                'stripe_session_id' => $session->id,
                 'stripe_price_id' => $session->line_items->data[0]->price->id ?? '',
                 'plan_id' => $session->metadata->plan ?? '',
                 'interval' => $session->metadata->interval ?? '',
-                'amount' => $session->amount_total ?? 0,
+                'amount' => $session->line_items->data[0]->amount_total ?? 0,
                 'payment_status' => $session->payment_status,
-                'ends_at' => isset($subscription->current_period_end)
-                    ? \Carbon\Carbon::createFromTimestamp($subscription->current_period_end)
-                    : null,
+                'ends_at' => $endsAt,
             ]
         );
 
         if ($session->payment_status === 'paid') {
             $user->update(['is_subscribed' => true]);
 
-            return view('checkout.success', ['session' => $session]);
+            return redirect()
+                ->route('profile.billing')
+                ->with('success', '¡Tu suscripción se activó con éxito!');
         } else {
-            return view('checkout.failed', ['session' => $session, 'message' => 'El pago aún no se completó.']);
+            return redirect()
+                ->route('profile.billing')
+                ->with('error', 'El pago aún no se completó.');
         }
-
     }
 
 

@@ -47,7 +47,7 @@
 												<div class="fs-5x fw-semibold d-flex justify-content-center align-items-start lh-sm">
 												<span class="align-self-start fs-2 mt-3">$</span>0</div>
 												<div class="text-muted fw-bold mb-7">Monthly</div>
-												<a href="#" class="btn btn-light-primary fw-bold mx-auto">Start</a>
+												
 											</div>
 										</th>
 										<th class="text-center min-w-200px" data-plan="pro">
@@ -63,14 +63,15 @@
 													data-bs-toggle="modal" 
 													data-bs-target="#kt_modal_new_card"
 													data-price-id="price_1S2uiwAZ4W6MNo33I0hfYQxF"
-													data-period="month">
-													Start
+													data-period="month"
+													data-plan="pro">
+													Choose Plan
 												</a>
 											</div>
 										</th>
 										<th class="text-center min-w-200px" data-plan="full">
 											<div class="min-w-200px mb-15">
-												<div class="text-primary fs-3 fw-bold mb-7">Lifetime</div>
+												<div class="text-primary fs-3 fw-bold mb-7">Full</div>
 												<div class="fs-5x d-flex justify-content-center align-items-start">
 													<span class="fs-2 mt-3">$</span>
 													<span class="lh-sm fw-semibold" data-kt-plan-price-month="50" data-kt-plan-price-annual="500">50</span>
@@ -81,8 +82,9 @@
 													data-bs-toggle="modal" 
 													data-bs-target="#kt_modal_new_card"
 													data-price-id="price_1S2xI8AZ4W6MNo33tSWwpwR5"
-													data-period="month">
-													Start
+													data-period="month"
+													data-plan="full">
+													Choose Plan
 												</a>
 											</div>
 										</th>
@@ -537,6 +539,8 @@
 		modalEl.addEventListener('shown.bs.modal', async (event) => {
 			const button = event.relatedTarget;
 			const priceId = button.getAttribute('data-price-id');
+			const period = button.getAttribute('data-period');
+			const plan = button.getAttribute('data-plan');
 
 			const fetchClientSecret = async () => {
 				const response = await fetch("/subscription/create-checkout-session", {
@@ -546,7 +550,9 @@
 						"X-CSRF-TOKEN": "{{ csrf_token() }}"
 					},
 					body: JSON.stringify({
-						price_id: priceId
+						price_id: priceId,
+						period: period,
+						plan: plan
 					})
 				});
 				const { clientSecret } = await response.json();

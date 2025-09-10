@@ -141,17 +141,7 @@
 											<div class="menu-sub menu-sub-dropdown w-175px py-4">
 												<!--begin::Menu item-->
 												<div class="menu-item px-3">
-													<a href="../../demo8/dist/account/referrals.html" class="menu-link px-5">Referrals</a>
-												</div>
-												<!--end::Menu item-->
-												<!--begin::Menu item-->
-												<div class="menu-item px-3">
-													<a href="../../demo8/dist/account/billing.html" class="menu-link px-5">Billing</a>
-												</div>
-												<!--end::Menu item-->
-												<!--begin::Menu item-->
-												<div class="menu-item px-3">
-													<a href="../../demo8/dist/account/statements.html" class="menu-link px-5">Payments</a>
+													<a href="{{ route('profile.billing') }}" class="menu-link px-5">Billing</a>
 												</div>
 												<!--end::Menu item-->
 												<!--begin::Menu separator-->
