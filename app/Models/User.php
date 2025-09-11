@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Event;
+use Carbon\Carbon;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -62,7 +63,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isAdmin()
     {
-        return $this->role === 'administrator';
+        if ($this->role !== 'administrator') {
+            return false;
+        }
+
+        $subscription = $this->latestSubscription;
+
+        return $subscription 
+            && $subscription->ends_at 
+            && Carbon::parse($subscription->ends_at)->isFuture();
     }
 
     public function isSuperAdmin()
@@ -83,6 +92,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class);
+    }
+
+    public function latestSubscription()
+    {
+        return $this->hasOne(Subscription::class)->latestOfMany(); 
     }
 
     public function getUserStatusLabelAttribute()

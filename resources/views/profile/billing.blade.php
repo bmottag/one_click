@@ -194,6 +194,12 @@
 
 										<div class="fs-6 text-gray-600 fw-semibold mb-10">
 											{{ ucfirst($lastSubscription->plan_id) }} Plan
+											<br>
+											This plan gives you access to a platform for managing your business activities, including events, 
+											jobs, rentals, tours, beauty services, investments, and restaurants. You also have the option to generate a professional landing page for your company.
+											@if($lastSubscription->plan_id == 'full')
+											By selecting the Full Plan, you will also gain access to the Jobseek module and the ability to create agents for your business.
+											@endif
 										</div>
 
 										<div class="d-flex justify-content-end pb-0 px-0">
@@ -259,7 +265,7 @@
 											</tr>
 										@empty
 											<tr>
-												<td colspan="5" class="text-center text-muted">No hay suscripciones registradas.</td>
+												<td colspan="5" class="text-center text-muted">There are no subscriptions registered.</td>
 											</tr>
 										@endforelse
 									</tbody>
@@ -273,7 +279,7 @@
 					<!--end::Tab Content-->
 				</div>
 				<!--end::Billing Address-->
-				
+
 			</div>
 			<!--end::Content container-->
 		</div>

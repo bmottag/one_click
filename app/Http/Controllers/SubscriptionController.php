@@ -139,15 +139,18 @@ class SubscriptionController extends Controller
         );
 
         if ($session->payment_status === 'paid') {
-            $user->update(['is_subscribed' => true]);
+            $user->update([
+                'is_subscribed' => true,
+                'role' => 'administrator'
+            ]);
 
             return redirect()
                 ->route('profile.billing')
-                ->with('success', '¡Tu suscripción se activó con éxito!');
+                ->with('success', 'Your subscription has been successfully activated!');
         } else {
             return redirect()
                 ->route('profile.billing')
-                ->with('error', 'El pago aún no se completó.');
+                ->with('error', 'The payment has not been completed yet.');
         }
     }
 
