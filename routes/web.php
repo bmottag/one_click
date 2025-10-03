@@ -11,6 +11,7 @@ use App\Http\Controllers\BeautyController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\TourismController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\ReserveController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,6 +21,11 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('guest')->group(function () {
+    Route::get('/reserve', [ReserveController::class, 'create'])->name('reserve');
+    Route::post('/reserve', [ReserveController::class, 'store']);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');

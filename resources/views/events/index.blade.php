@@ -133,7 +133,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <div class="symbol symbol-50px me-3">
                                                         @php
-                                                            $firstImage = is_array($event->image) ? $event->image[0] : json_decode($event->image)[0] ?? null;
+                                                            $firstImage = is_array($event->images) ? $event->images[0] : json_decode($event->images)[0] ?? null;
                                                         @endphp
                                                         @if($firstImage)
                                                             <img src="{{ asset('storage/' . $firstImage) }}" class="" alt="" />
@@ -336,7 +336,7 @@
                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Select images that best represents your event."></i>
                             </label>
                             <!--begin::Dropzone-->
-                            <div class="dropzone" id="kt_modal_new_event_dropzone">
+                            <div class="dropzone" id="kt_modal_new_dropzone">
                                 <!--begin::Message-->
                                 <div class="dz-message needsclick">
                                     <!--begin::Icon-->
