@@ -25,6 +25,13 @@ Route::get('/dashboard', function () {
 Route::middleware('guest')->group(function () {
     Route::get('/reserve', [ReserveController::class, 'create'])->name('reserve');
     Route::post('/reserve', [ReserveController::class, 'store']);
+    // ---------------------------
+    // RESERVATION PAYMENT
+    // ---------------------------
+    Route::post('/reserve/create-checkout-session', [ReserveController::class, 'createSession']);
+    Route::get('/reserve/return', [ReserveController::class, 'return'])->name('reserve.return');
+
+
 });
 
 Route::middleware('auth')->group(function () {

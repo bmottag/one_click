@@ -14,6 +14,7 @@ var KTSignupGeneral = function() {
         dueDate.flatpickr({
             enableTime: true,
             dateFormat: "Y-m-d H:i",
+            minDate: "today" 
         });
 
         // Init form validation rules
@@ -55,17 +56,64 @@ var KTSignupGeneral = function() {
         submitButton.addEventListener('click', function (e) {
             e.preventDefault();
 
-            validator.validate().then(function(status) {
+            validator.validate().then(function (status) {
                 if (status === 'Valid') {
                     submitButton.setAttribute('data-kt-indicator', 'on');
                     submitButton.disabled = true;
-                    form.submit();
+
+                    const formData = new FormData(form);
+                    fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json',
+                        },
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(text => {
+                        let data;
+                        try {
+                            data = JSON.parse(text);
+                        } catch (e) {
+                            throw new Error('La réponse du serveur n\'est pas un JSON valide');
+                        }
+                        if (data.success) {
+                            // Mostrar el modal de Stripe
+                            var stripeModal = new bootstrap.Modal(document.getElementById('kt_modal_new_card'));
+                            stripeModal.show();
+
+                            // Pasar info a Stripe si tu backend devuelve reservation_id
+                            const checkoutDiv = document.getElementById('checkout');
+                            checkoutDiv.dataset.reservationId = data.reservation_id;
+                        } else {
+                            const errors = data.errors
+                                ? Object.values(data.errors).flat().join('\n')
+                                : (data.message || 'Erreur inconnue.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Erreur!',
+                                text: errors,
+                                confirmButtonText: 'OK',
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur de parsing:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erreur!',
+                            text: 'Une erreur est survenue lors du traitement de la réponse.',
+                            confirmButtonText: 'OK',
+                        });
+                    });
                 } else {
                     Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
+                        text: "Veuillez vérifier les champs du formulaire.",
                         icon: "error",
                         buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
+                        confirmButtonText: "Ok, compris!",
                         customClass: { confirmButton: "btn btn-primary" }
                     });
                 }
@@ -88,7 +136,6 @@ KTUtil.onDOMContentLoaded(function() {
 
     // === Elements ===
     const serviceSelect = document.getElementById("service");
-    const piecesDepartSelect = document.getElementById("pieces_depart");
     const equipeSelect = document.getElementById("equipe");
     const departGroup = document.getElementById("adresse_depart_group");
     const departLabel = document.getElementById("adresse_depart_label");
@@ -100,7 +147,9 @@ KTUtil.onDOMContentLoaded(function() {
     const noteResidentialPack = document.getElementById("note_residential_pack");
     const noteResidencialLongDistance = document.getElementById("note_residential_and_long_distance");
     const noteLongDistance = document.getElementById("note_long_distance");
-    const noteInstallations = document.getElementById("note_installations");
+    const noteInstallations1 = document.getElementById("note_installations_1");
+    const noteInstallations2 = document.getElementById("note_installations_2");
+    const noteCommercial = document.getElementById("note_commercial");
     const piecesDepart = document.getElementById("pieces_depart");
     const installationTypeGroup = document.getElementById("installation_type_group");
     const descriptionGroup = document.getElementById("description_group");
@@ -127,6 +176,10 @@ KTUtil.onDOMContentLoaded(function() {
                 { value: "equipe_2", text: "Équipe de 2 personnes" },
                 { value: "equipe_3", text: "Équipe de 3 personnes" }
             ],
+            medium: [
+                { value: "equipe_1", text: "Service conducteur seulement" },
+                { value: "equipe_3", text: "Équipe de 3 personnes" }
+            ],
             large: [
                 { value: "equipe_1", text: "Service conducteur seulement" },
                 { value: "equipe_3", text: "Équipe de 3 personnes" },
@@ -136,6 +189,9 @@ KTUtil.onDOMContentLoaded(function() {
         residential_pack: {
             small: [
                 { value: "equipe_2", text: "Équipe de 2 personnes" },
+                { value: "equipe_3", text: "Équipe de 3 personnes" }
+            ],
+            medium: [
                 { value: "equipe_3", text: "Équipe de 3 personnes" }
             ],
             large: [
@@ -149,6 +205,10 @@ KTUtil.onDOMContentLoaded(function() {
                 { value: "equipe_2", text: "Équipe de 2 personnes" },
                 { value: "equipe_3", text: "Équipe de 3 personnes" }
             ],
+            medium: [
+                { value: "equipe_1", text: "Service conducteur seulement" },
+                { value: "equipe_3", text: "Équipe de 3 personnes" }
+            ],
             large: [
                 { value: "equipe_1", text: "Service conducteur seulement" },
                 { value: "equipe_3", text: "Équipe de 3 personnes" },
@@ -159,10 +219,10 @@ KTUtil.onDOMContentLoaded(function() {
 
     function updateEquipeOptions() {
         const service = serviceSelect.value;
-        const pieces = parseInt(piecesDepartSelect.value, 10); 
+        const pieces = parseInt(piecesDepart.value, 10); 
         equipeSelect.innerHTML = '<option value=""></option>';
 
-        let range = pieces >= 5 ? "large" : "small";
+        let range = pieces > 5 ? "large" : (pieces > 2 ? "medium" : "small");
         if (equipeOptions[service]) {
             equipeOptions[service][range].forEach(opt => {
                 const option = document.createElement("option");
@@ -212,7 +272,9 @@ KTUtil.onDOMContentLoaded(function() {
         noteResidentialPack.style.display = "none";
         noteResidencialLongDistance.style.display = "none";
         noteLongDistance.style.display = "none";
-        noteInstallations.style.display = "none";
+        noteInstallations1.style.display = "none";
+        noteInstallations2.style.display = "none";
+        noteCommercial.style.display = "none";
         noteCustom.style.display = "none";
         piecesDepart.style.display = "block";
         installationTypeGroup.style.display = "none";
@@ -260,6 +322,7 @@ KTUtil.onDOMContentLoaded(function() {
                 destinationGroup.style.display = "block";
                 departLabel.textContent = "Adresse de départ";
                 noteResidential.style.display = "block";
+                noteCommercial.style.display = "block";
                 piecesDepart.style.display = "none";
                 descriptionGroup.style.display = "block";
                 descriptionLabelSub.innerHTML = `
@@ -290,7 +353,8 @@ KTUtil.onDOMContentLoaded(function() {
                 departGroup.style.display = "block";
                 destinationGroup.style.display = "none";
                 departLabel.textContent = "Adresse";
-                noteInstallations.style.display = "block";
+                noteInstallations1.style.display = "block";
+                noteInstallations2.style.display = "block";
                 piecesDepart.style.display = "none";
                 installationTypeGroup.style.display = "block";
                 descriptionGroup.style.display = "block";
@@ -316,7 +380,7 @@ KTUtil.onDOMContentLoaded(function() {
             }
 
             // Revalidar al cambiar el valor
-            piecesDepartSelect.addEventListener('change', () => {
+            piecesDepart.addEventListener('change', () => {
                 try {
                     validator.revalidateField('pieces_depart');
                 } catch(e) {}
@@ -337,10 +401,10 @@ KTUtil.onDOMContentLoaded(function() {
          addPiecesValidator(); 
     });
 
-    piecesDepartSelect.addEventListener('change', () => {
+    piecesDepart.addEventListener('change', () => {
         updateEquipeOptions();
-        applyDynamicValidators(serviceSelect.value);
-         addPiecesValidator(); 
+        //applyDynamicValidators(serviceSelect.value);
+         //addPiecesValidator(); 
     });
 
     // Inicialización

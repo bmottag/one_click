@@ -40,4 +40,9 @@ return [
         'key'    => env('STRIPE_KEY'),
     ],
 
+    'stripereserve' => [
+        'secret' => env('STRIPE_SECRET_RESERVE'),
+        'key'    => env('STRIPE_KEY_RESERVE'),
+        'price' => env('STRIPE_RESERVE_PRICE_ID'),
+    ],
 ];
