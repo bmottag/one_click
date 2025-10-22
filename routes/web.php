@@ -14,6 +14,9 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\ReserveController;
 use Illuminate\Support\Facades\Route;
 
+use App\Mail\ReservePaymentConfirmedMail;
+use Illuminate\Support\Facades\Mail;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -30,6 +33,40 @@ Route::middleware('guest')->group(function () {
     // ---------------------------
     Route::post('/reserve/create-checkout-session', [ReserveController::class, 'createSession']);
     Route::get('/reserve/return', [ReserveController::class, 'return'])->name('reserve.return');
+
+
+
+
+
+
+
+
+
+
+
+Route::get('/test-mail', function () {
+
+    $reserve = App\Models\Reserve::where('id', 2)->first();
+
+    // Enviar usando la cola (recomendado con Mailpit)
+    Mail::to($reserve->email)->queue(new ReservePaymentConfirmedMail($reserve));
+
+    // Renderizar para ver en pantalla
+    return (new ReservePaymentConfirmedMail($reserve))->render();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 });

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reserve;
+use App\Mail\ReservePaymentConfirmedMail;
+use App\Mail\ReserveAdminPaymentNotificationMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Stripe\Stripe;
@@ -17,7 +20,7 @@ class ReserveController extends Controller
      */
     public function create(): View
     {
-        return view('reserve.form');
+        return view('reserve.layout');
     }
 
     /**
@@ -183,6 +186,14 @@ class ReserveController extends Controller
                     'amount_paid' => $amountPaid,
                     'currency' => $currency,
                 ]);
+
+                // 👉 Enviar correo de confirmación
+                try {
+                    Mail::to($reserve->email)->queue(new ReservePaymentConfirmedMail($reserve));
+                    Mail::to(config('mail.admin_address'))->queue(new ReserveAdminPaymentNotificationMail($reserve));
+                } catch (\Exception $e) {
+                    \Log::error('Error al enviar correos de confirmación de pago: ' . $e->getMessage());
+                }
             }
 
             return redirect()
