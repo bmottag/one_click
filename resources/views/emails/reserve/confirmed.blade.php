@@ -27,16 +27,49 @@ $equipeText = match($reserve->equipe ?? '') {
     'equipe_4' => '2 équipes de 3 personnes',
     default => 'Non assignée'
 };
+
+// Price messages mapping
+$priceMessages = [
+    "residential" => [
+        "equipe_1" => "Vous avez sélectionné <strong>Service conducteur seulement</strong>. <br>Le tarif horaire est de <strong>100$ / heure</strong>. <br>Le travail minimum est de 3 heures.",
+        "equipe_2" => "Vous avez sélectionné <strong>Équipe de 2 personnes</strong>. <br>Le tarif horaire est de <strong>125$ / heure</strong>. <br>Le travail minimum est de 3 heures.",
+        "equipe_3" => "Vous avez sélectionné <strong>Équipe de 3 personnes</strong>. <br>Le tarif horaire est de <strong>150$ / heure</strong>. <br>Le travail minimum est de 3 heures.",
+        "equipe_4" => "Vous avez sélectionné <strong>2 équipes de 3 personnes</strong>. <br>Le tarif horaire est de <strong>360$ / heure</strong>. <br>Le travail minimum est de 3 heures.",
+    ],
+    "residential_pack" => [
+        "equipe_2" => "Vous avez sélectionné <strong>Équipe de 2 personnes</strong>. <br>Le tarif horaire est de <strong>125$ / heure</strong>. <br>Le travail minimum est de 3 heures.",
+        "equipe_3" => "Vous avez sélectionné <strong>Équipe de 3 personnes</strong>. <br>Le tarif horaire est de <strong>150$ / heure</strong>. <br>Le travail minimum est de 3 heures.",
+        "equipe_4" => "Vous avez sélectionné <strong>2 équipes de 3 personnes</strong>. <br>Le tarif horaire est de <strong>360$ / heure</strong>. <br>Le travail minimum est de 3 heures.",
+    ],
+    "longue_distance" => [
+        "equipe_1" => "Vous avez sélectionné <strong>Service conducteur seulement</strong>. <br>Le tarif horaire est de <strong>100$ / heure</strong>. <br>Le travail minimum est de 3 heures.",
+        "equipe_2" => "Vous avez sélectionné <strong>Équipe de 2 personnes</strong>. <br>Le tarif horaire est de <strong>125$ / heure</strong>. <br>Le travail minimum est de 3 heures.",
+        "equipe_3" => "Vous avez sélectionné <strong>Équipe de 3 personnes</strong>. <br>Le tarif horaire est de <strong>150$ / heure</strong>. <br>Le travail minimum est de 3 heures.",
+        "equipe_4" => "Vous avez sélectionné <strong>2 équipes de 3 personnes</strong>. <br>Le tarif horaire est de <strong>360$ / heure</strong>. <br>Le travail minimum est de 3 heures.",
+    ],
+    "commercial" => [
+        "default" => "<strong>Équipe de 3 personnes.</strong> Tarif horaire : <strong>180$ / heure.</strong> <br>Minimum de 3 heures de travail. <br>Cette équipe dispose d'un camion de 22 pieds, et le prix final sera ajusté après une évaluation complète de vos besoins."
+    ],
+    "installations" => [
+        "default" => "Le tarif horaire est de <strong>60$ / heure</strong>. <br>Le travail minimum est de 3 heures. <br>Ce tarif correspond à une équipe de deux personnes. Le prix final sera ajusté après avoir bien évalué vos besoins."
+    ]
+];
+
+// Determine price message
+$priceMessage = '';
+if(in_array($reserve->service, ['commercial', 'installations'])) {
+    $priceMessage = $priceMessages[$reserve->service]['default'];
+} else {
+    $priceMessage = $priceMessages[$reserve->service][$reserve->equipe ?? ''] ?? '';
+}
 @endphp
 
 
 @component('mail::message')
 
-# Paiement reçu avec succès !
-
 Bonjour **{{ $reserve->name }}**,
 
-Votre paiement pour la réservation a été confirmé avec succès.
+Nous avons bien reçu votre paiement et votre réservation est confirmée avec succès.
 
 
 ### 🧾 Détails du paiement:
@@ -53,9 +86,14 @@ Votre paiement pour la réservation a été confirmé avec succès.
 
 @if($equipeText)- **Équipe assignée:** {{ $equipeText }}@endif
 
+@if($reserve->event_description)- **Détails supplémentaires:** {{ $reserve->event_description }}@endif
+
+### Tarif estimé
+{!! $priceMessage !!}
+
 
 Merci pour votre confiance.  
-Nous vous contacterons si des informations supplémentaires sont nécessaires.
+Nous restons à votre disposition pour toute question ou information supplémentaire.
 
 Cordialement,  
 **L'équipe du support**
