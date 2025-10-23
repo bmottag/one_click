@@ -51,6 +51,18 @@
         .animate-float {
             animation: float 3s ease-in-out infinite;
         }
+
+        /* Modal visibility fixes */
+        .modal {
+            z-index: 2000 !important;
+        }
+        .modal-backdrop {
+            z-index: 1900 !important;
+        }
+        #checkout {
+            position: relative;
+            z-index: 2100 !important;
+        }
     </style>
 
 </head>
@@ -128,8 +140,10 @@
             <h1 class="text-3xl md:text-4xl font-semibold text-[#002319] mb-8 text-center">
                 Réserver votre déménagement
             </h1>
-            <p class="text-gray-600 text-lg md:text-xl text-center mb-10">
+            <p class="text-gray-600 text-lg md:text-xl text-center mb-1">
                 Remplissez les informations ci-dessous et notre équipe vous contactera pour confirmer les détails.
+                <br>
+                Pour finaliser votre réservation, <b>un acompte de 200 $ est requis</b>.
             </p>
 
             <!-- Formulaire -->
@@ -170,6 +184,7 @@
 
             <!-- Liens -->
             <div class="grid grid-cols-2 gap-10 md:gap-20 flex-1">
+                <!--
                 <div>
                     <h3 class="text-xl md:text-2xl font-semibold mb-6 text-[#00da5b]">Services</h3>
                     <ul class="space-y-3 text-[#829e8e] text-base md:text-lg">
@@ -179,15 +194,21 @@
                         <li><a href="#" class="hover:text-white transition-colors">Transport longue distance</a></li>
                     </ul>
                 </div>
-
+                -->
                 <div>
                     <h3 class="text-xl md:text-2xl font-semibold mb-6 text-[#00da5b]">Entreprise</h3>
                     <ul class="space-y-3 text-[#829e8e] text-base md:text-lg">
                         <li><a href="https://logistiquepro.ca/#hero" class="hover:text-white transition-colors">Accueil</a></li>
+                        <li><a href="https://logistiquepro.ca/#services" class="hover:text-white transition-colors">Services</a></li>
                         <li><a href="https://logistiquepro.ca/#about" class="hover:text-white transition-colors">À propos</a></li>
                         <li><a href="https://logistiquepro.ca/#conseils" class="hover:text-white transition-colors">Conseils</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl md:text-2xl font-semibold mb-6 text-[#00da5b]">More</h3>
+                    <ul class="space-y-3 text-[#829e8e] text-base md:text-lg">
                         <li><a href="https://logistiquepro.ca/#contact" class="hover:text-white transition-colors">Nous joindre</a></li>
-                        <li><a href="{{ route('reserve') }}" class="hover:text-white transition-colors">Réserver votre équipe</a></li>
                     </ul>
                 </div>
 

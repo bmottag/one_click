@@ -14,7 +14,10 @@ var KTSignupGeneral = function() {
         dueDate.flatpickr({
             enableTime: true,
             dateFormat: "Y-m-d H:i",
-            minDate: "today" 
+            minDate: "today",
+            defaultHour: 7,
+            defaultMinute: 0,
+            time_24hr: true,
         });
 
         // Init form validation rules
@@ -147,9 +150,7 @@ KTUtil.onDOMContentLoaded(function() {
     const noteResidentialPack = document.getElementById("note_residential_pack");
     const noteResidencialLongDistance = document.getElementById("note_residential_and_long_distance");
     const noteLongDistance = document.getElementById("note_long_distance");
-    const noteInstallations1 = document.getElementById("note_installations_1");
-    const noteInstallations2 = document.getElementById("note_installations_2");
-    const noteCommercial = document.getElementById("note_commercial");
+    const noteInstallations = document.getElementById("note_installations");
     const piecesDepart = document.getElementById("pieces_depart");
     const installationTypeGroup = document.getElementById("installation_type_group");
     const descriptionGroup = document.getElementById("description_group");
@@ -272,9 +273,7 @@ KTUtil.onDOMContentLoaded(function() {
         noteResidentialPack.style.display = "none";
         noteResidencialLongDistance.style.display = "none";
         noteLongDistance.style.display = "none";
-        noteInstallations1.style.display = "none";
-        noteInstallations2.style.display = "none";
-        noteCommercial.style.display = "none";
+        noteInstallations.style.display = "none";
         noteCustom.style.display = "none";
         piecesDepart.style.display = "block";
         installationTypeGroup.style.display = "none";
@@ -322,7 +321,6 @@ KTUtil.onDOMContentLoaded(function() {
                 destinationGroup.style.display = "block";
                 departLabel.textContent = "Adresse de départ";
                 noteResidential.style.display = "block";
-                noteCommercial.style.display = "block";
                 piecesDepart.style.display = "none";
                 descriptionGroup.style.display = "block";
                 descriptionLabelSub.innerHTML = `
@@ -353,8 +351,7 @@ KTUtil.onDOMContentLoaded(function() {
                 departGroup.style.display = "block";
                 destinationGroup.style.display = "none";
                 departLabel.textContent = "Adresse";
-                noteInstallations1.style.display = "block";
-                noteInstallations2.style.display = "block";
+                noteInstallations.style.display = "block";
                 piecesDepart.style.display = "none";
                 installationTypeGroup.style.display = "block";
                 descriptionGroup.style.display = "block";
@@ -411,4 +408,80 @@ KTUtil.onDOMContentLoaded(function() {
     toggleAdresseFields();
     updateEquipeOptions();
     applyDynamicValidators(serviceSelect.value);
+
+
+    const priceDiv = document.getElementById("div_price");
+    const priceMessage = document.getElementById("price_message");
+
+    // Prices mapping
+    const prices = {
+        "residential": {
+            "equipe_1": 100,
+            "equipe_2": 125,
+            "equipe_3": 150,
+            "equipe_4": 360
+        },
+        "residential_pack": {
+            "equipe_2": 125,
+            "equipe_3": 150,
+            "equipe_4": 360
+        },
+        "longue_distance": {
+            "equipe_1": 100,
+            "equipe_2": 125,
+            "equipe_3": 150,
+            "equipe_4": 360
+        },
+        "commercial": {
+            "default": "<strong>Équipe de 3 personnes. </strong>Tarif horaire: <strong>180$ / heure.</strong> <br>Minimum de 3 heures de travail. <br>Cette équipe dispose d'un camion de 22 pieds, et le prix final sera ajusté après une évaluation complète de vos besoins."
+        },
+        "installations": {
+            "default": "Le tarif horaire est de <strong>60$ / heure </strong>. <br>Le travail minimum est de 3 heures. <br> Ce tarif correspond à une équipe de deux personnes. Le prix final sera ajusté après avoir bien évalué vos besoins."
+        }
+    };
+
+    // Friendly French message for selected équipe
+    function getPriceMessage(service, equipe) {
+        if (!service) return "";
+
+        // If it's commercial or installations without équipe, use default
+        if ((service === "commercial" || service === "installations") && !equipe) {
+            return prices[service].default;
+        }
+
+        const price = prices[service]?.[equipe];
+        if (!price) return "Veuillez sélectionner une équipe pour voir le prix.";
+
+        let equipeName = "";
+        switch(equipe) {
+            case "equipe_1": equipeName = "Service conducteur seulement"; break;
+            case "equipe_2": equipeName = "Équipe de 2 personnes"; break;
+            case "equipe_3": equipeName = "Équipe de 3 personnes"; break;
+            case "equipe_4": equipeName = "2 Équipes de 3 personnes"; break;
+        }
+
+        return `Vous avez sélectionné <strong>${equipeName}</strong>. <br>Le tarif horaire est de <strong>${price}$ / heure</strong>. <br>Le travail minimum est de 3 heures.`;
+    }
+
+    // Function to update price note
+    function updatePriceNote() {
+        const service = serviceSelect.value;
+        const equipe = equipeSelect.value;
+
+        if (!service) {
+            priceDiv.style.display = "none"; // hide if no service selected
+            return;
+        }
+
+        priceDiv.style.display = "block"; // show the note
+        priceMessage.innerHTML = getPriceMessage(service, equipe);
+    }
+
+    // === Listeners ===
+    serviceSelect.addEventListener("change", updatePriceNote);
+    equipeSelect.addEventListener("change", updatePriceNote);
+
+    // Initialize on page load
+    updatePriceNote();
+
 });

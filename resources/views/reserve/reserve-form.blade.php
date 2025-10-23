@@ -263,12 +263,8 @@
 
                                         </div>
 
-                                        <div id="note_installations_1" class="fs-6 text-gray-700 mb-3" style="display:none;">
+                                        <div id="note_installations" class="fs-6 text-gray-700 mb-3" style="display:none;">
                                             Veuillez noter que nos services n'incluent pas les installations électriques ni de plomberie.
-                                        </div>
-
-                                        <div id="note_installations_2" class="fs-6 text-gray-700 mb-3" style="display:none;">
-                                            Ce tarif correspond à une équipe de deux personnes. Le prix final sera ajusté après avoir bien évalué vos besoins.
                                         </div>
 
                                         <div id="note_residential_and_long_distance" class="fs-6 text-gray-700 mb-3" style="display:none;">
@@ -281,9 +277,16 @@
                                             <br>Vous y trouverez tous les détails utiles pour bien préparer votre déménagement.
                                         </div>
 
-                                        <div id="note_commercial" class="fs-6 text-gray-700 mb-3" style="display:none;">
-                                            Ce tarif correspond à une équipe de trois personnes avec un camion de 22 pieds. Le prix final sera ajusté après avoir bien évalué vos besoins.
-                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <!-- Price -->
+                            <div id="div_price" class="notice bg-light-warning rounded border-warning border p-6" style="display:none;">
+                                <div class="d-flex flex-column">
+                                    <h4 class="text-gray-900 fw-bold">Tarif estimé</h4>
+                                    <div id="price_message" class="fs-6 text-gray-700 mt-2">
+                                        <!-- Message will be inserted here dynamically -->
                                     </div>
                                 </div>
                             </div>
