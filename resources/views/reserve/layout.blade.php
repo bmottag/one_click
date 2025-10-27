@@ -137,17 +137,122 @@
     <!-- ===================================== -->
     <main class="flex-grow py-16 px-4 md:px-8 lg:px-16 animate-fade-in">
         <div class="max-w-[900px] mx-auto bg-gray-50 dark:bg-gray-200 rounded-2xl shadow-lg border border-gray-300 p-8 md:p-12 transition-all duration-300 hover:shadow-xl">
-            <h1 class="text-3xl md:text-4xl font-semibold text-[#002319] mb-8 text-center">
-                Réserver votre déménagement
-            </h1>
-            <p class="text-gray-600 text-lg md:text-xl text-center mb-1">
-                Remplissez les informations ci-dessous et notre équipe vous contactera pour confirmer les détails.
-                <br>
-                Pour finaliser votre réservation, <b>un acompte de 200 $ est requis</b>.
-            </p>
+            @if(!session('success'))
+                <h1 class="text-3xl md:text-4xl font-semibold text-[#002319] mb-8 text-center">
+                    Réserver votre déménagement
+                </h1>
+                <p class="text-gray-600 text-lg md:text-xl text-center mb-1">
+                    Remplissez les informations ci-dessous et notre équipe vous contactera pour confirmer les détails.
+                    <br>
+                    Pour finaliser votre réservation, <b>un acompte de 200 $ est requis</b>.
+                </p>
 
-            <!-- Formulaire -->
-            @include('reserve.reserve-form')
+                <!-- Formulaire -->
+                @include('reserve.reserve-form')
+            @endif
+
+            @if(session('success'))
+                <div class="text-center space-y-10 py-12 animate-fade-in">
+
+                    <!-- ✅ Ícono de confirmación -->
+                    <div class="flex justify-center">
+                        <div class="bg-[#00da5b]/10 p-6 rounded-full animate-float">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-[#00da5b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- 🎉 Título y mensaje -->
+                    <h1 class="text-4xl font-semibold text-[#002319]">Paiement confirmé!</h1>
+                    <p class="text-gray-700 text-lg max-w-2xl mx-auto">
+                        Merci pour votre confiance. Votre réservation a été enregistrée avec succès.  
+                        Vous recevrez un courriel de confirmation dans quelques instants.
+                    </p>
+
+                    <!-- 🔁 Bouton nouvelle réservation -->
+                    <div>
+                        <a href="{{ route('reserve') }}"
+                            class="inline-block bg-[#00da5b] hover:bg-[#00c14d] text-white font-semibold py-3 px-8 rounded-xl text-lg transition-all duration-300 shadow-md hover:shadow-lg">
+                            Faire une nouvelle réservation
+                        </a>
+                    </div>
+
+                    <!-- 💬 Résumé de la réservation -->
+                    @if(session('reservation'))
+                        @php $reservation = session('reservation'); @endphp
+
+                        <div class="max-w-3xl mx-auto mt-12 text-left bg-white rounded-2xl shadow-lg border border-gray-200 p-8 space-y-5">
+                            <h2 class="text-2xl font-semibold text-[#002319] mb-4 border-b pb-3">Résumé de votre réservation</h2>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-8 text-gray-800">
+                                <p><strong>Date:</strong>
+                                    {{ $reservation->reserve_date ? \Carbon\Carbon::parse($reservation->reserve_date)->format('d/m/Y H:i') : 'Non spécifiée' }}
+                                </p>
+                                <p><strong>Service:</strong>
+                                    @switch($reservation->service)
+                                        @case('residential') Déménagement résidentiel @break
+                                        @case('residential_pack') Déménagement résidentiel avec emballage @break
+                                        @case('commercial') Déménagement commercial @break
+                                        @case('longue_distance') Transport longue distance @break
+                                        @case('installations') Installations spéciales @break
+                                        @default Service inconnu
+                                    @endswitch
+                                </p>
+
+                                <p class="md:col-span-2">
+                                    <strong>Adresse de départ:</strong>
+                                    {{ $reservation->no_rue_depart }},
+                                    {{ $reservation->ville_depart }},
+                                    {{ $reservation->code_postal_depart }}
+                                </p>
+
+                                @if($reservation->no_rue_destination || $reservation->ville_destination)
+                                    <p class="md:col-span-2">
+                                        <strong>Adresse de destination:</strong>
+                                        {{ $reservation->no_rue_destination ?? '' }},
+                                        {{ $reservation->ville_destination ?? '' }},
+                                        {{ $reservation->code_postal_destination ?? '' }}
+                                    </p>
+                                @endif
+
+                                @if($reservation->equipe)
+                                    <p class="md:col-span-2">
+                                        <strong>Équipe assignée:</strong>
+                                        @switch($reservation->equipe)
+                                            @case('equipe_1') Service conducteur seulement @break
+                                            @case('equipe_2') Équipe de 2 personnes @break
+                                            @case('equipe_3') Équipe de 3 personnes @break
+                                            @case('equipe_4') 2 Équipes de 3 personnes @break
+                                            @default Non assignée
+                                        @endswitch
+                                    </p>
+                                @endif
+
+                                @if($reservation->event_description)
+                                    <p class="md:col-span-2">
+                                        <strong>Détails supplémentaires:</strong> {{ $reservation->event_description }}
+                                    </p>
+                                @endif
+
+                                <p class="text-lg font-medium text-[#00da5b] md:col-span-2">
+                                    <strong>Montant payé :</strong>
+                                    {{ number_format($reservation->amount_paid, 2, ',', ' ') }} {{ strtoupper($reservation->currency) }}
+                                </p>
+                            </div>
+
+                            <div class="mt-6 text-gray-600 text-sm">
+                                Un courriel de confirmation a été envoyé à <strong>{{ $reservation->email }}</strong>.  
+                                Si vous avez des questions, n’hésitez pas à nous contacter.
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            @elseif(session('error'))
+                <div class="alert alert-danger text-center mb-10">
+                    <strong>Erreur:</strong> {{ session('error') }}
+                </div>
+            @endif
         </div>
     </main>
 
@@ -240,11 +345,110 @@
         </div>
     </footer>
 
+    <!--begin::Modals-->
+    <!--begin::Modal - New Card-->
+    <div class="modal fade" id="kt_modal_new_card" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header">
+                    <!--begin::Modal title-->
+                    <h1 class="text-3xl md:text-4xl font-semibold">Continue to Payment</h1>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <!--begin::Form-->
+                    <div id="checkout"></div>
+                    <!--end::Form-->
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Card-->
+    <!--end::Modals-->
 
     <!-- JS de Keen -->
     <script>var hostUrl = "{{ asset('template/assets') }}/";</script>
     <script src="{{ asset('template/assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('template/assets/js/scripts.bundle.js') }}"></script>
+    <script src="{{ asset('js/validations/reserve/general.js') }}"></script>
+
+    <script src="https://js.stripe.com/basil/stripe.js"></script>
+
+    <script>
+        // -----------------------------
+        // Stripe Checkout en el modal
+        // -----------------------------
+        let checkout = null;
+        const stripe = Stripe("{{ config('services.stripereserve.key') }}");
+        const modalEl = document.getElementById('kt_modal_new_card');
+
+        modalEl.addEventListener('shown.bs.modal', async () => {
+            const reservationId = document.getElementById('checkout').dataset.reservationId;
+            if (!reservationId) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: 'Reservation ID manquant.'
+                });
+                return;
+            }
+
+            const fetchClientSecret = async () => {
+                const response = await fetch("/reserve/create-checkout-session", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        reservation_id: reservationId
+                    })
+                });
+
+                const { clientSecret } = await response.json();
+                return clientSecret;
+            };
+
+            try {
+                document.getElementById('checkout').innerHTML = '';
+                checkout = await stripe.initEmbeddedCheckout({ fetchClientSecret });
+                checkout.mount('#checkout');
+            } catch(err) {
+                console.error("Stripe Checkout error:", err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur Stripe',
+                    text: 'Impossible de charger la page de paiement. ' + err.message,
+                });
+            }
+        });
+
+        // al cerrar el modal → recarga la página
+        modalEl.addEventListener('hidden.bs.modal', function () {
+            location.reload();
+        });
+
+    </script>
 
     <script>
         function toggleMobileMenu() {
