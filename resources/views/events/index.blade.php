@@ -115,10 +115,10 @@
                                         <th class="min-w-150px">Event</th>
                                         <th class="text-start min-w-100px">Place</th>
                                         <th class="text-start min-w-200px">Description</th>
-                                        <th class="text-end min-w-100px">Date</th>
-                                        <th class="text-end min-w-100px">Status</th>
-                                        <th class="text-start min-w-100px">Link</th>
-                                        <th class="text-start min-w-100px">Instagram</th>
+                                        <th class="text-center min-w-100px">Date</th>
+                                        <th class="text-center min-w-100px">Status</th>
+                                        <th class="text-center min-w-100px">Link</th>
+                                        <th class="text-center min-w-100px">Instagram</th>
                                         <th class="text-end min-w-70px">Actions</th>
                                     </tr>
                                     <!--end::Table row-->
@@ -153,9 +153,11 @@
                                                 <span>{{ $event->description }}</span>
                                             </td>
 
-                                            <td class="text-end pe-0">{{ $event->date->format('M j, Y') }}</td>
+                                            <td class="text-center pe-0">
+                                                {{ \Carbon\Carbon::parse($event->date)->format('M d, Y · H:i') }}
+                                            </td>
 
-                                            <td class="text-end pe-0">
+                                            <td class="text-center pe-0">
                                                 @php
                                                     $today = date('Y-m-d');
 
@@ -166,7 +168,7 @@
                                                 <div class="badge badge-light-{{ $style }}">{{ $state }}</div>
                                                 <!--end::Badges-->
                                             </td>
-                                            <td class="text-start pe-0">
+                                            <td class="text-center pe-0">
                                                 @if ($event->link)
                                                     @php
                                                         $link = Str::startsWith($event->link, ['http://', 'https://']) ? $event->link : 'https://' . $event->link;

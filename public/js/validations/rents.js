@@ -17,6 +17,7 @@ var KTModalNewTarget = function () {
 		dueDate.flatpickr({
 			enableTime: false,
 			dateFormat: "Y-m-d",
+            minDate: "today"
 		});
 
         // Dropzone config

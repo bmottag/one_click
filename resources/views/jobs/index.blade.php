@@ -115,8 +115,8 @@
                                             <th class="text-start min-w-100px">Company</th>
                                             <th class="text-start min-w-200px">Description</th>
                                             <th class="text-center min-w-100px">Contact Number</th>
-                                            <th class="text-start min-w-100px">Due Date</th>
-                                            <th class="text-end min-w-100px">Status</th>
+                                            <th class="text-center min-w-100px">Due Date</th>
+                                            <th class="text-center min-w-100px">Status</th>
                                             <th class="text-end min-w-70px">Actions</th>
                                         </tr>
                                         <!--end::Table row-->
@@ -145,9 +145,9 @@
                                                     <span>{{ $job->contact_number }}</span>
                                                 </td>
 
-                                                <td class="text-end pe-0">{{ $job->due_date->format('M j, Y') }}</td>
+                                                <td class="text-center pe-0">{{ $job->due_date->format('M j, Y') }}</td>
 
-                                                <td class="text-end pe-0">
+                                                <td class="text-center pe-0">
                                                     @php
                                                         $today = date('Y-m-d');
 

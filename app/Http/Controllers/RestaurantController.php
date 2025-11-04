@@ -60,10 +60,26 @@ class RestaurantController extends Controller
             'email' => 'required|email|max:255',
             'images' => 'required|array',
             'images.*' => 'image|mimes:jpg,jpeg,png|max:5120', // 5MB por archivo
-            'link' => 'nullable|url|max:150',
-            'facebook' => 'nullable|url|max:150',
-            'instagram' => 'nullable|url|max:150',
-            'youtube' => 'nullable|url|max:150',
+            'link' => [
+                                'nullable',
+                                'regex:/^(https?:\/\/)?(www\.)?[a-z0-9\-]+(\.[a-z]{2,})(\/.*)?$/i',
+                                'max:150',
+                            ],
+            'facebook' => [
+                                'nullable',
+                                'regex:/^(https?:\/\/)?(www\.)?[a-z0-9\-]+(\.[a-z]{2,})(\/.*)?$/i',
+                                'max:150',
+                            ],
+            'instagram' => [
+                                'nullable',
+                                'regex:/^(https?:\/\/)?(www\.)?[a-z0-9\-]+(\.[a-z]{2,})(\/.*)?$/i',
+                                'max:150',
+                            ],
+            'youtube' => [
+                                'nullable',
+                                'regex:/^(https?:\/\/)?(www\.)?[a-z0-9\-]+(\.[a-z]{2,})(\/.*)?$/i',
+                                'max:150',
+                            ],
         ]);
 
         if ($validator->fails()) {

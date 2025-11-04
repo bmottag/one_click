@@ -34,41 +34,6 @@ Route::middleware('guest')->group(function () {
     Route::post('/reserve/create-checkout-session', [ReserveController::class, 'createSession']);
     Route::get('/reserve/return', [ReserveController::class, 'return'])->name('reserve.return');
 
-
-
-
-
-
-
-
-
-
-
-Route::get('/test-mail', function () {
-
-    $reserve = App\Models\Reserve::where('id', 2)->first();
-
-    // Enviar usando la cola (recomendado con Mailpit)
-    Mail::to($reserve->email)->queue(new ReservePaymentConfirmedMail($reserve));
-
-    // Renderizar para ver en pantalla
-    return (new ReservePaymentConfirmedMail($reserve))->render();
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
 
 Route::middleware('auth')->group(function () {

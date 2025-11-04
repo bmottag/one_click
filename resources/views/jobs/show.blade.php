@@ -92,7 +92,7 @@
                             <!--begin::Col-->
                             <div class="col-md-6 col-xl-4">
                                 <!--begin::Card-->
-                                <a href="../../demo8/dist/apps/projects/project.html" class="card border-hover-primary">
+                                <div class="card border-hover-primary">
                                     <!--begin::Card header-->
                                     <div class="card-header border-0 pt-9">
                                         <!--begin::Card Title-->
@@ -135,16 +135,26 @@
                                             </div>
                                             <!--end::Due-->
                                             <!--begin::Budget-->
-                                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                                <div class="fs-6 text-gray-800 fw-bold">{{ $job->contact_number }}</div>
+                                            @php
+                                                // Formatear el número (ejemplo: 1234567890 → (123) 456-7890)
+                                                $formattedPhone = preg_replace('/(\d{3})(\d{3})(\d{4})/', '($1) $2-$3', $job->contact_number);
+                                            @endphp
+
+                                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3 text-center hover:bg-light transition">
+                                                <a href="tel:{{ preg_replace('/\D/', '', $job->contact_number) }}" class="text-decoration-none">
+                                                    <div class="fs-6 text-primary fw-bold hover:underline">
+                                                        {{ $formattedPhone }}
+                                                    </div>
+                                                </a>
                                                 <div class="fw-semibold text-gray-400">Contact Number</div>
                                             </div>
+
                                             <!--end::Budget-->
                                         </div>
                                         <!--end::Info-->
                                     </div>
                                     <!--end:: Card body-->
-                                </a>
+                                </div>
                                 <!--end::Card-->
                             </div>
                             <!--end::Col-->

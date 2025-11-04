@@ -53,6 +53,16 @@ class EventController extends Controller
             'event_date' => 'required',
             'event_images' => 'required|array',
             'event_images.*' => 'image|mimes:jpg,jpeg,png|max:5120', // 5MB por archivo
+            'link' => [
+                                'nullable',
+                                'regex:/^(https?:\/\/)?(www\.)?[a-z0-9\-]+(\.[a-z]{2,})(\/.*)?$/i',
+                                'max:150',
+                            ],
+            'instagram' => [
+                                'nullable',
+                                'regex:/^(https?:\/\/)?(www\.)?[a-z0-9\-]+(\.[a-z]{2,})(\/.*)?$/i',
+                                'max:150',
+                            ],
         ]);
 
         if ($validator->fails()) {
@@ -148,7 +158,8 @@ class EventController extends Controller
             'place' => $event->place,
             'date' => $event->date,
             'link' => $event->link,
-            'image' => asset('storage/' . $event->image),
+            'instagram' => $event->instagram,
+            'images' => $event->images
         ]);
     }
 

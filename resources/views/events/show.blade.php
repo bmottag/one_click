@@ -17,47 +17,87 @@
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-fluid">
-                <!--begin::Toolbar-->
-                <div class="d-flex flex-wrap flex-stack mb-6">
-                    <!--begin::Heading-->
-                    <h3 class="fw-bold my-2">Events</h3>
-                    <!--end::Heading-->
+
+				<!--begin::Navbar-->
+
+                <div class="card card-flush mb-9" id="kt_user_profile_panel">
+                    <!--begin::Hero nav-->
+                    <x-hero-carousel 
+                        :images="[
+                            'images/slides/adventure-tourism-canada.png',
+                            'images/slides/digital-solutions-rcw-innovation.png',
+                            'images/slides/business-networking-event-canada.png'
+                        ]"
+                        height="400"
+                    />
+                    <div class="card-body mt-n19">
+                        <!--begin::Details-->
+                        <div class="m-0">
+                            <div class="d-flex flex-stack align-items-end pb-4 mt-n19" style="min-height: 100px;"></div>
+
+                            <!--begin::Info-->
+                            <div class="d-flex flex-stack flex-wrap align-items-end">
+                                <!--begin::User-->
+                                <div class="d-flex flex-column">
+                                    <!--begin::Name-->
+                                    <div class="d-flex align-items-center mb-2">
+                                        <a href="#" class="text-gray-800 text-hover-primary fs-2 fw-bolder me-1">Events</a>
+                                    </div>
+                                    <!--end::Name-->
+                                    <!--begin::Text-->
+                                    <span class="fw-bold text-gray-600 fs-6 mb-2 d-block">
+                                        Browse upcoming activities, explore event details, and easily join the ones that interest you.
+                                    </span>
+                                    <!--end::Text-->
+                                </div>
+                                <!--end::User-->
+                                <!--begin::Actions-->
+                                <div class="d-flex">
+                                    <form method="GET" action="{{ route('events.show_all') }}">
+                                        <!--begin::Card-->
+                                        <div class="card mb-7">
+                                            <!--begin::Card body-->
+                                            <div class="card-body">
+                                                <!--begin::Compact form-->
+                                                <div class="d-flex align-items-center">
+                                                    <!--begin::Input group-->
+                                                    <div class="position-relative w-md-400px me-md-2">
+                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                                        <span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                                                <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                                            </svg>
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                        <input type="text" class="form-control form-control-solid ps-10" name="search" value="" placeholder="Search" />
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                    <!--begin:Action-->
+                                                    <div class="d-flex align-items-center">
+                                                        <button type="submit" class="btn btn-primary me-5">Search</button>
+                                                    </div>
+                                                    <!--end:Action-->
+                                                </div>
+                                                <!--end::Compact form-->
+                                            </div>
+                                            <!--end::Card body-->
+                                        </div>
+                                        <!--end::Card-->
+                                    </form>
+                                </div>
+                                <!--end::Actions-->
+                            </div>
+                            <!--end::Info-->
+                        </div>
+                        <!--end::Details-->
+                    </div>
                 </div>
 
-                <!--begin::Form-->
-                <form method="GET" action="{{ route('events.show_all') }}">
-                    <!--begin::Card-->
-                    <div class="card mb-7">
-                        <!--begin::Card body-->
-                        <div class="card-body">
-                            <!--begin::Compact form-->
-                            <div class="d-flex align-items-center">
-                                <!--begin::Input group-->
-                                <div class="position-relative w-md-400px me-md-2">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                                    <span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
-                                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                    <input type="text" class="form-control form-control-solid ps-10" name="search" value="" placeholder="Search" />
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin:Action-->
-                                <div class="d-flex align-items-center">
-                                    <button type="submit" class="btn btn-primary me-5">Search</button>
-                                </div>
-                                <!--end:Action-->
-                            </div>
-                            <!--end::Compact form-->
-                        </div>
-                        <!--end::Card body-->
-                    </div>
-                    <!--end::Card-->
-                </form>
-                <!--end::Form-->
+
+                
+
+
 
                 <!--end::Toolbar-->
                 <div class="row g-5 g-xl-10">
@@ -90,7 +130,7 @@
                     @else
                         @foreach($events as $event)
                             <!--begin::Col-->
-                            <div class="col-xxl-5">
+                            <div class="col-xxl-6">
                                 <!--begin::Card widget 18-->
                                 <div class="card card-flush h-md-100">
                                     <!--begin::Body-->
@@ -98,20 +138,27 @@
                                         <!--begin::Row-->
                                         <div class="row gx-9 h-100">
                                             <!--begin::Col-->
+
+                                            <!--begin::Carousel-->
                                             <div class="col-sm-6 mb-10 mb-sm-0">
                                                 <!--begin::Carousel-->
-                                                <div id="eventCarousel{{ $event->id }}" class="carousel slide card-rounded min-h-400px min-h-sm-100 h-100" data-bs-ride="carousel">
-                                                    <div class="carousel-inner h-100">
-                                                        @foreach($event->image as $index => $img)
-                                                            <div class="carousel-item @if($index == 0) active @endif h-100">
-                                                                <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-100" 
-                                                                    style="background-size: 100% 100%; background-image: url('{{ asset('storage/' . $img) }}')">
+                                                <div id="eventCarousel{{ $event->id }}" class="carousel slide card-rounded min-h-400px h-100" data-bs-ride="false">
+                                                    <div class="carousel-inner text-center" style="max-height: 400px;">
+                                                        @foreach($event->images as $index => $img)
+                                                            <div class="carousel-item @if($index == 0) active @endif">
+                                                                <div class="d-flex align-items-center justify-content-center" style="height: 400px;">
+                                                                    <img 
+                                                                        src="{{ asset('storage/' . $img) }}" 
+                                                                        class="img-fluid card-rounded shadow-sm" 
+                                                                        style="max-height: 100%; max-width: 100%; object-fit: contain;" 
+                                                                        alt="Event image {{ $index + 1 }}"
+                                                                    >
                                                                 </div>
                                                             </div>
                                                         @endforeach
                                                     </div>
 
-                                                    <!-- Controls -->
+                                                    <!-- Controles -->
                                                     <button class="carousel-control-prev" type="button" data-bs-target="#eventCarousel{{ $event->id }}" data-bs-slide="prev">
                                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                         <span class="visually-hidden">Previous</span>
@@ -123,13 +170,14 @@
 
                                                     <!-- Indicators -->
                                                     <ol class="carousel-indicators">
-                                                        @foreach($event->image as $index => $img)
+                                                        @foreach($event->images as $index => $img)
                                                             <li data-bs-target="#eventCarousel{{ $event->id }}" data-bs-slide-to="{{ $index }}" class="@if($index == 0) active @endif"></li>
                                                         @endforeach
                                                     </ol>
                                                 </div>
                                                 <!--end::Carousel-->
                                             </div>
+                                            <!--end::Carousel-->
 
                                             <!--end::Col-->
                                             <!--begin::Col-->
@@ -185,7 +233,9 @@
                                                             <!--begin::Stat-->
                                                             <div class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
                                                                 <!--begin::Date-->
-                                                                <span class="fs-6 text-gray-700 fw-bold">{{ $event->date->format('M j, Y') }}</span>
+                                                                <span class="fs-6 text-gray-700 fw-bold">
+                                                                    {{ \Carbon\Carbon::parse($event->date)->format('M d, Y · H:i') }}
+                                                                </span>
                                                                 <!--end::Date-->
                                                                 <!--begin::Label-->
                                                                 <div class="fw-semibold text-gray-400">Date</div>
@@ -257,8 +307,6 @@
     </div>
 
     <!--begin::Modals-->
-
-
     <!--begin::Modal - New Target-->
     <div class="modal fade" id="kt_modal_bidding" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
@@ -302,33 +350,46 @@
                         <!--end::Heading-->
                         <!--begin::Input group-->
                         <div class="fv-row mb-8">
-                            <div id="modal_event_image_container" 
-                                class="card-rounded"
-                                style="min-height: 300px; background-size: cover; background-image: url('');">
+                            <div id="modal_event_carousel" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner" id="modal_event_carousel_inner"></div>
+                                <div class="carousel-indicators" id="modal_event_carousel_indicators"></div>
                             </div>
                         </div>
 
-                        <div class="fv-row mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span>Place</span>
-                            </label>
-                            <div id="modal_event_place" class="text-muted"></div>
+
+                        <div class="row mb-8">
+                            <div class="col-md-6">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>Place</span>
+                                </label>
+                                <div id="modal_event_place" class="text-muted"></div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>Date</span>
+                                </label>
+                                <div id="modal_event_date" class="text-muted"></div>
+                            </div>
                         </div>
 
+                        <div class="row mb-8">
+                            <div class="col-md-6">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>Link</span>
+                                </label>
+                                <div>
+                                    <a id="modal_event_link" href="#" target="_blank" class="text-primary text-hover-underline fw-semibold"></a>
+                                </div>
+                            </div>
 
-                                        <!--end::Input group-->
-                        <div class="fv-row mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span>Date</span>
-                            </label>
-                            <div id="modal_event_date" class="text-muted"></div>
-                        </div>
-                        <div class="fv-row mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span>Link</span>
-                            </label>
-                            <div>
-                                <a id="modal_event_link" href="#" target="_blank" class="text-primary text-hover-underline fw-semibold"></a>
+                            <div class="col-md-6">
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                    <span>Instagram</span>
+                                </label>
+                                <div>
+                                    <a id="modal_event_instagram" href="#" target="_blank" class="text-primary text-hover-underline fw-semibold"></a>
+                                </div>
                             </div>
                         </div>
 
@@ -400,7 +461,6 @@
                 // Limpiar contenido mientras carga
                 document.getElementById('modal_event_title').textContent = 'Loading...';
                 document.getElementById('modal_event_description').textContent = '';
-                document.getElementById('modal_event_image_container').style.backgroundImage = `url('')`;
 
                 fetch(`/events/${eventId}/json`)
                     .then(response => {
@@ -412,12 +472,78 @@
                         document.getElementById('modal_event_title').textContent = data.title;
                         document.getElementById('modal_event_description').textContent = data.description;
                         document.getElementById('modal_event_place').textContent = data.place;
-                        document.getElementById('modal_event_image_container').style.backgroundImage = `url('${data.image}')`;
 
-                        document.getElementById('modal_event_date').textContent = data.date;
+                        // Limpiar carrusel anterior
+                        const carouselInner = document.getElementById('modal_event_carousel_inner');
+                        const indicators = document.getElementById('modal_event_carousel_indicators');
+                        carouselInner.innerHTML = '';
+                        indicators.innerHTML = '';
+
+                        // Si el backend devuelve un JSON con imágenes (por ejemplo ["events/img1.jpg","events/img2.jpg"])
+                        if (data.images && Array.isArray(data.images) && data.images.length > 0) {
+                            data.images.forEach((img, index) => {
+                                const activeClass = index === 0 ? 'active' : '';
+
+                                // Asegurar que la URL sea válida (por si ya viene con /storage/)
+                                const imageUrl = img.startsWith('/storage/')
+                                    ? img
+                                    : `/storage/${img}`;
+
+                                // Crear item de carrusel
+                                const item = document.createElement('div');
+                                item.className = `carousel-item ${activeClass}`;
+                                item.innerHTML = `
+                                    <div class="d-flex justify-content-center align-items-center" style="height: 400px; background-color: #f8f9fa;">
+                                        <img src="${imageUrl}" class="img-fluid rounded" style="max-height: 100%; object-fit: contain;" alt="Event image">
+                                    </div>
+                                `;
+                                carouselInner.appendChild(item);
+
+                                // Crear indicador
+                                const indicator = document.createElement('button');
+                                indicator.type = 'button';
+                                indicator.setAttribute('data-bs-target', '#modal_event_carousel');
+                                indicator.setAttribute('data-bs-slide-to', index);
+                                indicator.className = activeClass;
+                                indicators.appendChild(indicator);
+                            });
+                        } else {
+                            // Si no hay imágenes, mostrar un placeholder
+                            carouselInner.innerHTML = `
+                                <div class="carousel-item active">
+                                    <div class="card-rounded min-h-300px bg-light d-flex align-items-center justify-content-center text-muted">
+                                        No images available
+                                    </div>
+                                </div>
+                            `;
+                        }
+
+                        // Formatear y mostrar fecha
+                        const dateElement = document.getElementById('modal_event_date');
+
+                        try {
+                            const dateValue = new Date(data.date.replace(' ', 'T')); // Asegura formato ISO
+                            const formattedDateTime = new Intl.DateTimeFormat(navigator.language, {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            }).format(dateValue);
+
+                            dateElement.textContent = formattedDateTime;
+                        } catch (e) {
+                            dateElement.textContent = data.date;
+                        }
+
                         const link = document.getElementById('modal_event_link');
                         link.href = data.link || '#';
                         link.textContent = data.link ? 'Visit event link' : 'No link available';
+
+                        const instagram = document.getElementById('modal_event_instagram');
+                        instagram.href = data.instagram || '#';
+                        instagram.textContent = data.instagram ? 'Visit instagram' : 'No link available';
+                        
                     })
                     .catch(error => {
                         console.error(error);
