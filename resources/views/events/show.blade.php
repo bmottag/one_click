@@ -19,7 +19,6 @@
             <div id="kt_app_content_container" class="app-container container-fluid">
 
 				<!--begin::Navbar-->
-
                 <div class="card card-flush mb-9" id="kt_user_profile_panel">
                     <!--begin::Hero nav-->
                     <x-hero-carousel 
@@ -94,11 +93,6 @@
                     </div>
                 </div>
 
-
-                
-
-
-
                 <!--end::Toolbar-->
                 <div class="row g-5 g-xl-10">
                     @if($events->isEmpty())
@@ -130,27 +124,22 @@
                     @else
                         @foreach($events as $event)
                             <!--begin::Col-->
-                            <div class="col-xxl-6">
-                                <!--begin::Card widget 18-->
-                                <div class="card card-flush h-md-100">
-                                    <!--begin::Body-->
-                                    <div class="card-body py-9">
-                                        <!--begin::Row-->
-                                        <div class="row gx-9 h-100">
-                                            <!--begin::Col-->
-
-                                            <!--begin::Carousel-->
-                                            <div class="col-sm-6 mb-10 mb-sm-0">
-                                                <!--begin::Carousel-->
-                                                <div id="eventCarousel{{ $event->id }}" class="carousel slide card-rounded min-h-400px h-100" data-bs-ride="false">
-                                                    <div class="carousel-inner text-center" style="max-height: 400px;">
+                            <div class="col-xxl-6 mb-5">
+                                <!--begin::Card widget-->
+                                <div class="card card-flush h-100">
+                                    <div class="card-body p-4 d-flex flex-column h-100">
+                                        <div class="row gx-4 gx-sm-9 h-100">
+                                            <!--begin::Carousel Column-->
+                                            <div class="col-sm-6 mb-4 mb-sm-0">
+                                                <div id="eventCarousel{{ $event->id }}" class="carousel slide card-rounded h-100" data-bs-ride="false">
+                                                    <div class="carousel-inner h-100 text-center">
                                                         @foreach($event->images as $index => $img)
                                                             <div class="carousel-item @if($index == 0) active @endif">
-                                                                <div class="d-flex align-items-center justify-content-center" style="height: 400px;">
+                                                                <div class="d-flex align-items-center justify-content-center h-100">
                                                                     <img 
                                                                         src="{{ asset('storage/' . $img) }}" 
                                                                         class="img-fluid card-rounded shadow-sm" 
-                                                                        style="max-height: 100%; max-width: 100%; object-fit: contain;" 
+                                                                        style="width: 100%; height: 100%; object-fit: cover;" 
                                                                         alt="Event image {{ $index + 1 }}"
                                                                     >
                                                                 </div>
@@ -158,7 +147,7 @@
                                                         @endforeach
                                                     </div>
 
-                                                    <!-- Controles -->
+                                                    <!-- Controls -->
                                                     <button class="carousel-control-prev" type="button" data-bs-target="#eventCarousel{{ $event->id }}" data-bs-slide="prev">
                                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                         <span class="visually-hidden">Previous</span>
@@ -175,129 +164,86 @@
                                                         @endforeach
                                                     </ol>
                                                 </div>
-                                                <!--end::Carousel-->
                                             </div>
-                                            <!--end::Carousel-->
+                                            <!--end::Carousel Column-->
 
-                                            <!--end::Col-->
-                                            <!--begin::Col-->
-                                            <div class="col-sm-6">
-                                                <!--begin::Wrapper-->
-                                                <div class="d-flex flex-column h-100">
-                                                    <!--begin::Header-->
-                                                    <div class="mb-7">
-                                                        <!--begin::Headin-->
-                                                        <div class="d-flex flex-stack mb-6">
-                                                            <!--begin::Title-->
-                                                            <div class="flex-shrink-0 me-5">
-                                                                <span class="text-gray-800 fs-1 fw-bold">{{ $event->title }}</span>
-                                                            </div>
-                                                            <!--end::Title-->
-                                                            @php
-                                                                $today = date('Y-m-d');
-
-                                                                $state = $event->date > $today ? 'Active' : 'Close';
-                                                                $style = $event->date > $today ? 'primary' : 'danger';
-                                                            @endphp
-                                                            <span class="badge badge-light-{{ $style }} flex-shrink-0 align-self-center py-3 px-4 fs-7">{{ $state }}</span>
-                                                        </div>
-                                                        <!--end::Heading-->
-                                                        <!--begin::Items-->
-                                                        <div class="d-flex align-items-center flex-wrap d-grid gap-2">
-                                                            <!--begin::Item-->
-                                                            <div class="d-flex align-items-center me-5 me-xl-13">
-                                                                @if (!empty($event->instagram))
-                                                                    @php
-                                                                        $igLink = Str::startsWith($event->instagram, ['http://', 'https://']) 
-                                                                            ? $event->instagram 
-                                                                            : 'https://' . $event->instagram;
-                                                                    @endphp
-
-                                                                    <a href="{{ $igLink }}" target="_blank" rel="noopener" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Instagram">
-                                                                        <img alt="Instagram" src="{{ asset('template/assets/media/svg/brand-logos/instagram-2-1.svg') }}" />
-                                                                    </a>
-                                                                @endif
-                                                            </div>
-                                                            <!--end::Item-->
-                                                        </div>
-                                                        <!--end::Items-->
-                                                    </div>
-                                                    <!--end::Header-->
-                                                    <!--begin::Body-->
-                                                    <div class="mb-6">
-                                                        <!--begin::Text-->
-                                                        <span class="fw-semibold text-gray-600 fs-6 mb-8 d-block">{{ $event->description }}</span>
-                                                        <!--end::Text-->
-                                                        <!--begin::Stats-->
-                                                        <div class="d-flex">
-                                                            <!--begin::Stat-->
-                                                            <div class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
-                                                                <!--begin::Date-->
-                                                                <span class="fs-6 text-gray-700 fw-bold">
-                                                                    {{ \Carbon\Carbon::parse($event->date)->format('M d, Y · H:i') }}
-                                                                </span>
-                                                                <!--end::Date-->
-                                                                <!--begin::Label-->
-                                                                <div class="fw-semibold text-gray-400">Date</div>
-                                                                <!--end::Label-->
-                                                            </div>
-                                                            <!--end::Stat-->
-                                                            <!--begin::Stat-->
-                                                            <div class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
-                                                                <!--begin::Number-->
-                                                                <span class="fs-6 text-gray-700 fw-bold">{{ $event->place }}</span>
-                                                                <!--end::Number-->
-                                                                <!--begin::Label-->
-                                                                <div class="fw-semibold text-gray-400">Place</div>
-                                                                <!--end::Label-->
-                                                            </div>
-                                                            <!--end::Stat-->
-                                                        </div>
-                                                        <!--end::Stats-->
-                                                    </div>
-                                                    <!--end::Body-->
-                                                    <!--begin::Footer-->
-                                                    <div class="d-flex flex-stack mt-auto bd-highlight">
-                                                        <!--begin::Actions-->
-                                                        @if ($event->link)
-                                                            @php
-                                                                $link = Str::startsWith($event->link, ['http://', 'https://']) ? $event->link : 'https://' . $event->link;
-                                                            @endphp
-                                                            <a href="{{ $link }}" class="text-primary opacity-75-hover fs-6 fw-semibold" target="_blank" rel="noopener">More
-                                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr095.svg-->
-                                                            <span class="svg-icon svg-icon-4 svg-icon-gray-800 ms-1">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z" fill="currentColor" />
-                                                                    <rect x="21.9497" y="3.46448" width="13" height="2" rx="1" transform="rotate(135 21.9497 3.46448)" fill="currentColor" />
-                                                                    <path d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z" fill="currentColor" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon--></a>
-                                                        @endif
-
-                                                        <button 
-                                                            class="btn btn-primary btn-join-event"
-                                                            data-event-id="{{ $event->id }}"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#kt_modal_bidding"
-                                                        >
-                                                            Join Event
-                                                        </button>
-
-                                                        <!--end::Actions-->
-                                                    </div>
-                                                    <!--end::Footer-->
+                                            <!--begin::Content Column-->
+                                            <div class="col-sm-6 d-flex flex-column">
+                                                <!-- Header -->
+                                                <div class="d-flex justify-content-between align-items-start mb-6">
+                                                    <span class="text-gray-800 fs-1 fw-bold">{{ $event->title }}</span>
+                                                    @php
+                                                        $today = date('Y-m-d');
+                                                        $state = $event->date > $today ? 'Active' : 'Close';
+                                                        $style = $event->date > $today ? 'primary' : 'danger';
+                                                    @endphp
+                                                    <span class="badge badge-light-{{ $style }} py-2 px-3 fs-7">{{ $state }}</span>
                                                 </div>
-                                                <!--end::Wrapper-->
+
+                                                <!-- Social Links -->
+                                                @if (!empty($event->instagram))
+                                                    @php
+                                                        $igLink = Str::startsWith($event->instagram, ['http://', 'https://']) 
+                                                            ? $event->instagram 
+                                                            : 'https://' . $event->instagram;
+                                                    @endphp
+                                                    <div class="d-flex gap-2 mb-3">
+                                                        <a href="{{ $igLink }}" target="_blank" rel="noopener" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Instagram">
+                                                            <img alt="Instagram" src="{{ asset('template/assets/media/svg/brand-logos/instagram-2-1.svg') }}" />
+                                                        </a>
+                                                    </div>
+                                                @endif
+
+                                                <!-- Description -->
+                                                <p class="fw-semibold text-gray-600 fs-6 mb-4">{{ $event->description }}</p>
+
+                                                <!-- Stats -->
+                                                <div class="d-flex flex-wrap gap-3 mb-4">
+                                                    <!-- Date -->
+                                                    <div class="border border-gray-300 border-dashed rounded p-3 flex-fill d-flex align-items-center gap-2">
+                                                        <i class="fas fa-calendar-alt text-gray-400"></i>
+                                                        <div>
+                                                            <div class="fw-bold text-gray-800">{{ \Carbon\Carbon::parse($event->date)->format('M d, Y · H:i') }}</div>
+                                                            <div class="text-gray-400 small">Date</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Place -->
+                                                    <div class="border border-gray-300 border-dashed rounded p-3 flex-fill d-flex align-items-center gap-2">
+                                                        <i class="fas fa-map-marker-alt text-gray-400"></i>
+                                                        <div>
+                                                            <div class="fw-bold text-gray-800">{{ $event->place }}</div>
+                                                            <div class="text-gray-400 small">Place</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Actions -->
+                                                <div class="d-flex gap-2 mt-auto">
+                                                    @if ($event->link)
+                                                        @php
+                                                            $link = Str::startsWith($event->link, ['http://', 'https://']) ? $event->link : 'https://' . $event->link;
+                                                        @endphp
+                                                        <a href="{{ $link }}" class="btn btn-light flex-shrink-0" target="_blank" rel="noopener">More Info</a>
+                                                    @endif
+
+                                                    <button 
+                                                        class="btn btn-primary flex-grow-1 btn-join-event"
+                                                        data-event-id="{{ $event->id }}"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#kt_modal_bidding"
+                                                    >
+                                                        Join Event
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <!--end::Col-->
+                                            <!--end::Content Column-->
                                         </div>
-                                        <!--end::Row-->
                                     </div>
-                                    <!--end::Body-->
                                 </div>
-                                <!--end::Card widget 18-->
+                                <!--end::Card widget-->
                             </div>
+
                             <!--end::Col-->
                         @endforeach
                     @endif

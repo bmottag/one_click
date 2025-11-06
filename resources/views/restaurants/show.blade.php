@@ -17,47 +17,81 @@
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-fluid">
-                <!--begin::Toolbar-->
-                <div class="d-flex flex-wrap flex-stack mb-6">
-                    <!--begin::Heading-->
-                    <h3 class="fw-bold my-2">Restaurants</h3>
-                    <!--end::Heading-->
-                </div>
 
-                <!--begin::Form-->
-                <form method="GET" action="{{ route('restaurants.show_all') }}">
-                    <!--begin::Card-->
-                    <div class="card mb-7">
-                        <!--begin::Card body-->
-                        <div class="card-body">
-                            <!--begin::Compact form-->
-                            <div class="d-flex align-items-center">
-                                <!--begin::Input group-->
-                                <div class="position-relative w-md-400px me-md-2">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                                    <span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
-                                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
-                                        </svg>
+				<!--begin::Navbar-->
+                <div class="card card-flush mb-9" id="kt_user_profile_panel">
+                    <!--begin::Hero nav-->
+                    <x-hero-carousel 
+                        :images="[
+                            'images/slides/buy-houses-and-apartments-canada.png',
+                            'images/slides/corporate-electronic-events-canada.png',
+                            'images/slides/culinary-experience-calgary.png'
+                        ]"
+                        height="400"
+                    />
+                    <div class="card-body mt-n19">
+                        <!--begin::Details-->
+                        <div class="m-0">
+                            <div class="d-flex flex-stack align-items-end pb-4 mt-n19" style="min-height: 100px;"></div>
+
+                            <!--begin::Info-->
+                            <div class="d-flex flex-stack flex-wrap align-items-end">
+                                <!--begin::User-->
+                                <div class="d-flex flex-column">
+                                    <!--begin::Name-->
+                                    <div class="d-flex align-items-center mb-2">
+                                        <a href="#" class="text-gray-800 text-hover-primary fs-2 fw-bolder me-1">Restaurants</a>
+                                    </div>
+                                    <!--end::Name-->
+                                    <!--begin::Text-->
+                                    <span class="fw-bold text-gray-600 fs-6 mb-2 d-block">
+                                        Browse local restaurants, explore their menus and details, and easily find the perfect place to dine.
                                     </span>
-                                    <!--end::Svg Icon-->
-                                    <input type="text" class="form-control form-control-solid ps-10" name="search" value="" placeholder="Search" />
+                                    <!--end::Text-->
                                 </div>
-                                <!--end::Input group-->
-                                <!--begin:Action-->
-                                <div class="d-flex align-items-center">
-                                    <button type="submit" class="btn btn-primary me-5">Search</button>
+                                <!--end::User-->
+                                <!--begin::Actions-->
+                                <div class="d-flex">
+                                    <form method="GET" action="{{ route('restaurants.show_all') }}">
+                                        <!--begin::Card-->
+                                        <div class="card mb-7">
+                                            <!--begin::Card body-->
+                                            <div class="card-body">
+                                                <!--begin::Compact form-->
+                                                <div class="d-flex align-items-center">
+                                                    <!--begin::Input group-->
+                                                    <div class="position-relative w-md-400px me-md-2">
+                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                                        <span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 translate-middle ms-6">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                                                <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                                            </svg>
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                        <input type="text" class="form-control form-control-solid ps-10" name="search" value="" placeholder="Search" />
+                                                    </div>
+                                                    <!--end::Input group-->
+                                                    <!--begin:Action-->
+                                                    <div class="d-flex align-items-center">
+                                                        <button type="submit" class="btn btn-primary me-5">Search</button>
+                                                    </div>
+                                                    <!--end:Action-->
+                                                </div>
+                                                <!--end::Compact form-->
+                                            </div>
+                                            <!--end::Card body-->
+                                        </div>
+                                        <!--end::Card-->
+                                    </form>
                                 </div>
-                                <!--end:Action-->
+                                <!--end::Actions-->
                             </div>
-                            <!--end::Compact form-->
+                            <!--end::Info-->
                         </div>
-                        <!--end::Card body-->
+                        <!--end::Details-->
                     </div>
-                    <!--end::Card-->
-                </form>
-                <!--end::Form-->
+                </div>
 
                 <!--end::Toolbar-->
                 <div class="row g-5 g-xl-10">
@@ -90,33 +124,35 @@
                     @else
                         @foreach($data as $item)
                             <!--begin::Col-->
-                            <div class="col-xxl-5">
-                                <!--begin::Card widget 18-->
-                                <div class="card card-flush h-md-100">
-                                    <!--begin::Body-->
-                                    <div class="card-body py-9">
-                                        <!--begin::Row-->
-                                        <div class="row gx-9 h-100">
-                                            <!--begin::Col-->
-                                            <div class="col-sm-6 mb-10 mb-sm-0">
-                                                <!--begin::Carousel-->
-                                                <div id="eventCarousel{{ $item->id }}" class="carousel slide card-rounded min-h-400px min-h-sm-100 h-100" data-bs-ride="carousel">
-                                                    <div class="carousel-inner h-100">
+                            <div class="col-xxl-6 mb-5">
+                                <!--begin::Card widget-->
+                                <div class="card card-flush h-100">
+                                    <div class="card-body p-4 d-flex flex-column h-100">
+                                        <div class="row gx-4 gx-sm-9 h-100">
+                                            <!--begin::Carousel Column-->
+                                            <div class="col-sm-6 mb-4 mb-sm-0">
+                                                <div id="restaurantCarousel{{ $item->id }}" class="carousel slide card-rounded h-100" data-bs-ride="false">
+                                                    <div class="carousel-inner h-100 text-center">
                                                         @foreach($item->images as $index => $img)
-                                                            <div class="carousel-item @if($index == 0) active @endif h-100">
-                                                                <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded h-100" 
-                                                                    style="background-size: 100% 100%; background-image: url('{{ asset('storage/' . $img) }}')">
+                                                            <div class="carousel-item @if($index == 0) active @endif">
+                                                                <div class="d-flex align-items-center justify-content-center h-100">
+                                                                    <img 
+                                                                        src="{{ asset('storage/' . $img) }}" 
+                                                                        class="img-fluid card-rounded shadow-sm" 
+                                                                        style="width: 100%; height: 100%; object-fit: cover;" 
+                                                                        alt="Restaurant image {{ $index + 1 }}"
+                                                                    >
                                                                 </div>
                                                             </div>
                                                         @endforeach
                                                     </div>
 
                                                     <!-- Controls -->
-                                                    <button class="carousel-control-prev" type="button" data-bs-target="#eventCarousel{{ $item->id }}" data-bs-slide="prev">
+                                                    <button class="carousel-control-prev" type="button" data-bs-target="#restaurantCarousel{{ $item->id }}" data-bs-slide="prev">
                                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                         <span class="visually-hidden">Previous</span>
                                                     </button>
-                                                    <button class="carousel-control-next" type="button" data-bs-target="#eventCarousel{{ $item->id }}" data-bs-slide="next">
+                                                    <button class="carousel-control-next" type="button" data-bs-target="#restaurantCarousel{{ $item->id }}" data-bs-slide="next">
                                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                         <span class="visually-hidden">Next</span>
                                                     </button>
@@ -124,128 +160,115 @@
                                                     <!-- Indicators -->
                                                     <ol class="carousel-indicators">
                                                         @foreach($item->images as $index => $img)
-                                                            <li data-bs-target="#eventCarousel{{ $item->id }}" data-bs-slide-to="{{ $index }}" class="@if($index == 0) active @endif"></li>
+                                                            <li data-bs-target="#restaurantCarousel{{ $item->id }}" data-bs-slide-to="{{ $index }}" class="@if($index == 0) active @endif"></li>
                                                         @endforeach
                                                     </ol>
                                                 </div>
-                                                <!--end::Carousel-->
                                             </div>
-                                            <!--end::Col-->
-                                            <!--begin::Col-->
-                                            <div class="col-sm-6">
-                                                <!--begin::Wrapper-->
-                                                <div class="d-flex flex-column h-100">
-                                                    <!--begin::Header-->
-                                                    <div class="mb-7">
-                                                        <!--begin::Headin-->
-                                                        <div class="d-flex flex-stack mb-6">
-                                                            <!--begin::Title-->
-                                                            <div class="flex-shrink-0 me-5">
-                                                                <span class="text-gray-800 fs-1 fw-bold">{{ $item->restaurant_name }}</span>
-                                                            </div>
-                                                            <!--end::Title-->
-                                                        </div>
-                                                        <!--end::Heading-->
-                                                        <!--begin::Items-->
-                                                        <div class="d-flex align-items-center flex-wrap d-grid gap-2">
-                                                            <!--begin::Item-->
-                                                            <div class="d-flex align-items-center me-5 me-xl-13">
-                                                                @if (!empty($item->instagram))
-                                                                    @php
-                                                                        $igLink = Str::startsWith($item->instagram, ['http://', 'https://']) 
-                                                                            ? $item->instagram 
-                                                                            : 'https://' . $item->instagram;
-                                                                    @endphp
+                                            <!--end::Carousel Column-->
 
-                                                                    <a href="{{ $igLink }}" target="_blank" rel="noopener" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Instagram">
-                                                                        <img alt="Instagram" src="{{ asset('template/assets/media/svg/brand-logos/instagram-2-1.svg') }}" />
-                                                                    </a>
-                                                                @endif
-                                                            </div>
-                                                            <!--end::Item-->
-                                                        </div>
-                                                        <!--end::Items-->
-                                                    </div>
-                                                    <!--end::Header-->
-                                                    <!--begin::Body-->
-                                                    <div class="mb-6">
-                                                        <!--begin::Text-->
-                                                        <span class="fw-semibold text-gray-600 fs-6 mb-8 d-block">{{ $item->description }}</span>
-                                                        <!--end::Text-->
-                                                        <!--begin::Stats-->
-                                                        <div class="d-flex">
-                                                            <!--begin::Stat-->
-                                                            <div class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
-                                                                <!--begin::Date-->
-                                                                <span class="fs-6 text-gray-700 fw-bold">{{ $item->contact_number }}</span>
-                                                                <!--end::Date-->
-                                                                <!--begin::Label-->
-                                                                <div class="fw-semibold text-gray-400">Phone</div>
-                                                                <!--end::Label-->
-                                                            </div>
-                                                            <!--end::Stat-->
-                                                            <!--begin::Stat-->
-                                                            <div class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
-                                                                <!--begin::Number-->
-                                                                <span class="fs-6 text-gray-700 fw-bold">{{ $item->email }}</span>
-                                                                <!--end::Number-->
-                                                                <!--begin::Label-->
-                                                                <div class="fw-semibold text-gray-400">Email</div>
-                                                                <!--end::Label-->
-                                                            </div>
-                                                            <!--end::Stat-->
-                                                        </div>
-                                                        <!--end::Stats-->
-
-                                                        <!--begin::Stats-->
-                                                        <div class="d-flex">
-                                                            <!--begin::Stat-->
-                                                            <div class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
-                                                                <!--begin::Date-->
-                                                                <span class="fs-6 text-gray-700 fw-bold">{{ $item->address }}</span>
-                                                                <!--end::Date-->
-                                                                <!--begin::Label-->
-                                                                <div class="fw-semibold text-gray-400">Address</div>
-                                                                <!--end::Label-->
-                                                            </div>
-                                                            <!--end::Stat-->
-                                                        </div>
-                                                        <!--end::Stats-->
-                                                    </div>
-                                                    <!--end::Body-->
-                                                    <!--begin::Footer-->
-                                                    <div class="d-flex flex-stack mt-auto bd-highlight">
-                                                        <!--begin::Actions-->
-                                                        @if ($item->link)
-                                                            @php
-                                                                $link = Str::startsWith($item->link, ['http://', 'https://']) ? $item->link : 'https://' . $item->link;
-                                                            @endphp
-                                                            <a href="{{ $link }}" class="text-primary opacity-75-hover fs-6 fw-semibold" target="_blank" rel="noopener">More
-                                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr095.svg-->
-                                                            <span class="svg-icon svg-icon-4 svg-icon-gray-800 ms-1">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z" fill="currentColor" />
-                                                                    <rect x="21.9497" y="3.46448" width="13" height="2" rx="1" transform="rotate(135 21.9497 3.46448)" fill="currentColor" />
-                                                                    <path d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z" fill="currentColor" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon--></a>
-                                                        @endif
-                                                        <a href="#" class="btn btn-primary btn-sm flex-shrink-0 me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_bidding">Join Event</a>
-                                                        <!--end::Actions-->
-                                                    </div>
-                                                    <!--end::Footer-->
+                                            <!--begin::Content Column-->
+                                            <div class="col-sm-6 d-flex flex-column">
+                                                <!-- Header -->
+                                                <div class="d-flex justify-content-between align-items-start mb-6">
+                                                    <span class="text-gray-800 fs-1 fw-bold">{{ $item->restaurant_name }}</span>
+                                                    @if (!empty($item->rating))
+                                                        <span class="badge badge-light-success py-2 px-3 fs-7">
+                                                            ⭐ {{ number_format($item->rating, 1) }}
+                                                        </span>
+                                                    @endif
                                                 </div>
-                                                <!--end::Wrapper-->
+
+                                                <!-- Social Links -->
+                                                <div class="d-flex gap-2 mb-3">
+                                                    @if (!empty($item->instagram))
+                                                        @php
+                                                            $igLink = Str::startsWith($item->instagram, ['http://', 'https://']) 
+                                                                ? $item->instagram 
+                                                                : 'https://' . $item->instagram;
+                                                        @endphp
+                                                        <a href="{{ $igLink }}" target="_blank" rel="noopener" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Instagram">
+                                                            <img alt="Instagram" src="{{ asset('template/assets/media/svg/brand-logos/instagram-2-1.svg') }}" />
+                                                        </a>
+                                                    @endif
+
+                                                    @if (!empty($item->facebook))
+                                                        @php
+                                                            $fbLink = Str::startsWith($item->facebook, ['http://', 'https://']) 
+                                                                ? $item->facebook 
+                                                                : 'https://' . $item->facebook;
+                                                        @endphp
+                                                        <a href="{{ $fbLink }}" target="_blank" rel="noopener" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Facebook">
+                                                            <img alt="Facebook" src="{{ asset('template/assets/media/svg/brand-logos/facebook-4.svg') }}" />
+                                                        </a>
+                                                    @endif
+
+                                                    @if (!empty($item->youtube))
+                                                        @php
+                                                            $ytLink = Str::startsWith($item->youtube, ['http://', 'https://']) 
+                                                                ? $item->youtube 
+                                                                : 'https://' . $item->youtube;
+                                                        @endphp
+                                                        <a href="{{ $ytLink }}" target="_blank" rel="noopener" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="YouTube">
+                                                            <img alt="YouTube" src="{{ asset('template/assets/media/svg/brand-logos/youtube-3.svg') }}" />
+                                                        </a>
+                                                    @endif
+                                                </div>
+
+                                                <!-- Description -->
+                                                <p class="fw-semibold text-gray-600 fs-6 mb-4">{{ $item->description }}</p>
+
+                                                <!-- Stats -->
+                                                <div class="d-flex flex-wrap gap-3 mb-4">
+                                                    <!-- Phone -->
+                                                    @php
+                                                        $formattedPhone = preg_replace('/(\d{3})(\d{3})(\d{4})/', '($1) $2-$3', $item->contact_number);
+                                                    @endphp
+                                                    <div class="border border-gray-300 border-dashed rounded p-3 flex-fill d-flex align-items-center gap-2">
+                                                        <i class="fas fa-phone text-gray-400"></i>
+                                                        <div>
+                                                            <a href="tel:{{ preg_replace('/\D/', '', $item->contact_number) }}" class="text-decoration-none">
+                                                                <div class="fw-bold text-primary">{{ $formattedPhone }}</div>
+                                                            </a>
+                                                            <div class="text-gray-400 small">Contact</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Email -->
+                                                    <div class="border border-gray-300 border-dashed rounded p-3 flex-fill d-flex align-items-center gap-2">
+                                                        <i class="fas fa-envelope text-gray-400"></i>
+                                                        <div>
+                                                            <div class="fw-bold text-gray-800">{{ $item->email }}</div>
+                                                            <div class="text-gray-400 small">Email</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="border border-gray-300 border-dashed rounded p-3 d-flex align-items-center gap-2 mb-4">
+                                                    <i class="fas fa-map-marker-alt text-gray-400"></i>
+                                                    <div>
+                                                        <div class="fw-bold text-gray-800">{{ $item->address }}</div>
+                                                        <div class="text-gray-400 small">Address</div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Actions -->
+                                                <div class="d-flex gap-2 mt-auto">
+                                                    @if ($item->link)
+                                                        <a href="{{ $item->link }}" class="btn btn-light flex-shrink-0" target="_blank" rel="noopener">More Info</a>
+                                                    @endif
+                                                    <a href="#" class="btn btn-primary flex-grow-1" data-bs-toggle="modal" data-bs-target="#kt_modal_booking">
+                                                        Book Table
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <!--end::Col-->
+                                            <!--end::Content Column-->
                                         </div>
-                                        <!--end::Row-->
                                     </div>
-                                    <!--end::Body-->
                                 </div>
-                                <!--end::Card widget 18-->
+                                <!--end::Card widget-->
                             </div>
+
                             <!--end::Col-->
                         @endforeach
                     @endif

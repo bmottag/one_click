@@ -773,6 +773,33 @@
 							<!--end::Menu wrapper-->
 						</div>
 						<!--end::sidebar menu-->
+
+						<!--begin::Footer-->
+						<div class="app-sidebar-footer d-flex flex-center flex-column-auto pt-6 mb-7" id="kt_app_sidebar_footer">
+							<!--begin::Menu-->
+							<div class="d-flex justify-content-center gap-2 mb-0">
+								<a href="https://www.facebook.com/latinoscalgaryapp" target="_blank" class="menu-link menu-center">
+									<span class="menu-icon me-0 d-flex flex-column align-items-center">
+										<i class="bi bi-facebook fs-1"></i>
+									</span>
+								</a>
+
+								<a href="https://www.instagram.com/latinoscalgaryapp/" target="_blank" class="menu-link menu-center">
+									<span class="menu-icon me-0 d-flex flex-column align-items-center">
+										<i class="bi bi-instagram fs-1"></i>
+									</span>
+								</a>
+
+								<a href="https://www.tiktok.com/@latinoscalgaryapp" target="_blank" class="menu-link menu-center">
+									<span class="menu-icon me-0 d-flex flex-column align-items-center">
+										<i class="bi bi-tiktok fs-1"></i>
+									</span>
+								</a>
+							</div>
+							<!--end::Menu-->
+						</div>
+						<!--end::Footer-->
+
 					</div>
 					<!--end::Sidebar-->
 					<!--begin::Main-->

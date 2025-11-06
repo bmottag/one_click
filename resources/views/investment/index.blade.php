@@ -113,10 +113,10 @@
                                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                             <th class="min-w-150px">Company</th>
                                             <th class="text-start min-w-200px">Description</th>
-                                            <th class="text-end min-w-100px">Phone</th>
-                                            <th class="text-end min-w-100px">Email</th>
-                                            <th class="text-end min-w-100px">Address</th>
-                                            <th class="text-end min-w-100px">Link</th>
+                                            <th class="text-center min-w-100px">Phone</th>
+                                            <th class="text-start min-w-100px">Email</th>
+                                            <th class="text-start min-w-100px">Address</th>
+                                            <th class="text-center min-w-100px">Link</th>
                                             <th class="text-end min-w-70px">Actions</th>
                                         </tr>
                                         <!--end::Table row-->
@@ -147,11 +147,17 @@
                                                     <span>{{ $item->description }}</span>
                                                 </td>
 
-                                                <td class="text-end pe-0">{{ $item->contact_number }}</td>
-                                                <td class="text-end pe-0">{{ $item->email }}</td>
-                                                <td class="text-end pe-0">{{ $item->address }}</td>
+                                                <td class="text-center pe-0">
+                                                    <span>
+                                                        @php
+                                                            echo preg_replace('/(\d{3})(\d{3})(\d{4})/', '($1) $2-$3', $item->contact_number);
+                                                        @endphp
+                                                    </span>
+                                                </td>
+                                                <td class="text-start pe-0">{{ $item->email }}</td>
+                                                <td class="text-start pe-0">{{ $item->address }}</td>
                                                 
-                                                <td class="text-start pe-0">
+                                                <td class="text-center pe-0">
                                                     @if ($item->link)
                                                         @php
                                                             $link = Str::startsWith($item->link, ['http://', 'https://']) ? $item->link : 'https://' . $item->link;

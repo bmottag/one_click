@@ -142,7 +142,11 @@
                                                 </td>
 
                                                 <td class="text-center pe-0">
-                                                    <span>{{ $job->contact_number }}</span>
+                                                    <span>
+                                                        @php
+                                                            echo preg_replace('/(\d{3})(\d{3})(\d{4})/', '($1) $2-$3', $job->contact_number);
+                                                        @endphp
+                                                    </span>
                                                 </td>
 
                                                 <td class="text-center pe-0">{{ $job->due_date->format('M j, Y') }}</td>

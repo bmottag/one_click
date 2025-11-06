@@ -114,10 +114,10 @@
                                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                             <th class="min-w-150px">Name</th>
                                             <th class="text-start min-w-200px">Description</th>
-                                            <th class="text-end min-w-100px">Phone</th>
-                                            <th class="text-end min-w-100px">Email</th>
-                                            <th class="text-end min-w-100px">Address</th>
-                                            <th class="text-end min-w-100px">Link</th>
+                                            <th class="text-center min-w-100px">Phone</th>
+                                            <th class="text-start min-w-100px">Email</th>
+                                            <th class="text-start min-w-100px">Address</th>
+                                            <th class="text-center min-w-100px">Social Links</th>
                                             <th class="text-end min-w-70px">Actions</th>
                                         </tr>
                                         <!--end::Table row-->
@@ -148,25 +148,70 @@
                                                     <span>{{ $item->description }}</span>
                                                 </td>
 
-                                                <td class="text-end pe-0">{{ $item->contact_number }}</td>
-                                                <td class="text-end pe-0">{{ $item->email }}</td>
-                                                <td class="text-end pe-0">{{ $item->address }}</td>
-                                                
-                                                <td class="text-start pe-0">
-                                                    @if ($item->link)
+                                                <td class="text-center pe-0">
+                                                    <span>
                                                         @php
-                                                            $link = Str::startsWith($item->link, ['http://', 'https://']) ? $item->link : 'https://' . $item->link;
+                                                            echo preg_replace('/(\d{3})(\d{3})(\d{4})/', '($1) $2-$3', $item->contact_number);
                                                         @endphp
-                                                        <a href="{{ $link }}" class="text-primary opacity-75-hover fs-6 fw-semibold" target="_blank" rel="noopener">Link
-                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr095.svg-->
-                                                        <span class="svg-icon svg-icon-4 svg-icon-gray-800 ms-1">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path opacity="0.3" d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z" fill="currentColor" />
-                                                                <rect x="21.9497" y="3.46448" width="13" height="2" rx="1" transform="rotate(135 21.9497 3.46448)" fill="currentColor" />
-                                                                <path d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z" fill="currentColor" />
-                                                            </svg>
-                                                        </span>
-                                                        <!--end::Svg Icon--></a>
+                                                    </span>
+                                                </td>
+                                                <td class="text-start pe-0">{{ $item->email }}</td>
+                                                <td class="text-start pe-0">{{ $item->address }}</td>
+                                                
+                                                <td class="text-center pe-0">
+                                                    @if (!empty($item->link))
+                                                        @php
+                                                            $webLink = Str::startsWith($item->link, ['http://', 'https://']) 
+                                                                ? $item->link 
+                                                                : 'https://' . $item->link;
+                                                        @endphp
+                                                        <a href="{{ $webLink }}" target="_blank" rel="noopener" class="symbol symbol-35px symbol-circle d-inline-flex align-items-center justify-content-center" data-bs-toggle="tooltip" title="Website">
+                                                            <i class="fas fa-globe text-gray-800" style="font-size: 26px;"></i>
+                                                        </a>
+                                                    @endif
+
+                                                    @if (!empty($item->instagram))
+                                                        @php
+                                                            $igLink = Str::startsWith($item->instagram, ['http://', 'https://']) 
+                                                                ? $item->instagram 
+                                                                : 'https://' . $item->instagram;
+                                                        @endphp
+                                                        <a href="{{ $igLink }}" target="_blank" rel="noopener" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Instagram">
+                                                            <img alt="Instagram" src="{{ asset('template/assets/media/svg/brand-logos/instagram-2-1.svg') }}" />
+                                                        </a>
+                                                    @endif
+
+                                                    @if (!empty($item->facebook))
+                                                        @php
+                                                            $fbLink = Str::startsWith($item->facebook, ['http://', 'https://']) 
+                                                                ? $item->facebook 
+                                                                : 'https://' . $item->facebook;
+                                                        @endphp
+                                                        <a href="{{ $fbLink }}" target="_blank" rel="noopener" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Facebook">
+                                                            <img alt="Facebook" src="{{ asset('template/assets/media/svg/brand-logos/facebook-4.svg') }}" />
+                                                        </a>
+                                                    @endif
+
+                                                    @if (!empty($item->youtube))
+                                                        @php
+                                                            $ytLink = Str::startsWith($item->youtube, ['http://', 'https://']) 
+                                                                ? $item->youtube 
+                                                                : 'https://' . $item->youtube;
+                                                        @endphp
+                                                        <a href="{{ $ytLink }}" target="_blank" rel="noopener" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="YouTube">
+                                                            <img alt="YouTube" src="{{ asset('template/assets/media/svg/brand-logos/youtube-3.svg') }}" />
+                                                        </a>
+                                                    @endif
+
+                                                    @if (!empty($item->google))
+                                                        @php
+                                                            $googleLink = Str::startsWith($item->google, ['http://', 'https://']) 
+                                                                ? $item->google 
+                                                                : 'https://' . $item->google;
+                                                        @endphp
+                                                        <a href="{{ $googleLink }}" target="_blank" rel="noopener" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Google">
+                                                            <img alt="Google" src="{{ asset('template/assets/media/svg/brand-logos/google-icon.svg') }}" />
+                                                        </a>
                                                     @endif
                                                 </td>
                                                 <!--end::Status=-->
